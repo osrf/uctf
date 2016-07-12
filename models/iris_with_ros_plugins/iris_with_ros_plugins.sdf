@@ -1,0 +1,13 @@
+<sdf version="1.6">
+  <model name="iris_with_ros_plugins">
+    <include>
+      <uri>model://iris</uri>
+    </include>
+
+    <plugin name="ros_imu" filename='libgazebo_ros_imu.so'>
+      <bodyName>iris::iris/imu_link</bodyName>
+      <serviceName>iris/imu</serviceName>
+      <topicName>iris/imu</topicName>
+    </plugin>
+  </model>
+</sdf>

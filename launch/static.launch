@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" pass_all_args="true">
+    <arg name="world_name" value="$(find uctf)/worlds/static.world" />
+  </include>
+</launch>
