@@ -1,3 +1,5 @@
+<?xml version="1.0" ?>
+<?xml-model href="http://sdformat.org/schemas/root.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <sdf version="1.6">
   <model name="iris_with_ros_plugins">
     <include>
