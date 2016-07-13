@@ -19,3 +19,7 @@ Unmanned Capture the Flag (U-CTF) project.
   1. Setup a docker container to run a single team of 50 vehicles in cloudsim.
 1. Gazebo rules and scoring plugin
   1. Save this for last. The arbiter may implement this for us.
+
+# References
+
+1. [google group uctf-internal](https://groups.google.com/a/osrfoundation.org/forum/#!forum/uctf-internal)
