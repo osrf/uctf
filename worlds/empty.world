@@ -1,4 +1,5 @@
 <?xml version="1.0" ?>
+<?xml-model href="http://sdformat.org/schemas/root.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <sdf version="1.5">
   <world name="default">
 
@@ -21,7 +22,7 @@
       <max_step_size>0.002</max_step_size>
       <real_time_factor>1</real_time_factor>
       <real_time_update_rate>500</real_time_update_rate>
-      <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+      <magnetic_field>6.0e-06 2.3e-05 -4.2e-05</magnetic_field>
     </physics>
 
     <scene>
@@ -72,13 +73,5 @@
         </visual>
       </link>
     </model>
-
-    <include>
-      <uri>model://iris_with_ros_plugins</uri>
-    </include>
-
-    <include>
-      <uri>model://plane_with_ros_plugins</uri>
-    </include>
   </world>
 </sdf>
