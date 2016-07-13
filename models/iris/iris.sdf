@@ -1,4 +1,5 @@
-<sdf version='1.6'>
+<sdf version='1.6' xmlns:xacro='http://ros.org/wiki/xacro'>
+  <xacro:arg name='visual_material' default='Gazebo/DarkGrey' />
   <model name='iris'>
     <link name='base_link'>
       <pose frame=''>0 0 0 0 -0 0</pose>
@@ -43,7 +44,7 @@
         </geometry>
         <material>
           <script>
-            <name>Gazebo/DarkGrey</name>
+            <name>$(arg visual_material)</name>
             <uri>file://media/materials/scripts/gazebo.material</uri>
           </script>
         </material>
@@ -126,7 +127,7 @@
         </geometry>
         <material>
           <script>
-            <name>Gazebo/Blue</name>
+            <name>$(arg visual_material)</name>
             <uri>file://media/materials/scripts/gazebo.material</uri>
           </script>
         </material>
@@ -192,7 +193,7 @@
         </geometry>
         <material>
           <script>
-            <name>Gazebo/DarkGrey</name>
+            <name>$(arg visual_material)</name>
             <uri>file://media/materials/scripts/gazebo.material</uri>
           </script>
         </material>
@@ -258,7 +259,7 @@
         </geometry>
         <material>
           <script>
-            <name>Gazebo/Blue</name>
+            <name>$(arg visual_material)</name>
             <uri>file://media/materials/scripts/gazebo.material</uri>
           </script>
         </material>
@@ -324,7 +325,7 @@
         </geometry>
         <material>
           <script>
-            <name>Gazebo/DarkGrey</name>
+            <name>$(arg visual_material)</name>
             <uri>file://media/materials/scripts/gazebo.material</uri>
           </script>
         </material>
@@ -440,6 +441,12 @@
       <accelerometerRandomWalk>0.006</accelerometerRandomWalk>
       <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
       <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
+    </plugin>
+
+    <plugin name="ros_imu" filename='libgazebo_ros_imu.so'>
+      <bodyName>iris/imu_link</bodyName>
+      <serviceName>imu</serviceName>
+      <topicName>imu</topicName>
     </plugin>
   </model>
 </sdf>

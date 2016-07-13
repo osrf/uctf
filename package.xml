@@ -7,6 +7,9 @@
   <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
   <license>Apache License 2.0</license>
 
+  <exec_depend>gazebo_msgs</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
   <export>
     <build_type>cmake</build_type>
   </export>
