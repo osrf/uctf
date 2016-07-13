@@ -6,8 +6,8 @@
 
     <plugin name="ros_imu" filename='libgazebo_ros_imu.so'>
       <bodyName>plane::plane/imu_link</bodyName>
-      <serviceName>plane/imu</serviceName>
-      <topicName>plane/imu</topicName>
+      <serviceName>imu</serviceName>
+      <topicName>imu</topicName>
     </plugin>
   </model>
 </sdf>

@@ -72,13 +72,5 @@
         </visual>
       </link>
     </model>
-
-    <include>
-      <uri>model://iris_with_ros_plugins</uri>
-    </include>
-
-    <include>
-      <uri>model://plane_with_ros_plugins</uri>
-    </include>
   </world>
 </sdf>
