@@ -23,3 +23,5 @@ Unmanned Capture the Flag (U-CTF) project.
 # References
 
 1. [google group uctf-internal](https://groups.google.com/a/osrfoundation.org/forum/#!forum/uctf-internal)
+1. [jsbsim models](https://github.com/hsu/jsbsim/tree/master/aircraft)
+1. [zephyr rc kit](http://www.readymaderc.com/store/index.php?main_page=product_info&products_id=722)
