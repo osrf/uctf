@@ -23,6 +23,39 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}
 )
 
+include(ExternalProject)
+
+set(firmware_path "${CMAKE_CURRENT_SOURCE_DIR}/Firmware")
+ExternalProject_Add(sitl_gazebo
+  UPDATE_COMMAND "${firmware_path}/Tools/check_submodules.sh"
+  SOURCE_DIR "${firmware_path}/Tools/sitl_gazebo"
+  CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}"
+  INSTALL_COMMAND ""
+)
+
+install(FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/sitl_gazebo-prefix/src/sitl_gazebo-build/libLiftDragPlugin.so"
+  "${CMAKE_CURRENT_BINARY_DIR}/sitl_gazebo-prefix/src/sitl_gazebo-build/librotors_gazebo_motor_model.so"
+  "${CMAKE_CURRENT_BINARY_DIR}/sitl_gazebo-prefix/src/sitl_gazebo-build/librotors_gazebo_imu_plugin.so"
+  "${CMAKE_CURRENT_BINARY_DIR}/sitl_gazebo-prefix/src/sitl_gazebo-build/librotors_gazebo_mavlink_interface.so"
+  "${CMAKE_CURRENT_BINARY_DIR}/sitl_gazebo-prefix/src/sitl_gazebo-build/librotors_gazebo_multirotor_base_plugin.so"
+  DESTINATION lib
+)
+
+ExternalProject_Add(firmware
+  UPDATE_COMMAND "${firmware_path}/Tools/check_submodules.sh"
+  SOURCE_DIR "${firmware_path}"
+  CMAKE_ARGS
+    "-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}"
+    "-DCONFIG=posix_sitl_default"
+  INSTALL_COMMAND ""
+)
+
+install(PROGRAMS
+  "${CMAKE_CURRENT_BINARY_DIR}/firmware-prefix/src/firmware-build/src/firmware/posix/mainapp"
+  DESTINATION bin
+)
+
 configure_file(
   cmake/setup.sh.in
   setup.sh
