@@ -12,18 +12,23 @@ from xacro import process_doc
 
 
 def main():
-    parser = argparse.ArgumentParser('Spawn vehicle.')
+    parser = argparse.ArgumentParser(
+        'Spawn vehicle.',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('vehicle_type', choices=['iris', 'plane'])
     parser.add_argument('suffix', default='')
     parser.add_argument('-x', type=float, default=0.0)
     parser.add_argument('-y', type=float, default=0.0)
     parser.add_argument('--color', choices=['blue', 'gold'])
     parser.add_argument('--debug', action='store_true')
+    parser.add_argument('--mavlink', type=int, default=14560)
+    parser.add_argument('--mavlink2', type=int, default=14556)
     args = parser.parse_args()
-    spawn(args.vehicle_type, args.suffix, args.x, args.y, args.color, args.debug)
+    spawn(args.vehicle_type, args.suffix, args.x, args.y, args.color,
+          args.debug, args.mavlink, args.mavlink2)
 
 
-def spawn(vehicle_type, suffix, x, y, color, debug):
+def spawn(vehicle_type, suffix, x, y, color, debug, mavlink, mavlink2):
     srv = ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
 
     model_filename = os.path.join(
@@ -34,7 +39,10 @@ def spawn(vehicle_type, suffix, x, y, color, debug):
         model_xml = h.read()
 
     kwargs = {
-        'mappings': {},
+        'mappings': {
+            'mavlink_udp_port': str(mavlink),
+            'mavlink_udp_port_2': str(mavlink2),
+        },
     }
     if color:
         material_name = 'Gazebo/%s' % color.capitalize()
@@ -69,4 +77,6 @@ def spawn(vehicle_type, suffix, x, y, color, debug):
 def xacro(template_xml, **kwargs):
     doc = parse(template_xml)
     process_doc(doc, **kwargs)
-    return doc.toprettyxml(indent='  ')
+    xml = doc.toprettyxml(indent='  ')
+    xml = xml.replace(' xmlns:xacro="http://ros.org/wiki/xacro"', '', 1)
+    return xml
