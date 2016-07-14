@@ -11,24 +11,60 @@ from xacro import parse
 from xacro import process_doc
 
 
+def mav_sys_id_type(value):
+    value = int(value)
+    if value < 1 or value > 250:
+        raise argparse.ArgumentTypeError('MAV_SYS_ID must be in [1, 250]')
+    return value
+
+
 def main():
     parser = argparse.ArgumentParser(
         'Spawn vehicle.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('vehicle_type', choices=['iris', 'plane'])
-    parser.add_argument('suffix', default='')
-    parser.add_argument('-x', type=float, default=0.0)
-    parser.add_argument('-y', type=float, default=0.0)
+    parser.add_argument('mav_sys_id', type=mav_sys_id_type)
+    parser.add_argument('--vehicle-type', choices=['iris', 'plane'])
+    parser.add_argument('--baseport', type=int)
     parser.add_argument('--color', choices=['blue', 'gold'])
+    parser.add_argument('-x', type=float)
+    parser.add_argument('-y', type=float)
     parser.add_argument('--debug', action='store_true')
-    parser.add_argument('--mavlink', type=int, default=14560)
-    parser.add_argument('--mavlink2', type=int, default=14556)
     args = parser.parse_args()
-    spawn(args.vehicle_type, args.suffix, args.x, args.y, args.color,
-          args.debug, args.mavlink, args.mavlink2)
+
+    # choose some nice defaults based on the id
+    if args.vehicle_type is None:
+        args.vehicle_type = 'iris' if args.mav_sys_id % 2 else 'plane'
+    if args.baseport is None:
+        args.baseport = 14000 + args.mav_sys_id * 4
+    if args.color is None:
+        if args.mav_sys_id < 101:
+            args.color = 'blue'
+        elif args.mav_sys_id < 201:
+            args.color = 'gold'
+    if args.x is None and args.y is None:
+        # arrange in 10 by 10 blocks
+        offset_x = ((args.mav_sys_id - 1) // 10) % 10
+        offset_y = ((args.mav_sys_id - 1) % 10)
+        if args.mav_sys_id > 200:
+            args.x = 1.0 + offset_x
+            args.y = offset_y - 5.0
+        else:
+            args.x = -offset_x
+            args.y = 1.0 + offset_y
+            if args.mav_sys_id <= 100:
+                args.y = -args.y
+    if args.x is None:
+        args.x = 0.0
+    if args.y is None:
+        args.y = 0.0
+
+    spawn(
+        args.mav_sys_id,
+        args.vehicle_type, args.baseport, args.color,
+        args.x, args.y, args.debug)
 
 
-def spawn(vehicle_type, suffix, x, y, color, debug, mavlink, mavlink2):
+def spawn(mav_sys_id, vehicle_type, baseport, color, x, y, debug):
     srv = ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
 
     model_filename = os.path.join(
@@ -40,8 +76,8 @@ def spawn(vehicle_type, suffix, x, y, color, debug, mavlink, mavlink2):
 
     kwargs = {
         'mappings': {
-            'mavlink_udp_port': str(mavlink),
-            'mavlink_udp_port_2': str(mavlink2),
+            'mavlink_udp_port': str(baseport),
+            'mavlink_udp_port_2': str(baseport + 1),
         },
     }
     if color:
@@ -52,7 +88,7 @@ def spawn(vehicle_type, suffix, x, y, color, debug, mavlink, mavlink2):
         print(model_xml)
 
     req = SpawnModelRequest()
-    unique_name = vehicle_type + suffix
+    unique_name = vehicle_type + '_' + str(mav_sys_id)
     req.model_name = unique_name
     req.model_xml = model_xml
     req.robot_namespace = unique_name
