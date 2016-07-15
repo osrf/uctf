@@ -55,6 +55,27 @@ install(PROGRAMS
   "${CMAKE_CURRENT_BINARY_DIR}/firmware-prefix/src/firmware-build/src/firmware/posix/mainapp"
   DESTINATION bin
 )
+install(FILES
+  "Firmware/ROMFS/px4fmu_common/mixers/quad_w.main.mix"
+  "Firmware/ROMFS/sitl/mixers/plane_sitl.main.mix"
+  DESTINATION share/${PROJECT_NAME}/mixers
+)
+install(FILES
+  "Firmware/posix-configs/SITL/init/rcS_gazebo_iris"
+  "Firmware/posix-configs/SITL/init/rcS_gazebo_plane"
+  DESTINATION share/${PROJECT_NAME}/SITLinit
+)
+
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/dataman" "")
+install(FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/dataman"
+  DESTINATION share/${PROJECT_NAME}/rootfs/fs/microsd
+)
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/parameters" "")
+install(FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/parameters"
+  DESTINATION share/${PROJECT_NAME}/rootfs/eeprom
+)
 
 configure_file(
   cmake/setup.sh.in
