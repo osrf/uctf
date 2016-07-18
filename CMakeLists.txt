@@ -55,6 +55,10 @@ install(PROGRAMS
   "${CMAKE_CURRENT_BINARY_DIR}/firmware-prefix/src/firmware-build/src/firmware/posix/mainapp"
   DESTINATION bin
 )
+install(PROGRAMS
+  "script/mainapp.sh"
+  DESTINATION share/${PROJECT_NAME}
+)
 install(FILES
   "Firmware/ROMFS/px4fmu_common/mixers/quad_w.main.mix"
   "Firmware/ROMFS/sitl/mixers/plane_sitl.main.mix"
