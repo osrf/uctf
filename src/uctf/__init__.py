@@ -1,11 +1,16 @@
 from __future__ import print_function
 
 import argparse
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from io import StringIO
 import os
 import re
 import sys
 import tempfile
 
+from em import Interpreter
 from gazebo_msgs.srv import SpawnModel
 from gazebo_msgs.srv import SpawnModelRequest
 from rospy import ServiceProxy
@@ -76,7 +81,13 @@ def main():
         args.vehicle_type, args.baseport, args.color,
         args.x, args.y, args.debug)
 
-    spawn_controller(config_path)
+    launch_file = generate_launch_file(
+        args.mav_sys_id,
+        args.vehicle_type, args.baseport,
+        config_path,
+        args.debug)
+
+    spawn_launch_file(launch_file)
 
 
 def generate_controller_config(
@@ -211,9 +222,63 @@ def xacro(template_xml, **kwargs):
     return xml
 
 
-def spawn_controller(config_path):
+def generate_launch_file(
+    mav_sys_id, vehicle_type, baseport, config_path, debug
+):
     pkg_share_path = os.path.normpath(os.path.join(
         os.path.dirname(__file__), '..', '..', '..', '..',
         'share', 'uctf'))
-    print('cd %s' % pkg_share_path)
-    print('mainapp %s' % config_path)
+    if debug:
+        print('For manual invocation run:')
+        print('  cd %s && mainapp %s' % (pkg_share_path, config_path))
+        print(
+            '  roslaunch px4 mavros.launch fcu_url:=udp://:%d@localhost:%d '
+            'tgt_system:=%d ns:=/%s_%d' % (
+                baseport + 3, baseport + 2, mav_sys_id,
+                vehicle_type, mav_sys_id))
+
+    vehicles = []
+    vehicles.append({
+        'controller_config_path': config_path,
+        'ros_interface_port3': baseport + 2,
+        'ros_interface_port4': baseport + 3,
+        'vehicle_type': vehicle_type,
+        'mav_sys_id': mav_sys_id,
+    })
+
+    data = {
+        'pkg_share_path': pkg_share_path,
+        'vehicles': vehicles,
+    }
+
+    launch_xml = empy('controllers_and_ros_interfaces.launch.em', data)
+    if debug:
+        print(launch_xml)
+
+    fd, path = tempfile.mkstemp(suffix='.launch')
+    with os.fdopen(fd, 'w') as h:
+        h.write(launch_xml)
+    return path
+
+
+def empy(template_name, data, options=None):
+    template_path = os.path.join(
+        os.path.dirname(__file__), 'templates', template_name)
+    output = StringIO()
+    try:
+        interpreter = Interpreter(output=output, options=options)
+        with open(template_path, 'r') as h:
+            content = h.read()
+        interpreter.string(content, template_path, locals=data)
+        value = output.getvalue()
+        return value
+    except Exception as e:
+        print("%s processing template '%s'" %
+              (e.__class__.__name__, template_name), file=sys.stderr)
+        raise
+    finally:
+        interpreter.shutdown()
+
+
+def spawn_launch_file(launch_file):
+    print('roslaunch %s' % launch_file)
