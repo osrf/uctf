@@ -1,0 +1,108 @@
+import * from "grid.material"
+
+material Uctf/TeamAreaGrass
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.3 0.3 0.3 1.000000
+
+      texture_unit
+      {
+        scale .2 .02
+        texture grass.jpg
+        filtering anisotropic
+        max_anisotropy 16
+      }
+    }
+  }
+}
+
+
+material Uctf/PenaltyAreaGrass
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.3 0.3 0.3 1.000000
+
+      texture_unit
+      {
+        scale .02 .2
+        texture grass.jpg
+        filtering anisotropic
+        max_anisotropy 16
+      }
+    }
+  }
+}
+
+material Uctf/LightGrayTransparent
+{
+  technique
+  {
+    pass
+    {
+      scene_blend alpha_blend
+      depth_write off
+
+      ambient 0.9 0.9 0.9 0.1
+      diffuse 0.9 0.9 0.9 0.1
+
+      texture_unit
+      {
+        colour_op_ex source1 src_current src_current 1 0 0
+        alpha_op_ex source1 src_manual src_current 1.0
+      }
+    }
+  }
+}
+
+material Uctf/BlueTransparent
+{
+  technique
+  {
+    pass
+    {
+      scene_blend alpha_blend
+      depth_write off
+
+      ambient 0.0 0.0 1.0 0.2
+      diffuse 0.0 0.0 1.0 0.2
+
+      texture_unit
+      {
+        colour_op_ex source1 src_current src_current 1 0 0
+        alpha_op_ex source1 src_manual src_current 1.0
+      }
+    }
+  }
+}
+
+material Uctf/GoldTransparent
+{
+  technique
+  {
+    pass
+    {
+      scene_blend alpha_blend
+      depth_write off
+
+      ambient 0.400000 0.248690 0.020759 0.8
+      diffuse 0.800000 0.648690 0.120759 0.8
+      specular 0.400000 0.400000 0.400000 1.000000 12.500000
+
+      texture_unit
+      {
+        colour_op_ex source1 src_current src_current 1 0 0
+        alpha_op_ex source1 src_manual src_current 1.0
+      }
+    }
+  }
+}

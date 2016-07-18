@@ -19,7 +19,7 @@ install(DIRECTORY
   DESTINATION lib/python/site-packages
 )
 install(DIRECTORY
-  "launch" "models" "worlds"
+  "launch" "media" "models" "worlds"
   DESTINATION share/${PROJECT_NAME}
 )
 

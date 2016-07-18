@@ -1,0 +1,187 @@
+<?xml version="1.0" ?>
+<?xml-model href="http://sdformat.org/schemas/root.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<sdf version="1.5">
+  <world name="default">
+
+    <physics name="default_physics" default="0" type="ode">
+      <gravity>0 0 -9.8066</gravity>
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>10</iters>
+          <sor>1.3</sor>
+          <use_dynamic_moi_rescaling>0</use_dynamic_moi_rescaling>
+        </solver>
+        <constraints>
+          <cfm>0</cfm>
+          <erp>0.2</erp>
+          <contact_max_correcting_vel>100</contact_max_correcting_vel>
+          <contact_surface_layer>0.001</contact_surface_layer>
+        </constraints>
+      </ode>
+      <max_step_size>0.002</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>500</real_time_update_rate>
+      <magnetic_field>6.0e-06 2.3e-05 -4.2e-05</magnetic_field>
+    </physics>
+
+    <scene>
+      <shadows>false</shadows>
+      <sky>
+        <clouds/>
+      </sky>
+    </scene>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>300 250 600 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>0 0 -1</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <pose>300 275 50 0 0 0</pose>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>600 550</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="grass">
+          <pose>300 250 50 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>500 500</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grass</name>
+            </script>
+          </material>
+        </visual>
+        <visual name="game_cube">
+          <pose>300 250 300 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <box>
+              <size>500 500 500</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/uctf.material</uri>
+              <name>Uctf/LightGrayTransparent</name>
+            </script>
+          </material>
+        </visual>
+        <visual name="blue_teamarea">
+          <pose>25 250 50 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>50 500</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/uctf.material</uri>
+              <name>Uctf/TeamAreaGrass</name>
+            </script>
+          </material>
+        </visual>
+        <visual name="blue_teamarea_background">
+          <pose>0.5 250 75 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <box>
+              <size>1 500 50</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/uctf.material</uri>
+              <name>Uctf/BlueTransparent</name>
+            </script>
+          </material>
+        </visual>
+        <visual name="gold_teamarea">
+          <pose>575 250 50 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>50 500</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/uctf.material</uri>
+              <name>Uctf/TeamAreaGrass</name>
+            </script>
+          </material>
+        </visual>
+        <visual name="gold_teamarea_background">
+          <pose>599.5 250 75 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <box>
+              <size>1 500 50</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/uctf.material</uri>
+              <name>Uctf/GoldTransparent</name>
+            </script>
+          </material>
+        </visual>
+        <visual name="penalty_area">
+          <pose>300 525 50 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>500 50</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/uctf.material</uri>
+              <name>Uctf/PenaltyAreaGrass</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <gui>
+      <camera name="camera">
+        <pose>300 -700 450 0 0.2 1.5708</pose>
+      </camera>
+    </gui>
+  </world>
+</sdf>
