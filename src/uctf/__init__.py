@@ -5,6 +5,7 @@ try:
     from cStringIO import StringIO
 except ImportError:
     from io import StringIO
+import math
 import os
 import re
 import sys
@@ -18,6 +19,28 @@ from xacro import parse
 from xacro import process_doc
 
 
+VEHICLE_BASE_PORT = 14000
+GROUND_CONTROL_PORT_BLUE = 14000
+GROUND_CONTROL_PORT_GOLD = 14001
+
+
+def get_ground_control_port(color):
+    return GROUND_CONTROL_PORT_BLUE \
+        if color == 'blue' else GROUND_CONTROL_PORT_GOLD
+
+
+def get_vehicle_base_port(mav_sys_id):
+    return VEHICLE_BASE_PORT + mav_sys_id * 4
+
+
+def get_vehicle_pose(mav_sys_id, vehicle_type, color):
+    inteam_id = mav_sys_id % 100
+    x = 45 if color == 'blue' else 555
+    y = 500 - 50 - inteam_id * (2 if vehicle_type == 'iris' else 5)
+    yaw = 0 if color == 'blue' else 3.1416
+    return (x, y, yaw)
+
+
 def mav_sys_id_type(value):
     value = int(value)
     if value < 1 or value > 250:
@@ -25,7 +48,7 @@ def mav_sys_id_type(value):
     return value
 
 
-def main():
+def spawn_one():
     parser = argparse.ArgumentParser(
         'Spawn vehicle.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -72,14 +95,14 @@ def main():
     if args.y is None:
         args.y = 0.0
 
-    config_path = generate_controller_config(
+    config_path = generate_init_script(
         args.mav_sys_id, args.vehicle_type, args.baseport, args.groundport,
         args.debug)
 
     spawn_model(
         args.mav_sys_id,
         args.vehicle_type, args.baseport, args.color,
-        args.x, args.y, args.debug)
+        (args.x, args.y, 0), args.debug)
 
     launch_file = generate_launch_file(
         args.mav_sys_id,
@@ -90,8 +113,8 @@ def main():
     spawn_launch_file(launch_file)
 
 
-def generate_controller_config(
-    mav_sys_id, vehicle_type, baseport, ground_port, debug
+def generate_init_script(
+    mav_sys_id, vehicle_type, baseport, ground_port, debug=False
 ):
     # read vehicle specific init file
     init_filename = os.path.join(
@@ -168,7 +191,8 @@ def generate_controller_config(
     return path
 
 
-def spawn_model(mav_sys_id, vehicle_type, baseport, color, x, y, debug):
+def spawn_model(mav_sys_id, vehicle_type, baseport, color, pose, debug=False):
+    x, y, yaw = pose
     srv = ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
 
     model_filename = os.path.join(
@@ -198,16 +222,16 @@ def spawn_model(mav_sys_id, vehicle_type, baseport, color, x, y, debug):
     req.robot_namespace = unique_name
     req.initial_pose.position.x = x
     req.initial_pose.position.y = y
-    req.initial_pose.position.z = 0.0
+    req.initial_pose.position.z = 50.0
     req.initial_pose.orientation.x = 0.0
     req.initial_pose.orientation.y = 0.0
-    req.initial_pose.orientation.z = 0.0
-    req.initial_pose.orientation.w = 1.0
+    req.initial_pose.orientation.z = math.sin(yaw / 2.0)
+    req.initial_pose.orientation.w = math.cos(yaw / 2.0)
     req.reference_frame = ''
 
     resp = srv(req)
     if resp.success:
-        print(resp.status_message)
+        print(resp.status_message, '(%s)' % unique_name)
         return 0
     else:
         print(resp.status_message, file=sys.stderr)
@@ -225,39 +249,44 @@ def xacro(template_xml, **kwargs):
 def generate_launch_file(
     mav_sys_id, vehicle_type, baseport, config_path, debug
 ):
+    launch_snippet = get_launch_snippet(mav_sys_id, vehicle_type, baseport, config_path, debug)
+    if debug:
+        print(launch_snippet)
+    return write_launch_file(launch_snippet)
+
+
+def get_launch_snippet(
+    mav_sys_id, vehicle_type, vehicle_base_port, init_script_path, debug=False
+):
     pkg_share_path = os.path.normpath(os.path.join(
         os.path.dirname(__file__), '..', '..', '..', '..',
         'share', 'uctf'))
     if debug:
         print('For manual invocation run:')
-        print('  cd %s && mainapp %s' % (pkg_share_path, config_path))
+        print('  cd %s && mainapp %s' % (pkg_share_path, init_script_path))
         print(
             '  roslaunch px4 mavros.launch fcu_url:=udp://:%d@localhost:%d '
             'tgt_system:=%d ns:=/%s_%d' % (
-                baseport + 3, baseport + 2, mav_sys_id,
-                vehicle_type, mav_sys_id))
-
-    vehicles = []
-    vehicles.append({
-        'controller_config_path': config_path,
-        'ros_interface_port3': baseport + 2,
-        'ros_interface_port4': baseport + 3,
-        'vehicle_type': vehicle_type,
-        'mav_sys_id': mav_sys_id,
-    })
+                vehicle_base_port + 3, vehicle_base_port + 2,
+                mav_sys_id, vehicle_type, mav_sys_id))
 
     data = {
+        'controller_config_path': init_script_path,
+        'ros_interface_port3': vehicle_base_port + 2,
+        'ros_interface_port4': vehicle_base_port + 3,
+        'vehicle_type': vehicle_type,
+        'mav_sys_id': mav_sys_id,
         'pkg_share_path': pkg_share_path,
-        'vehicles': vehicles,
     }
+    return empy('px4_and_mavros.launch.em', data)
 
-    launch_xml = empy('controllers_and_ros_interfaces.launch.em', data)
-    if debug:
-        print(launch_xml)
 
+def write_launch_file(launch_snippet):
     fd, path = tempfile.mkstemp(suffix='.launch')
     with os.fdopen(fd, 'w') as h:
-        h.write(launch_xml)
+        h.write('<launch>\n')
+        h.write(launch_snippet)
+        h.write('</launch>\n')
     return path
 
 
