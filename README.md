@@ -20,6 +20,22 @@ Unmanned Capture the Flag (U-CTF) project.
 1. Gazebo rules and scoring plugin
   1. Save this for last. The arbiter may implement this for us.
 
+# Build
+
+* Only supporting Ubuntu Xenial at the moment
+* Source Gazebo 7 and ROS Kinetic environments
+* Clone this repo
+* cmake, make, install
+
+# Run
+
+* Additionally source <install-prefix>/share/uctf/setup.sh
+* Run `spawn_blue` or `spawn_gold` to spawn the 50 vehicles in Gazebo
+* Run the generated launch file (see output of the spawn script) to run the `PX4` and the `mavros` bridge for each vehicle
+* Optionally use [QGroundControl](http://qgroundcontrol.org/) to connect to the vehicles in each team and control them (for the UDP ports please see https://github.com/osrf/uctf/blob/master/src/uctf/__init__.py)
+
+You can also spawn a single vehicle using `spawn_one`.
+
 # References
 
 1. [google group uctf-internal](https://groups.google.com/a/osrfoundation.org/forum/#!forum/uctf-internal)
