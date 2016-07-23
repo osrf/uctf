@@ -1,3 +1,5 @@
+import argparse
+
 from uctf import generate_init_script
 from uctf import get_ground_control_port
 from uctf import get_launch_snippet
@@ -7,24 +9,38 @@ from uctf import VEHICLE_BASE_PORT
 from uctf import write_launch_file
 
 
+def vehicle_id_type(value):
+    value = int(value)
+    if value < 1 or value > 50:
+        raise argparse.ArgumentTypeError('Vehicle id must be in [1, 50]')
+    return value
+
+
 def spawn_team(color):
+    parser = argparse.ArgumentParser('Spawn vehicle for one team.')
+    parser.add_argument(
+        'vehicle_id', nargs='*', metavar='VEHICLE_ID', type=vehicle_id_type,
+        default=range(1, 51),
+        help='The vehicle ids to spawn (default: 1-50)')
+    args = parser.parse_args()
+
     # ensure valid team color
     assert color in ['blue', 'gold']
 
     launch_snippet = ''
 
     # spawn 50 vehicles
-    for i in range(50):
+    for i in args.vehicle_id:
         # valid MAV_SYS_IDs 1 to 250
         # BLUE uses 1 to 50
         # GOLD uses 101 to 150
-        mav_sys_id = 1 + i
+        mav_sys_id = i
         if color == 'gold':
             mav_sys_id += 100
 
         # the first 25 vehicles per team are iris
         # the second 25 vehicles per team are plane
-        vehicle_type = 'iris' if i < 25 else 'plane'
+        vehicle_type = 'iris' if i <= 25 else 'plane'
 
         # each vehicle uses 4 consecutive ports
         # the first one is VEHICLE_BASE_PORT + MAV_SYS_IDs
