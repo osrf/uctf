@@ -11,6 +11,8 @@ install(FILES
   DESTINATION share/${PROJECT_NAME}
 )
 install(PROGRAMS
+  "script/control_team_blue"
+  "script/control_team_gold"
   "script/spawn_blue"
   "script/spawn_gold"
   "script/spawn_one"
