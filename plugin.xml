@@ -1,0 +1,17 @@
+<library path="src">
+  <class name="U-CTF View" type="uctf.view.View" base_class_type="rqt_gui_py::Plugin">
+    <description>
+      A plugin visualizing the vehicle positions.
+    </description>
+    <qtgui>
+      <group>
+        <label>Visualization</label>
+        <icon type="theme">folder</icon>
+        <statustip>Plugins related to visualization.</statustip>
+      </group>
+      <label>U-CTF View</label>
+      <icon type="theme">zoom-in</icon>
+      <statustip>A plugin for visualizing the vehicle positions.</statustip>
+    </qtgui>
+  </class>
+</library>
