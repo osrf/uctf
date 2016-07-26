@@ -85,6 +85,11 @@ install(FILES
   DESTINATION share/${PROJECT_NAME}/rootfs/eeprom
 )
 
+install(FILES
+  "plugin.xml"
+  DESTINATION share/${PROJECT_NAME}
+)
+
 configure_file(
   cmake/setup.sh.in
   setup.sh
