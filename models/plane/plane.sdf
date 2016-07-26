@@ -419,11 +419,5 @@
       </elevator_joint>
     </plugin>
     <static>0</static>
-
-    <plugin name="ros_imu" filename='libgazebo_ros_imu.so'>
-      <bodyName>plane/imu_link</bodyName>
-      <serviceName>imu</serviceName>
-      <topicName>imu</topicName>
-    </plugin>
   </model>
 </sdf>
