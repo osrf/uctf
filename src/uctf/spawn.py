@@ -1,4 +1,5 @@
 import argparse
+import subprocess
 
 from uctf import generate_init_script
 from uctf import get_ground_control_port
@@ -22,6 +23,9 @@ def spawn_team(color):
         'vehicle_id', nargs='*', metavar='VEHICLE_ID', type=vehicle_id_type,
         default=range(1, 51),
         help='The vehicle ids to spawn (default: 1-50)')
+    parser.add_argument(
+        '--launch', action='store_true',
+        help='Run generate launch file')
     args = parser.parse_args()
 
     # ensure valid team color
@@ -62,4 +66,7 @@ def spawn_team(color):
             mav_sys_id, vehicle_type, vehicle_base_port, init_script_path)
 
     launch_path = write_launch_file(launch_snippet)
-    print('roslaunch %s' % launch_path)
+    cmd = ['roslaunch', launch_path]
+    print(' '.join(cmd))
+    if args.launch:
+        return subprocess.call(cmd)
