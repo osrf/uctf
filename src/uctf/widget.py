@@ -3,13 +3,10 @@ from python_qt_binding.QtGui import QBrush, QColor, QPen, QPolygonF
 from python_qt_binding.QtWidgets import QGraphicsEllipseItem, \
     QGraphicsPolygonItem, QGraphicsRectItem, QGraphicsScene, QGraphicsView
 
-CUBE_LENGTH = 500
+from uctf import CUBE_LENGTH
+from uctf import global_to_cube
+
 SUPPORT_AREA_DEPTH = 50
-# default location of spawned vehicles
-MIN_LATITUDE = 47.3981929
-MAX_LATITUDE = 47.4027024
-MIN_LONGITUDE = 8.5389321
-MAX_LONGITUDE = 8.5455939
 
 
 class Widget(QGraphicsView):
@@ -65,7 +62,7 @@ class Widget(QGraphicsView):
             self._vehicles[namespace] = item
         else:
             item = self._vehicles[namespace]
-        cube_pos = self._global_to_cube(msg.latitude, msg.longitude)
+        cube_pos = global_to_cube(msg.latitude, msg.longitude)
         item.setPos(*cube_pos)
 
         # set visible area
@@ -98,10 +95,3 @@ class Widget(QGraphicsView):
         item.setPen(self._pens[color])
         item.setToolTip(namespace)
         return item
-
-    def _global_to_cube(self, latitude, longitude):
-        up_fraction = (latitude - MIN_LATITUDE) / (MAX_LATITUDE - MIN_LATITUDE)
-        right_fraction = (longitude - MIN_LONGITUDE) / \
-            (MAX_LONGITUDE - MIN_LONGITUDE)
-        left_fraction = 1.0 - right_fraction
-        return left_fraction * CUBE_LENGTH, up_fraction * CUBE_LENGTH
