@@ -19,6 +19,13 @@ from xacro import parse
 from xacro import process_doc
 
 
+CUBE_LENGTH = 500
+# default location of spawned vehicles
+MIN_LATITUDE = 47.3981929
+MAX_LATITUDE = 47.4027024
+MIN_LONGITUDE = 8.5389321
+MAX_LONGITUDE = 8.5455939
+
 VEHICLE_BASE_PORT = 14000
 GROUND_CONTROL_PORT_BLUE = 14000
 GROUND_CONTROL_PORT_GOLD = 14001
@@ -311,3 +318,20 @@ def empy(template_name, data, options=None):
 
 def spawn_launch_file(launch_file):
     print('roslaunch %s' % launch_file)
+
+
+def global_to_cube(latitude, longitude):
+    up_fraction = (latitude - MIN_LATITUDE) / (MAX_LATITUDE - MIN_LATITUDE)
+    right_fraction = (longitude - MIN_LONGITUDE) / \
+        (MAX_LONGITUDE - MIN_LONGITUDE)
+    left_fraction = 1.0 - right_fraction
+    return left_fraction * CUBE_LENGTH, up_fraction * CUBE_LENGTH
+
+
+def cube_to_global(x, y):
+    left_fraction = x / CUBE_LENGTH
+    up_fraction = y / CUBE_LENGTH
+    right_fraction = 1.0 - left_fraction
+    latitude = up_fraction * (MAX_LATITUDE - MIN_LATITUDE) + MIN_LATITUDE
+    longitude = right_fraction * (MAX_LONGITUDE - MIN_LONGITUDE) + MIN_LONGITUDE
+    return latitude, longitude
