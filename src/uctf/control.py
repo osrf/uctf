@@ -57,8 +57,7 @@ def get_namespaces(color):
 
 
 STATE_IDLE = 0
-STATE_FLYING = 1
-STATE_FLYING_WP = 11
+STATE_MISSION = 1
 STATE_LANDING = 2
 STATE_DONE = 3
 STATE_ERROR = 4
@@ -114,23 +113,14 @@ class Vehicle(object):
                 self._set_state(STATE_ERROR)
                 return
 
-        # take off
+        # start mission
         if msg.armed and self.start_position and self.state == STATE_IDLE:
-            tookoff = self._takeoff()
-            if not tookoff:
+            started = self._start_mission()
+            if not started:
                 self._set_state(STATE_ERROR)
             return
 
-        if self.state == STATE_FLYING:
-            if time.time() - self.state_changed < 15.0:
-                # just do nothing for now
-                pass
-            else:
-                set_wp = self._set_waypoints()
-                if not set_wp:
-                    self._set_state(STATE_ERROR)
-
-        if self.state == STATE_FLYING_WP:
+        if self.state == STATE_MISSION:
             if time.time() - self.state_changed < 120.0:
                 # just do nothing for now
                 pass
@@ -168,51 +158,34 @@ class Vehicle(object):
         print(self.namespace, 'armed')
         return True
 
-    def _takeoff(self):
-        print(self.namespace, 'takeoff')
-        req = CommandTOLRequest()
-        req.min_pitch = 0.3
-        req.yaw = 0.0 if self.color == 'blue' else -math.pi
-        req.latitude = self.start_position.latitude
-        req.longitude = self.start_position.longitude
-        req.altitude = self.start_position.altitude + ALTITUDE_ABOVE_GROUND / 2.0
-
-        service_name = '%s/mavros/cmd/takeoff' % self.namespace
-        rospy.wait_for_service(service_name)
-        try:
-            service = rospy.ServiceProxy(service_name, CommandTOL)
-            resp = service.call(req)
-        except rospy.ServiceException as e:
-            print(self.namespace, 'service call to takeoff failed:', str(e),
-                  file=sys.stderr)
-            return False
-        if not resp.success:
-            print(self.namespace, 'failed to takeoff: %d' % resp.result, file=sys.stderr)
-            return False
-        print(self.namespace, 'taking off')
-        self._set_state(STATE_FLYING)
-        return True
-
-    def _set_waypoints(self):
+    def _start_mission(self):
         print(self.namespace, 'waypoints')
         req = WaypointPushRequest()
         wp1 = Waypoint()
         wp1.frame = Waypoint.FRAME_GLOBAL
-        wp1.command = CommandCode.NAV_WAYPOINT
+        wp1.command = CommandCode.NAV_TAKEOFF
         wp1.is_current = True
         wp1.autocontinue = True
-        wp1.param1 = 0.0
-        wp1.param2 = 5.0  # acceptance radius
+        wp1.param1 = 0.3  # minimum / desired pitch
+        wp1.param2 = 0.0
         wp1.param3 = 0.0
-        wp1.param4 = 0.0
-        wp1.x_lat, wp1.y_long = cube_to_global(400.0, 250.0)
+        wp1.param4 = 0.0 if self.color == 'blue' else -math.pi  # yaw angle
+        wp1.x_lat = self.start_position.latitude
+        wp1.y_long = self.start_position.longitude
         wp1.z_alt = self.start_position.altitude + ALTITUDE_ABOVE_GROUND
 
         wp2 = copy.deepcopy(wp1)
+        wp2.command = CommandCode.NAV_WAYPOINT
         wp2.is_current = False
-        wp2.autocontinue = False
-        wp2.x_lat, wp2.y_long = cube_to_global(100.0, 250.0)
-        req.waypoints = [wp1, wp2]
+        wp2.param1 = 0.0
+        wp2.param2 = 5.0  # acceptance radius
+        wp2.param4 = 0.0
+        wp2.x_lat, wp2.y_long = cube_to_global(400.0, 250.0)
+
+        wp3 = copy.deepcopy(wp2)
+        wp3.autocontinue = False
+        wp3.x_lat, wp3.y_long = cube_to_global(100.0, 250.0)
+        req.waypoints = [wp1, wp2, wp3]
 
         service_name = '%s/mavros/mission/push' % self.namespace
         rospy.wait_for_service(service_name)
@@ -230,12 +203,11 @@ class Vehicle(object):
 
         print(self.namespace, 'start mission')
         req = SetModeRequest()
-        req.base_mode = 0
-        # int('0x0404019d', 0)
+        req.base_mode = 0  # use custom mode
         # first 0x04: mode auto
         # second 0x04: mission
-        # 0x019d: ??? (sniffed from QGroundControl)
-        req.custom_mode = '67371421'
+        # third and fourth 0x0000: empty
+        req.custom_mode = str(int('0x04040000', 0))
 
         service_name = '%s/mavros/set_mode' % self.namespace
         rospy.wait_for_service(service_name)
@@ -250,7 +222,7 @@ class Vehicle(object):
             print(self.namespace, 'failed to set mode', file=sys.stderr)
             return False
         print(self.namespace, 'started mission')
-        self._set_state(STATE_FLYING_WP)
+        self._set_state(STATE_MISSION)
         return True
 
     def _return_home(self):
