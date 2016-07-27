@@ -36,6 +36,26 @@ Unmanned Capture the Flag (U-CTF) project.
 
 You can also spawn a single vehicle using `spawn_one`.
 
+# Coordinate systems
+
+Gazebo:
+
+* The `x` direction points from the blue team area towards the gold team area.
+* The `y` direction points from the side without any area towards the penalty area.
+* Therefore the `z` direction is upwards.
+* The coordinate `0, 0, 50` is where the blue team area, the "no" area, and the game cube meet.
+
+Latitude / Longitude:
+
+* The `latitude` direction points from the blue team area towards the gold team area.
+* The `longitude` direction points from the penalty area towards the side without any area.
+
+Scene in `rqt` (after rotating the view by `pi`):
+
+* The `x` direction points from the penalty area towards the side without any area.
+* The `y` direction points from the blue team area towards the gold team area.
+* The coordinate `0, 0` is where the blue team area, the penalty area, and the game cube meet.
+
 # References
 
 1. [google group uctf-internal](https://groups.google.com/a/osrfoundation.org/forum/#!forum/uctf-internal)

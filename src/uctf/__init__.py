@@ -22,9 +22,9 @@ from xacro import process_doc
 
 CUBE_LENGTH = 500
 # default location of spawned vehicles
-MIN_LATITUDE = 47.3981929
-MAX_LATITUDE = 47.4027024
-MIN_LONGITUDE = 8.5389321
+MIN_LATITUDE = 47.397742
+MAX_LATITUDE = 47.402251
+MIN_LONGITUDE = 8.5389317
 MAX_LONGITUDE = 8.5455939
 
 VEHICLE_BASE_PORT = 14000
@@ -43,8 +43,10 @@ def get_vehicle_base_port(mav_sys_id):
 
 def get_vehicle_pose(mav_sys_id, vehicle_type, color):
     inteam_id = mav_sys_id % 100
-    x = 45 if color == 'blue' else 555
-    y = 500 - 50 - inteam_id * (2 if vehicle_type == 'iris' else 5)
+    DISTANCE_FROM_CUBE = 5.0
+    x = -DISTANCE_FROM_CUBE if color == 'blue' else \
+        (CUBE_LENGTH + DISTANCE_FROM_CUBE)
+    y = CUBE_LENGTH - 50 - inteam_id * (2 if vehicle_type == 'iris' else 5)
     yaw = 0 if color == 'blue' else 3.1416
     return (x, y, yaw)
 
