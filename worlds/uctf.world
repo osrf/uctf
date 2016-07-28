@@ -34,7 +34,7 @@
 
     <light type="directional" name="sun">
       <cast_shadows>true</cast_shadows>
-      <pose>300 250 600 0 0 0</pose>
+      <pose>250 250 600 0 0 0</pose>
       <diffuse>0.8 0.8 0.8 1</diffuse>
       <specular>0.2 0.2 0.2 1</specular>
       <attenuation>
@@ -50,7 +50,7 @@
       <static>true</static>
       <link name="link">
         <collision name="collision">
-          <pose>300 275 50 0 0 0</pose>
+          <pose>250 275 50 0 0 0</pose>
           <geometry>
             <plane>
               <normal>0 0 1</normal>
@@ -67,7 +67,7 @@
           </surface>
         </collision>
         <visual name="grass">
-          <pose>300 250 50 0 0 0</pose>
+          <pose>250 250 50 0 0 0</pose>
           <cast_shadows>false</cast_shadows>
           <geometry>
             <plane>
@@ -83,7 +83,7 @@
           </material>
         </visual>
         <visual name="game_cube">
-          <pose>300 250 300 0 0 0</pose>
+          <pose>250 250 300 0 0 0</pose>
           <cast_shadows>false</cast_shadows>
           <geometry>
             <box>
@@ -98,7 +98,7 @@
           </material>
         </visual>
         <visual name="blue_teamarea">
-          <pose>25 250 50 0 0 0</pose>
+          <pose>-25 250 50 0 0 0</pose>
           <cast_shadows>false</cast_shadows>
           <geometry>
             <plane>
@@ -114,7 +114,7 @@
           </material>
         </visual>
         <visual name="blue_teamarea_background">
-          <pose>0.5 250 75 0 0 0</pose>
+          <pose>-49.5 250 75 0 0 0</pose>
           <cast_shadows>false</cast_shadows>
           <geometry>
             <box>
@@ -129,7 +129,7 @@
           </material>
         </visual>
         <visual name="gold_teamarea">
-          <pose>575 250 50 0 0 0</pose>
+          <pose>525 250 50 0 0 0</pose>
           <cast_shadows>false</cast_shadows>
           <geometry>
             <plane>
@@ -145,7 +145,7 @@
           </material>
         </visual>
         <visual name="gold_teamarea_background">
-          <pose>599.5 250 75 0 0 0</pose>
+          <pose>549.5 250 75 0 0 0</pose>
           <cast_shadows>false</cast_shadows>
           <geometry>
             <box>
@@ -160,7 +160,7 @@
           </material>
         </visual>
         <visual name="penalty_area">
-          <pose>300 525 50 0 0 0</pose>
+          <pose>250 525 50 0 0 0</pose>
           <cast_shadows>false</cast_shadows>
           <geometry>
             <plane>
@@ -180,7 +180,7 @@
 
     <gui>
       <camera name="camera">
-        <pose>300 -700 450 0 0.2 1.5708</pose>
+        <pose>250 -700 450 0 0.2 1.5708</pose>
       </camera>
     </gui>
   </world>
