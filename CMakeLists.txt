@@ -13,6 +13,7 @@ install(FILES
 install(PROGRAMS
   "script/control_team_blue"
   "script/control_team_gold"
+  "script/rqt_uctf"
   "script/spawn_blue"
   "script/spawn_gold"
   "script/spawn_one"
