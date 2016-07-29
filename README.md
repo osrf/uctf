@@ -1,63 +1,18 @@
 # uctf
+
 Unmanned Capture the Flag (U-CTF) project.
 
-# Kick-off goals
+Please see the [documentation](doc/readme.md) in the `doc` subfolder for more information.
 
-1. Vehicles and environments
-  1. Fixed wing model with aerodynamics
-  1. Quad-copter model with aerodynamics
-  1. Flat grass textured ground plane
-    1. Pick a reasonable size that we can justify.
-1. ROS vehicle control interface
-  1. A plugin with public API to control the vehicles.
-    1. Look at [swarm](https://bitbucket.org/osrf/swarm)
-  1. Write an example controller that uses the plugin
-    1. Demonstrate take off, simple flight pattern, and landing.
-1. Gazebo-arbiter interface
-  1. Get in contact with Tim Chung for access to their arbiter code.
-1. Run single team in cloudsim
-  1. Setup a docker container to run a single team of 50 vehicles in cloudsim.
-1. Gazebo rules and scoring plugin
-  1. Save this for last. The arbiter may implement this for us.
+## Contributions to markdown
 
-# Build
+After modifying any markdown files please run the linter and address any warnings:
 
-* Only supporting Ubuntu Xenial at the moment
-* Source Gazebo 7 and ROS Kinetic environments
-* Clone this repo
-* cmake, make, install
+```sh
+npm install remark-cli remark-lint
+./node_modules/remark-cli/cli.js README.md doc/
+```
 
-# Run
+## References
 
-* Additionally source <install-prefix>/share/uctf/setup.sh
-* Run `spawn_blue` or `spawn_gold` to spawn the 50 vehicles in Gazebo
-* Run the generated launch file (see output of the spawn script) to run the `PX4` and the `mavros` bridge for each vehicle
-* Optionally use [QGroundControl](http://qgroundcontrol.org/) to connect to the vehicles in each team and control them (for the UDP ports please see https://github.com/osrf/uctf/blob/master/src/uctf/__init__.py)
-
-You can also spawn a single vehicle using `spawn_one`.
-
-# Coordinate systems
-
-Gazebo:
-
-* The `x` direction points from the blue team area towards the gold team area.
-* The `y` direction points from the side without any area towards the penalty area.
-* Therefore the `z` direction is upwards.
-* The coordinate `0, 0, 50` is where the blue team area, the "no" area, and the game cube meet.
-
-Latitude / Longitude:
-
-* The `latitude` direction points from the blue team area towards the gold team area.
-* The `longitude` direction points from the penalty area towards the side without any area.
-
-Scene in `rqt` (after rotating the view by `pi`):
-
-* The `x` direction points from the penalty area towards the side without any area.
-* The `y` direction points from the blue team area towards the gold team area.
-* The coordinate `0, 0` is where the blue team area, the penalty area, and the game cube meet.
-
-# References
-
-1. [google group uctf-internal](https://groups.google.com/a/osrfoundation.org/forum/#!forum/uctf-internal)
-1. [jsbsim models](https://github.com/hsu/jsbsim/tree/master/aircraft)
-1. [zephyr rc kit](http://www.readymaderc.com/store/index.php?main_page=product_info&products_id=722)
+1. Google group [uctf-internal](https://groups.google.com/a/osrfoundation.org/forum/#!forum/uctf-internal)
