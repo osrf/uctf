@@ -58,7 +58,7 @@ material Uctf/LightGrayTransparent
       texture_unit
       {
         colour_op_ex source1 src_current src_current 1 0 0
-        alpha_op_ex source1 src_manual src_current 1.0
+        alpha_op_ex source1 src_manual src_current 0.1
       }
     }
   }
@@ -79,7 +79,7 @@ material Uctf/BlueTransparent
       texture_unit
       {
         colour_op_ex source1 src_current src_current 1 0 0
-        alpha_op_ex source1 src_manual src_current 1.0
+        alpha_op_ex source1 src_manual src_current 0.2
       }
     }
   }
@@ -101,7 +101,7 @@ material Uctf/GoldTransparent
       texture_unit
       {
         colour_op_ex source1 src_current src_current 1 0 0
-        alpha_op_ex source1 src_manual src_current 1.0
+        alpha_op_ex source1 src_manual src_current 0.8
       }
     }
   }
