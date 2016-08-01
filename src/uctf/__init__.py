@@ -15,6 +15,7 @@ import tempfile
 from em import Interpreter
 from gazebo_msgs.srv import SpawnModel
 from gazebo_msgs.srv import SpawnModelRequest
+from rosgraph import ROS_MASTER_URI
 from rospy import ServiceProxy
 from xacro import parse
 from xacro import process_doc
@@ -112,7 +113,7 @@ def spawn_one():
     spawn_model(
         args.mav_sys_id,
         args.vehicle_type, args.baseport, args.color,
-        (args.x, args.y, 0), args.debug)
+        (args.x, args.y, 0), debug=args.debug)
 
     launch_file = generate_launch_file(
         args.mav_sys_id,
@@ -201,8 +202,14 @@ def generate_init_script(
     return path
 
 
-def spawn_model(mav_sys_id, vehicle_type, baseport, color, pose, debug=False):
+def spawn_model(
+    mav_sys_id, vehicle_type, baseport, color, pose, ros_master_uri=None, debug=False
+):
     x, y, yaw = pose
+
+    if ros_master_uri:
+        original_uri = os.environ[ROS_MASTER_URI]
+        os.environ[ROS_MASTER_URI] = ros_master_uri
     srv = ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
 
     model_filename = os.path.join(
@@ -240,6 +247,10 @@ def spawn_model(mav_sys_id, vehicle_type, baseport, color, pose, debug=False):
     req.reference_frame = ''
 
     resp = srv(req)
+
+    if ros_master_uri:
+        os.environ[ROS_MASTER_URI] = original_uri
+
     if resp.success:
         print(resp.status_message, '(%s)' % unique_name)
         return 0
