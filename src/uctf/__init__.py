@@ -292,7 +292,7 @@ def get_launch_snippet(
 
 
 def write_launch_file(launch_snippet):
-    fd, path = tempfile.mkstemp(suffix='.launch')
+    fd, path = tempfile.mkstemp(prefix='uctf_', suffix='.launch')
     with os.fdopen(fd, 'w') as h:
         h.write('<launch>\n')
         h.write(launch_snippet)
