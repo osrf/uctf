@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg height="297mm" style="background:#fff" version="1.1" viewBox="0 0 1250 800" width="210mm" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <marker id="MavlinkArrowEnd" orient="auto" overflow="visible" refX="0.0" refY="0.0">
+   <path d="m8.7186 4.0337l-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7355 5.6174 0 8.0354z" fill="#f60" fill-rule="evenodd" stroke="#f60" stroke-linejoin="round" stroke-width="0" transform="rotate(180) translate(2)"/>
+  </marker>
+  <marker id="MavlinkArrowStart" orient="auto" overflow="visible" refX="0.0" refY="0.0">
+   <path d="m8.7186 4.0337l-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7355 5.6174 0 8.0354z" fill="#f60" fill-rule="evenodd" stroke="#f60" stroke-linejoin="round" stroke-width="0" transform="translate(2)"/>
+  </marker>
+  <marker id="RosArrowEnd" orient="auto" overflow="visible" refX="0.0" refY="0.0">
+   <path d="m8.7186 4.0337l-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7355 5.6174 0 8.0354z" fill="#008" fill-rule="evenodd" stroke="#008" stroke-linejoin="round" stroke-width="0" transform="rotate(180) translate(2)"/>
+  </marker>
+  <marker id="RosArrowStart" orient="auto" overflow="visible" refX="0.0" refY="0.0">
+   <path d="m8.7186 4.0337l-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7355 5.6174 0 8.0354z" fill="#008" fill-rule="evenodd" stroke="#008" stroke-linejoin="round" stroke-width="0" transform="translate(2)"/>
+  </marker>
+ </defs>
+
+ <g id="gazebo" transform="translate(360 50)">
+  <rect id="gazebo_box" fill="none" height="470" stroke="#888" stroke-dasharray="1, 3" style="image-rendering:auto" width="530"/>
+  <text id="gazebo_box_title">
+   <tspan fill="#888" font-size="25px" font-weight="bold" x="5" y="-5">Gazebo Simulation</tspan>
+  </text>
+  <g transform="translate(20 20)">
+   <g id="gazebo_world_model">
+    <line stroke="#888" x2="150" y1="35" y2="35"/>
+    <rect fill="none" height="180" stroke="#000" stroke-width="2" width="150"/>
+    <g transform="translate(10)">
+     <text>
+      <tspan font-size="18px" font-weight="bold" y="25">World Model</tspan>
+     </text>
+     <text>
+      <tspan font-size="18px" y="65">- terrain</tspan>
+     </text>
+     <text>
+      <tspan font-size="18px" y="95">- game cube</tspan>
+     </text>
+     <text>
+      <tspan font-size="18px" y="125">- team areas</tspan>
+     </text>
+     <text>
+      <tspan font-size="18px" y="155">- penalty area</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="gazebo_environment_model" transform="translate(170)">
+    <line stroke="#888" x2="150" y1="35" y2="35"/>
+    <rect fill="none" height="180" stroke="#000" stroke-width="2" width="150"/>
+    <g transform="translate(10)">
+     <text>
+      <tspan font-size="18px" font-weight="bold" y="25">Env. Model</tspan>
+     </text>
+     <text>
+      <tspan font-size="18px" y="65">- wind</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="gazebo_sensor_model" transform="translate(340)">
+    <line stroke="#888" x2="150" y1="35" y2="35"/>
+    <rect fill="none" height="180" stroke="#000" stroke-width="2" width="150"/>
+    <g transform="translate(10)">
+     <text>
+      <tspan font-size="18px" font-weight="bold" y="25">Sensor Model</tspan>
+     </text>
+     <text>
+      <tspan font-size="18px" y="65">- imu</tspan>
+     </text>
+     <text>
+      <tspan font-size="18px" y="95">- accelerom.</tspan>
+     </text>
+     <text opacity=".2">
+      <tspan font-size="18px" y="125">- (magnetom.)</tspan>
+     </text>
+     <text opacity=".2">
+      <tspan font-size="18px" y="155">- (camera)</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="gazebo_physic_model" transform="translate(0 200)">
+    <line stroke="#888" x2="490" y1="35" y2="35"/>
+    <rect fill="none" height="230" stroke="#000" stroke-width="2" width="490"/>
+    <g transform="translate(10)">
+     <text>
+      <tspan font-size="18px" font-weight="bold" x="150" y="25">Physics Modeling</tspan>
+     </text>
+    </g>
+    <g transform="translate(220)">
+     <text>
+      <tspan font-size="18px" y="65">- collisions</tspan>
+     </text>
+     <text>
+      <tspan font-size="18px" y="95">- lift</tspan>
+     </text>
+     <text>
+      <tspan font-size="18px" y="125">- drag</tspan>
+     </text>
+    </g>
+    <g opacity=".2">
+     <g transform="translate(20 50)">
+      <rect fill="#fff" height="120" stroke="#000" stroke-width="2" width="130"/>
+      <line stroke="#888" x2="130" y1="35" y2="35"/>
+      <g transform="translate(10)">
+       <text>
+        <tspan font-size="18px" font-weight="bold" y="25">UAV #n</tspan>
+       </text>
+       <g transform="translate(0 45)">
+        <rect fill="none" height="60" stroke="#000" width="90" x="20"/>
+        <text>
+         <tspan font-size="18px" x="30" y="25">mavlink</tspan>
+        </text>
+        <text>
+         <tspan font-size="18px" x="30" y="45">plugin</tspan>
+        </text>
+       </g>
+      </g>
+     </g>
+     <g transform="translate(50 70)">
+      <rect fill="#fff" height="120" stroke="#000" stroke-width="2" width="130"/>
+      <line stroke="#888" x2="130" y1="35" y2="35"/>
+      <g transform="translate(10)">
+       <text>
+        <tspan font-size="18px" font-weight="bold" y="25">UAV #n</tspan>
+       </text>
+       <g transform="translate(0 45)">
+        <rect fill="none" height="60" stroke="#000" width="90" x="20"/>
+        <text>
+         <tspan font-size="18px" x="30" y="25">mavlink</tspan>
+        </text>
+        <text>
+         <tspan font-size="18px" x="30" y="45">plugin</tspan>
+        </text>
+       </g>
+      </g>
+     </g>
+    </g>
+    <g id="gazebo_blue_uavN" transform="translate(80 90)">
+     <rect fill="#fff" height="120" stroke="#000" stroke-width="2" width="130"/>
+     <line stroke="#888" x2="130" y1="35" y2="35"/>
+     <g transform="translate(10)">
+      <text>
+       <tspan font-size="18px" font-weight="bold" y="25">UAV #n</tspan>
+      </text>
+      <g transform="translate(0 45)">
+       <rect fill="none" height="60" stroke="#000" width="90" x="20"/>
+       <text>
+        <tspan font-size="18px" x="30" y="25">mavlink</tspan>
+       </text>
+       <text>
+        <tspan font-size="18px" x="30" y="45">plugin</tspan>
+       </text>
+      </g>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+
+ <g id="roslaunch_blue" transform="translate(50 200)">
+  <rect id="roslaunch_blue_box" fill="none" height="320" stroke="#888" stroke-dasharray="1, 3" style="image-rendering:auto" width="230"/>
+  <text id="roslaunch_blue_box_title">
+   <tspan fill="#888" font-size="25px" font-weight="bold" x="5" y="-5">roslaunch (blue)</tspan>
+  </text>
+  <g opacity=".2">
+   <g transform="translate(20 20)">
+    <rect fill="#fff" height="190" stroke="#000" stroke-width="2" width="130"/>
+    <line stroke="#888" x2="130" y1="35" y2="35"/>
+    <g transform="translate(10)">
+     <text>
+      <tspan font-size="18px" font-weight="bold" y="25">UAV #1</tspan>
+     </text>
+     <g transform="translate(0 45)">
+      <rect fill="none" height="40" stroke="#000" width="60"/>
+      <text>
+       <tspan font-size="18px" x="10" y="25">PX4</tspan>
+      </text>
+      <g transform="translate(60 10)">
+       <path d="m0 0h200v120h90" fill="none" marker-end="url(#MavlinkArrowEnd)" marker-start="url(#MavlinkArrowStart)" stroke="#f60"/>
+      </g>
+     </g>
+     <g transform="translate(0 115)">
+      <rect fill="none" height="40" stroke="#000" width="110"/>
+      <text>
+       <tspan font-size="18px" x="10" y="25">MAVROS</tspan>
+      </text>
+      <g transform="translate(30 40)">
+       <path d="m0 0v185h135v40" fill="none" marker-end="url(#RosArrowEnd)" marker-start="url(#RosArrowStart)" stroke="#008"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g transform="translate(50 40)">
+    <rect fill="#fff" height="190" stroke="#000" stroke-width="2" width="130"/>
+    <line stroke="#888" x2="130" y1="35" y2="35"/>
+    <g transform="translate(10)">
+     <text>
+      <tspan font-size="18px" font-weight="bold" y="25">UAV #2</tspan>
+     </text>
+     <g transform="translate(0 45)">
+      <rect fill="none" height="40" stroke="#000" width="60"/>
+      <text>
+       <tspan font-size="18px" x="10" y="25">PX4</tspan>
+      </text>
+      <g transform="translate(60 10)">
+       <path d="m0 0h160v120h130" fill="none" marker-end="url(#MavlinkArrowEnd)" marker-start="url(#MavlinkArrowStart)" stroke="#f60"/>
+      </g>
+     </g>
+     <g transform="translate(0 115)">
+      <rect fill="none" height="40" stroke="#000" width="110"/>
+      <text>
+       <tspan font-size="18px" x="10" y="25">MAVROS</tspan>
+      </text>
+      <g transform="translate(30 40)">
+       <path d="m0 0v155h115v50" fill="none" marker-end="url(#RosArrowEnd)" marker-start="url(#RosArrowStart)" stroke="#008"/>
+      </g>
+     </g>
+    </g>
+   </g>
+  </g>
+  <g id="roslaunch_blue_uavN" transform="translate(80 60)">
+   <rect fill="#fff" height="190" stroke="#000" stroke-width="2" width="130"/>
+   <line stroke="#888" x2="130" y1="35" y2="35"/>
+   <g transform="translate(10)">
+    <text>
+     <tspan font-size="18px" font-weight="bold" y="25">UAV #n</tspan>
+    </text>
+    <g transform="translate(30 85)">
+     <line marker-end="url(#MavlinkArrowEnd)" marker-start="url(#MavlinkArrowStart)" stroke="#f60" y2="30"/>
+     <text>
+      <tspan fill="#f60" font-size="10px" x="5" y="10">+2</tspan>
+     </text>
+     <text>
+      <tspan fill="#f60" font-size="10px" x="5" y="27">+3</tspan>
+     </text>
+    </g>
+    <g transform="translate(0 45)">
+     <rect fill="none" height="40" stroke="#000" width="60"/>
+     <text>
+      <tspan font-size="18px" x="10" y="25">PX4</tspan>
+     </text>
+     <g transform="translate(60 10)">
+      <path d="m0 0h120v120h170" fill="none" marker-end="url(#MavlinkArrowEnd)" marker-start="url(#MavlinkArrowStart)" stroke="#f60"/>
+      <text>
+       <tspan fill="#f60" font-size="10px" x="5" y="-5">+0</tspan>
+      </text>
+     </g>
+     <g transform="translate(60 30)">
+      <path d="m0 0h100v340h230" fill="none" marker-end="url(#MavlinkArrowEnd)" marker-start="url(#MavlinkArrowStart)" stroke="#f60"/>
+      <text>
+       <tspan fill="#f60" font-size="10px" x="5" y="15">+1</tspan>
+      </text>
+      <text>
+       <tspan fill="#f60" font-size="10px" x="295" y="355">14000</tspan>
+      </text>
+      <text>
+       <tspan fill="#f60" font-size="10px" x="515" y="355">14001</tspan>
+      </text>
+     </g>
+    </g>
+    <g transform="translate(0 115)">
+     <rect fill="none" height="40" stroke="#000" width="110"/>
+     <text>
+      <tspan font-size="18px" x="10" y="25">MAVROS</tspan>
+     </text>
+     <g transform="translate(30 40)">
+      <path d="m0 0v125h95v60" fill="none" marker-end="url(#RosArrowEnd)" marker-start="url(#RosArrowStart)" stroke="#008"/>
+      <text>
+       <tspan fill="#008" font-size="10px" x="5" y="15">/&lt;ns&gt;/mavlink/*</tspan>
+      </text>
+      <text>
+       <tspan fill="#008" font-size="10px" x="5" y="25">/&lt;ns&gt;/mavros/*</tspan>
+      </text>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+
+ <g id="roslaunch_gold" transform="translate(970 200)">
+  <rect fill="none" height="320" stroke="#888" stroke-dasharray="1, 3" style="image-rendering:auto" width="230"/>
+  <text>
+   <tspan fill="#888" font-size="25px" font-weight="bold" x="5" y="-5">roslaunch (gold)</tspan>
+  </text>
+ </g>
+
+ <g id="controller_blue" transform="translate(50 600)">
+  <rect fill="none" height="160" stroke="#888" stroke-dasharray="1, 3" style="image-rendering:auto" width="230"/>
+  <text>
+   <tspan fill="#888" font-size="25px" font-weight="bold" x="5" y="-5">controller</tspan>
+  </text>
+ </g>
+
+ <g id="groundcontrol" transform="translate(490 600)">
+  <rect fill="none" height="160" stroke="#888" stroke-dasharray="1, 3" style="image-rendering:auto" width="270"/>
+  <text>
+   <tspan fill="#888" font-size="22.5px" font-weight="bold" x="5" y="-5">GCS</tspan>
+  </text>
+  <g id="groundcontrolstation" transform="translate(40 20)">
+   <line stroke="#888" x2="180" y1="35" y2="35"/>
+   <rect fill="none" height="120" stroke="#000" stroke-width="2" width="180"/>
+   <g transform="translate(10)">
+    <text>
+     <tspan font-size="18px" font-weight="bold" y="25">QGroundControl</tspan>
+    </text>
+    <text>
+     <tspan font-size="18px" y="65">- visualize pose</tspan>
+    </text>
+    <text>
+     <tspan font-size="18px" x="10" y="95">of all vehicles</tspan>
+    </text>
+   </g>
+  </g>
+ </g>
+</svg>
