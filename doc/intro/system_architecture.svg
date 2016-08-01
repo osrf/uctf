@@ -83,56 +83,56 @@
       <tspan font-size="18px" font-weight="bold" x="150" y="25">Physics Modeling</tspan>
      </text>
     </g>
-    <g transform="translate(220)">
+    <g transform="translate(205)">
      <text>
       <tspan font-size="18px" y="65">- collisions</tspan>
      </text>
      <text>
-      <tspan font-size="18px" y="95">- lift</tspan>
+      <tspan font-size="18px" x="15" y="95">- lift</tspan>
      </text>
      <text>
-      <tspan font-size="18px" y="125">- drag</tspan>
+      <tspan font-size="18px" x="15" y="125">- drag</tspan>
      </text>
     </g>
     <g opacity=".2">
-     <g transform="translate(20 50)">
+     <g transform="translate(15 50)">
       <rect fill="#fff" height="120" stroke="#000" stroke-width="2" width="130"/>
       <line stroke="#888" x2="130" y1="35" y2="35"/>
       <g transform="translate(10)">
        <text>
-        <tspan font-size="18px" font-weight="bold" y="25">UAV #n</tspan>
+        <tspan font-size="18px" font-weight="bold" y="25">UAV #1</tspan>
        </text>
        <g transform="translate(0 45)">
-        <rect fill="none" height="60" stroke="#000" width="90" x="20"/>
+        <rect fill="none" height="60" stroke="#000" width="90" x="5"/>
         <text>
-         <tspan font-size="18px" x="30" y="25">mavlink</tspan>
+         <tspan font-size="18px" x="15" y="25">mavlink</tspan>
         </text>
         <text>
-         <tspan font-size="18px" x="30" y="45">plugin</tspan>
+         <tspan font-size="18px" x="15" y="45">plugin</tspan>
         </text>
        </g>
       </g>
      </g>
-     <g transform="translate(50 70)">
+     <g transform="translate(45 70)">
       <rect fill="#fff" height="120" stroke="#000" stroke-width="2" width="130"/>
       <line stroke="#888" x2="130" y1="35" y2="35"/>
       <g transform="translate(10)">
        <text>
-        <tspan font-size="18px" font-weight="bold" y="25">UAV #n</tspan>
+        <tspan font-size="18px" font-weight="bold" y="25">UAV #2</tspan>
        </text>
        <g transform="translate(0 45)">
-        <rect fill="none" height="60" stroke="#000" width="90" x="20"/>
+        <rect fill="none" height="60" stroke="#000" width="90" x="5"/>
         <text>
-         <tspan font-size="18px" x="30" y="25">mavlink</tspan>
+         <tspan font-size="18px" x="15" y="25">mavlink</tspan>
         </text>
         <text>
-         <tspan font-size="18px" x="30" y="45">plugin</tspan>
+         <tspan font-size="18px" x="15" y="45">plugin</tspan>
         </text>
        </g>
       </g>
      </g>
     </g>
-    <g id="gazebo_blue_uavN" transform="translate(80 90)">
+    <g id="gazebo_blue_uavN" transform="translate(75 90)">
      <rect fill="#fff" height="120" stroke="#000" stroke-width="2" width="130"/>
      <line stroke="#888" x2="130" y1="35" y2="35"/>
      <g transform="translate(10)">
@@ -140,12 +140,12 @@
        <tspan font-size="18px" font-weight="bold" y="25">UAV #n</tspan>
       </text>
       <g transform="translate(0 45)">
-       <rect fill="none" height="60" stroke="#000" width="90" x="20"/>
+       <rect fill="none" height="60" stroke="#000" width="90" x="5"/>
        <text>
-        <tspan font-size="18px" x="30" y="25">mavlink</tspan>
+        <tspan font-size="18px" x="15" y="25">mavlink</tspan>
        </text>
        <text>
-        <tspan font-size="18px" x="30" y="45">plugin</tspan>
+        <tspan font-size="18px" x="15" y="45">plugin</tspan>
        </text>
       </g>
      </g>
@@ -173,7 +173,7 @@
        <tspan font-size="18px" x="10" y="25">PX4</tspan>
       </text>
       <g transform="translate(60 10)">
-       <path d="m0 0h200v120h90" fill="none" marker-end="url(#MavlinkArrowEnd)" marker-start="url(#MavlinkArrowStart)" stroke="#f60"/>
+       <path d="m0 0h200v120h70" fill="none" marker-end="url(#MavlinkArrowEnd)" marker-start="url(#MavlinkArrowStart)" stroke="#f60"/>
       </g>
      </g>
      <g transform="translate(0 115)">
@@ -200,7 +200,7 @@
        <tspan font-size="18px" x="10" y="25">PX4</tspan>
       </text>
       <g transform="translate(60 10)">
-       <path d="m0 0h160v120h130" fill="none" marker-end="url(#MavlinkArrowEnd)" marker-start="url(#MavlinkArrowStart)" stroke="#f60"/>
+       <path d="m0 0h160v120h110" fill="none" marker-end="url(#MavlinkArrowEnd)" marker-start="url(#MavlinkArrowStart)" stroke="#f60"/>
       </g>
      </g>
      <g transform="translate(0 115)">
@@ -237,7 +237,7 @@
       <tspan font-size="18px" x="10" y="25">PX4</tspan>
      </text>
      <g transform="translate(60 10)">
-      <path d="m0 0h120v120h170" fill="none" marker-end="url(#MavlinkArrowEnd)" marker-start="url(#MavlinkArrowStart)" stroke="#f60"/>
+      <path d="m0 0h120v120h150" fill="none" marker-end="url(#MavlinkArrowEnd)" marker-start="url(#MavlinkArrowStart)" stroke="#f60"/>
       <text>
        <tspan fill="#f60" font-size="10px" x="5" y="-5">+0</tspan>
       </text>
