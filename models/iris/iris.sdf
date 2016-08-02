@@ -1,7 +1,7 @@
 <sdf version='1.6' xmlns:xacro='http://ros.org/wiki/xacro'>
   <xacro:arg name='visual_material' default='Gazebo/DarkGrey' />
+  <xacro:arg name='mavlink_addr' default='INADDR_ANY' />
   <xacro:arg name='mavlink_udp_port' default='14560' />
-  <xacro:arg name='mavlink_udp_port_2' default='14556' />
   <model name='iris'>
     <link name='base_link'>
       <pose frame=''>0 0 0 0 -0 0</pose>
@@ -428,8 +428,8 @@
     <plugin name='mavlink_interface' filename='librotors_gazebo_mavlink_interface.so'>
       <robotNamespace>iris</robotNamespace>
       <imuSubTopic>/imu</imuSubTopic>
+      <mavlink_addr>$(arg mavlink_addr)</mavlink_addr>
       <mavlink_udp_port>$(arg mavlink_udp_port)</mavlink_udp_port>
-      <mavlink_udp_port_2>$(arg mavlink_udp_port_2)</mavlink_udp_port_2>
       <motorSpeedCommandPubTopic>/gazebo/command/motor_speed</motorSpeedCommandPubTopic>
     </plugin>
     <static>0</static>

@@ -27,8 +27,12 @@ def spawn_team(color):
         '--gazebo-ros-master-uri',
         help='The uri used to spawn the models')
     parser.add_argument(
+        '--mavlink-address',
+        help='The IP address for mavlink (default: INADDR_ANY)')
+    parser.add_argument(
         '--launch', action='store_true',
         help='Run generate launch file')
+    parser.add_argument('--debug', action='store_true')
     args = parser.parse_args()
 
     # ensure valid team color
@@ -64,7 +68,8 @@ def spawn_team(color):
         vehicle_pose = get_vehicle_pose(mav_sys_id, vehicle_type, color)
         spawn_model(
             mav_sys_id, vehicle_type, vehicle_base_port, color, vehicle_pose,
-            ros_master_uri=args.gazebo_ros_master_uri)
+            ros_master_uri=args.gazebo_ros_master_uri, mavlink_address=args.mavlink_address,
+            debug=args.debug)
 
         launch_snippet += get_launch_snippet(
             mav_sys_id, vehicle_type, vehicle_base_port, init_script_path)

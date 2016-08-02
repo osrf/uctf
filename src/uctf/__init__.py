@@ -203,7 +203,8 @@ def generate_init_script(
 
 
 def spawn_model(
-    mav_sys_id, vehicle_type, baseport, color, pose, ros_master_uri=None, debug=False
+    mav_sys_id, vehicle_type, baseport, color, pose, ros_master_uri=None, mavlink_address=None,
+    debug=False
 ):
     x, y, yaw = pose
 
@@ -222,12 +223,13 @@ def spawn_model(
     kwargs = {
         'mappings': {
             'mavlink_udp_port': str(baseport),
-            'mavlink_udp_port_2': str(baseport + 1),
         },
     }
     if color:
         material_name = 'Gazebo/%s' % color.capitalize()
         kwargs['mappings']['visual_material'] = material_name
+    if mavlink_address:
+        kwargs['mappings']['mavlink_addr'] = mavlink_address
     model_xml = xacro(model_xml, **kwargs)
     if debug:
         print(model_xml)
