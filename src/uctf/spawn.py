@@ -24,6 +24,9 @@ def spawn_team(color):
         default=range(1, 51),
         help='The vehicle ids to spawn (default: 1-50)')
     parser.add_argument(
+        '--gazebo-ros-master-uri',
+        help='The uri used to spawn the models')
+    parser.add_argument(
         '--launch', action='store_true',
         help='Run generate launch file')
     args = parser.parse_args()
@@ -60,7 +63,8 @@ def spawn_team(color):
         # spawn the vehicle model in gazebo
         vehicle_pose = get_vehicle_pose(mav_sys_id, vehicle_type, color)
         spawn_model(
-            mav_sys_id, vehicle_type, vehicle_base_port, color, vehicle_pose)
+            mav_sys_id, vehicle_type, vehicle_base_port, color, vehicle_pose,
+            ros_master_uri=args.gazebo_ros_master_uri)
 
         launch_snippet += get_launch_snippet(
             mav_sys_id, vehicle_type, vehicle_base_port, init_script_path)
