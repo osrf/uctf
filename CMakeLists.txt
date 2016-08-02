@@ -39,7 +39,6 @@ ExternalProject_Add(sitl_gazebo
 )
 
 install(FILES
-  "${CMAKE_CURRENT_BINARY_DIR}/sitl_gazebo-prefix/src/sitl_gazebo-build/libLiftDragPlugin.so"
   "${CMAKE_CURRENT_BINARY_DIR}/sitl_gazebo-prefix/src/sitl_gazebo-build/librotors_gazebo_motor_model.so"
   "${CMAKE_CURRENT_BINARY_DIR}/sitl_gazebo-prefix/src/sitl_gazebo-build/librotors_gazebo_imu_plugin.so"
   "${CMAKE_CURRENT_BINARY_DIR}/sitl_gazebo-prefix/src/sitl_gazebo-build/librotors_gazebo_mavlink_interface.so"

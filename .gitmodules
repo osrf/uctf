@@ -1,4 +1,4 @@
 [submodule "Firmware"]
 	path = Firmware
 	url = git@github.com:osrf/Firmware.git
-	branch = osrf_fork
+	branch = osrf_fork2
