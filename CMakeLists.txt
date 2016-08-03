@@ -56,7 +56,7 @@ ExternalProject_Add(firmware
 )
 
 install(PROGRAMS
-  "${CMAKE_CURRENT_BINARY_DIR}/firmware-prefix/src/firmware-build/src/firmware/posix/mainapp"
+  "${CMAKE_CURRENT_BINARY_DIR}/firmware-prefix/src/firmware-build/src/firmware/posix/px4"
   DESTINATION bin
 )
 install(PROGRAMS
