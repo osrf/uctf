@@ -204,33 +204,6 @@ def generate_init_script(
     return path
 
 
-def delete_model(
-    mav_sys_id, vehicle_type, ros_master_uri=None,
-    debug=False
-):
-
-    if ros_master_uri:
-        original_uri = os.environ[ROS_MASTER_URI]
-        os.environ[ROS_MASTER_URI] = ros_master_uri
-    srv = ServiceProxy('/gazebo/delete_model', DeleteModel)
-
-
-    req = DeleteModelRequest()
-    unique_name = vehicle_type + '_' + str(mav_sys_id)
-    req.model_name = unique_name
-
-    resp = srv(req)
-
-    if ros_master_uri:
-        os.environ[ROS_MASTER_URI] = original_uri
-
-    if resp.success:
-        print(resp.status_message, '(%s)' % unique_name)
-        return 0
-    else:
-        print(resp.status_message, file=sys.stderr)
-        return 1
-
 def spawn_model(
     mav_sys_id, vehicle_type, baseport, color, pose, ros_master_uri=None, mavlink_address=None,
     debug=False
@@ -288,6 +261,7 @@ def spawn_model(
     else:
         print(resp.status_message, file=sys.stderr)
         return 1
+
 
 def xacro(template_xml, **kwargs):
     doc = parse(template_xml)
@@ -362,6 +336,29 @@ def empy(template_name, data, options=None):
 
 def spawn_launch_file(launch_file):
     print('roslaunch %s' % launch_file)
+
+
+def delete_model(mav_sys_id, vehicle_type, ros_master_uri=None):
+    if ros_master_uri:
+        original_uri = os.environ[ROS_MASTER_URI]
+        os.environ[ROS_MASTER_URI] = ros_master_uri
+    srv = ServiceProxy('/gazebo/delete_model', DeleteModel)
+
+    req = DeleteModelRequest()
+    unique_name = vehicle_type + '_' + str(mav_sys_id)
+    req.model_name = unique_name
+
+    resp = srv(req)
+
+    if ros_master_uri:
+        os.environ[ROS_MASTER_URI] = original_uri
+
+    if resp.success:
+        print(resp.status_message, '(%s)' % unique_name)
+        return 0
+    else:
+        print(resp.status_message, file=sys.stderr)
+        return 1
 
 
 def global_to_cube(latitude, longitude):

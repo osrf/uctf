@@ -72,7 +72,8 @@ def spawn_team(color):
         vehicle_pose = get_vehicle_pose(mav_sys_id, vehicle_type, color)
         spawn_model(
             mav_sys_id, vehicle_type, vehicle_base_port, color, vehicle_pose,
-            ros_master_uri=args.gazebo_ros_master_uri, mavlink_address=args.mavlink_address,
+            ros_master_uri=args.gazebo_ros_master_uri,
+            mavlink_address=args.mavlink_address,
             debug=args.debug)
 
         launch_snippet += get_launch_snippet(
@@ -81,17 +82,16 @@ def spawn_team(color):
     launch_path = write_launch_file(launch_snippet)
     cmd = ['roslaunch', launch_path]
     print(' '.join(cmd))
+
+    retcode = 0
     if args.launch:
         try:
             retcode = subprocess.call(cmd)
         except KeyboardInterrupt:
-            print("Received KeyboardInterrupt during launch")
-            retcode = 0
-        if args.delete:
-            print("Deleting Spawned Models %s" % args.vehicle_id)
-            for i in args.vehicle_id:
-                # the first 25 vehicles per team are iris
-                # the second 25 vehicles per team are plane
-                vehicle_type = 'iris' if i <= 25 else 'plane'
-                delete_model(i, vehicle_type)
-        return retcode
+            pass
+    if args.delete:
+        for i in args.vehicle_id:
+            vehicle_type = 'iris' if i <= 25 else 'plane'
+            delete_model(
+                i, vehicle_type, ros_master_uri=args.gazebo_ros_master_uri)
+    return retcode
