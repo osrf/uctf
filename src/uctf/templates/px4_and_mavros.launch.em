@@ -1,7 +1,7 @@
   <node
     name="px4_@(vehicle_type)_@(mav_sys_id)"
     pkg="uctf"
-    type="mainapp.sh"
+    type="px4.sh"
     args="@(controller_config_path)"
     cwd="node"
     ns="/@(vehicle_type)_@(mav_sys_id)"
