@@ -60,7 +60,7 @@ install(PROGRAMS
   DESTINATION bin
 )
 install(PROGRAMS
-  "script/mainapp.sh"
+  "script/px4.sh"
   DESTINATION share/${PROJECT_NAME}
 )
 install(FILES
