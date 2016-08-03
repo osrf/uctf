@@ -13,6 +13,8 @@ import sys
 import tempfile
 
 from em import Interpreter
+from gazebo_msgs.srv import DeleteModel
+from gazebo_msgs.srv import DeleteModelRequest
 from gazebo_msgs.srv import SpawnModel
 from gazebo_msgs.srv import SpawnModelRequest
 from rosgraph import ROS_MASTER_URI
@@ -202,6 +204,33 @@ def generate_init_script(
     return path
 
 
+def delete_model(
+    mav_sys_id, vehicle_type, ros_master_uri=None,
+    debug=False
+):
+
+    if ros_master_uri:
+        original_uri = os.environ[ROS_MASTER_URI]
+        os.environ[ROS_MASTER_URI] = ros_master_uri
+    srv = ServiceProxy('/gazebo/delete_model', DeleteModel)
+
+
+    req = DeleteModelRequest()
+    unique_name = vehicle_type + '_' + str(mav_sys_id)
+    req.model_name = unique_name
+
+    resp = srv(req)
+
+    if ros_master_uri:
+        os.environ[ROS_MASTER_URI] = original_uri
+
+    if resp.success:
+        print(resp.status_message, '(%s)' % unique_name)
+        return 0
+    else:
+        print(resp.status_message, file=sys.stderr)
+        return 1
+
 def spawn_model(
     mav_sys_id, vehicle_type, baseport, color, pose, ros_master_uri=None, mavlink_address=None,
     debug=False
@@ -259,7 +288,6 @@ def spawn_model(
     else:
         print(resp.status_message, file=sys.stderr)
         return 1
-
 
 def xacro(template_xml, **kwargs):
     doc = parse(template_xml)
