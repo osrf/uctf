@@ -5,6 +5,7 @@ from uctf import generate_init_script
 from uctf import get_ground_control_port
 from uctf import get_launch_snippet
 from uctf import get_vehicle_pose
+from uctf import delete_model
 from uctf import spawn_model
 from uctf import VEHICLE_BASE_PORT
 from uctf import write_launch_file
@@ -32,6 +33,9 @@ def spawn_team(color):
     parser.add_argument(
         '--launch', action='store_true',
         help='Run generate launch file')
+    parser.add_argument(
+        '--delete', action='store_true',
+        help='Despawn when killed')
     parser.add_argument('--debug', action='store_true')
     args = parser.parse_args()
 
@@ -68,7 +72,8 @@ def spawn_team(color):
         vehicle_pose = get_vehicle_pose(mav_sys_id, vehicle_type, color)
         spawn_model(
             mav_sys_id, vehicle_type, vehicle_base_port, color, vehicle_pose,
-            ros_master_uri=args.gazebo_ros_master_uri, mavlink_address=args.mavlink_address,
+            ros_master_uri=args.gazebo_ros_master_uri,
+            mavlink_address=args.mavlink_address,
             debug=args.debug)
 
         launch_snippet += get_launch_snippet(
@@ -77,5 +82,16 @@ def spawn_team(color):
     launch_path = write_launch_file(launch_snippet)
     cmd = ['roslaunch', launch_path]
     print(' '.join(cmd))
+
+    retcode = 0
     if args.launch:
-        return subprocess.call(cmd)
+        try:
+            retcode = subprocess.call(cmd)
+        except KeyboardInterrupt:
+            pass
+    if args.delete:
+        for i in args.vehicle_id:
+            vehicle_type = 'iris' if i <= 25 else 'plane'
+            delete_model(
+                i, vehicle_type, ros_master_uri=args.gazebo_ros_master_uri)
+    return retcode
