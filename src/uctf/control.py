@@ -64,7 +64,7 @@ STATE_ERROR = 4
 
 
 class Vehicle(object):
-    """A Vehicle will subscribe to its topics and then arm, takeoff, and land."""
+    """A Vehicle will subscribe to its topics, arm, takeoff, and land."""
 
     def __init__(self, color, namespace):
         self.color = color
@@ -193,8 +193,8 @@ class Vehicle(object):
             service = rospy.ServiceProxy(service_name, WaypointPush)
             resp = service.call(req)
         except rospy.ServiceException as e:
-            print(self.namespace, 'service call to push waypoints failed:', str(e),
-                  file=sys.stderr)
+            print(self.namespace, 'service call to push waypoints failed:',
+                  str(e), file=sys.stderr)
             return False
         if not resp.success:
             print(self.namespace, 'failed to push waypoints', file=sys.stderr)

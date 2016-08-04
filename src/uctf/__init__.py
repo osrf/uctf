@@ -205,8 +205,8 @@ def generate_init_script(
 
 
 def spawn_model(
-    mav_sys_id, vehicle_type, baseport, color, pose, ros_master_uri=None, mavlink_address=None,
-    debug=False
+    mav_sys_id, vehicle_type, baseport, color, pose, ros_master_uri=None,
+    mavlink_address=None, debug=False
 ):
     x, y, yaw = pose
 
@@ -274,7 +274,8 @@ def xacro(template_xml, **kwargs):
 def generate_launch_file(
     mav_sys_id, vehicle_type, baseport, config_path, debug
 ):
-    launch_snippet = get_launch_snippet(mav_sys_id, vehicle_type, baseport, config_path, debug)
+    launch_snippet = get_launch_snippet(
+        mav_sys_id, vehicle_type, baseport, config_path, debug)
     if debug:
         print(launch_snippet)
     return write_launch_file(launch_snippet)
@@ -374,5 +375,6 @@ def cube_to_global(x, y):
     up_fraction = y / CUBE_LENGTH
     right_fraction = 1.0 - left_fraction
     latitude = up_fraction * (MAX_LATITUDE - MIN_LATITUDE) + MIN_LATITUDE
-    longitude = right_fraction * (MAX_LONGITUDE - MIN_LONGITUDE) + MIN_LONGITUDE
+    longitude = right_fraction * (MAX_LONGITUDE - MIN_LONGITUDE) + \
+        MIN_LONGITUDE
     return latitude, longitude
