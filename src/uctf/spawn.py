@@ -92,6 +92,9 @@ def spawn_team(color):
     if args.delete:
         for i in args.vehicle_id:
             vehicle_type = 'iris' if i <= 25 else 'plane'
+            mav_sys_id = i
+            if color == 'gold':
+                mav_sys_id += 100
             delete_model(
-                i, vehicle_type, ros_master_uri=args.gazebo_ros_master_uri)
+                mav_sys_id, vehicle_type, ros_master_uri=args.gazebo_ros_master_uri)
     return retcode
