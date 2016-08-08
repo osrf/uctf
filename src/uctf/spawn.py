@@ -12,10 +12,27 @@ from uctf import write_launch_file
 
 
 def vehicle_id_type(value):
+    """Validate the vehicle_id_type from string to int."""
     value = int(value)
     if value < 1 or value > 50:
         raise argparse.ArgumentTypeError('Vehicle id must be in [1, 50]')
     return value
+
+
+def vehicle_type_and_mav_sys_id(vehicle_id, vehicle_color):
+    """Get the vehicle_type and mav_sys_id from the vehicle's id and color."""
+    # valid MAV_SYS_IDs 1 to 250
+
+    # the first 25 vehicles per team are iris
+    # the second 25 vehicles per team are plane
+    vehicle_type = 'iris' if vehicle_id <= 25 else 'plane'
+
+    # BLUE uses 1 to 50
+    # GOLD uses 101 to 150
+    mav_sys_id = vehicle_id
+    if vehicle_color == 'gold':
+        mav_sys_id += 100
+    return vehicle_type, mav_sys_id
 
 
 def spawn_team(color):
@@ -46,16 +63,8 @@ def spawn_team(color):
 
     # spawn 50 vehicles
     for i in args.vehicle_id:
-        # valid MAV_SYS_IDs 1 to 250
-        # BLUE uses 1 to 50
-        # GOLD uses 101 to 150
-        mav_sys_id = i
-        if color == 'gold':
-            mav_sys_id += 100
 
-        # the first 25 vehicles per team are iris
-        # the second 25 vehicles per team are plane
-        vehicle_type = 'iris' if i <= 25 else 'plane'
+        vehicle_type, mav_sys_id = vehicle_type_and_mav_sys_id(i, color)
 
         # each vehicle uses 4 consecutive ports
         # the first one is VEHICLE_BASE_PORT + MAV_SYS_IDs
@@ -91,10 +100,9 @@ def spawn_team(color):
             pass
     if args.delete:
         for i in args.vehicle_id:
-            vehicle_type = 'iris' if i <= 25 else 'plane'
-            mav_sys_id = i
-            if color == 'gold':
-                mav_sys_id += 100
+            _, mav_sys_id = vehicle_type_and_mav_sys_id(i, color)
             delete_model(
-                mav_sys_id, vehicle_type, ros_master_uri=args.gazebo_ros_master_uri)
+                mav_sys_id,
+                vehicle_type,
+                ros_master_uri=args.gazebo_ros_master_uri)
     return retcode
