@@ -1,9 +1,12 @@
-import pep8
+try:
+    import pycodestyle
+except ImportError:
+    import pep8 as pycodestyle
 import os
 
 
 def test_pycodestyle():
-    style = pep8.StyleGuide()
+    style = pycodestyle.StyleGuide()
     base_path = os.path.dirname(os.path.dirname(__file__))
     report = style.check_files([
         os.path.join(base_path, 'script', 'control_team_blue'),
