@@ -24,8 +24,8 @@ def vehicle_type_and_mav_sys_id(vehicle_id, vehicle_color):
     # valid MAV_SYS_IDs 1 to 250
 
     # the first 25 vehicles per team are iris
-    # the second 25 vehicles per team are plane
-    vehicle_type = 'iris' if vehicle_id <= 25 else 'plane'
+    # the second 25 vehicles per team are plane (delta_wing)
+    vehicle_type = 'iris' if vehicle_id <= 25 else 'delta_wing'
 
     # BLUE uses 1 to 50
     # GOLD uses 101 to 150

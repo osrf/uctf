@@ -1,4 +1,4 @@
 [submodule "Firmware"]
 	path = Firmware
-	url = https://github.com/PX4/Firmware.git
-	branch = master
+	url = https://github.com/osrf/Firmware.git
+	branch = zephyr

@@ -66,7 +66,7 @@ def spawn_one():
         'Spawn vehicle.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('mav_sys_id', type=mav_sys_id_type)
-    parser.add_argument('--vehicle-type', choices=['iris', 'plane'])
+    parser.add_argument('--vehicle-type', choices=['iris', 'delta_wing'])
     parser.add_argument('--baseport', type=int)
     parser.add_argument('--color', choices=['blue', 'gold'])
     parser.add_argument('--groundport', type=int)
@@ -77,7 +77,7 @@ def spawn_one():
 
     # choose some nice defaults based on the id
     if args.vehicle_type is None:
-        args.vehicle_type = 'iris' if args.mav_sys_id % 2 else 'plane'
+        args.vehicle_type = 'iris' if args.mav_sys_id % 2 else 'delta_wing'
     if args.baseport is None:
         args.baseport = 14000 + args.mav_sys_id * 4
     if args.color is None:
@@ -215,10 +215,20 @@ def spawn_model(
         os.environ[ROS_MASTER_URI] = ros_master_uri
     srv = ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
 
-    model_filename = os.path.join(
+    model_file = ""
+    if vehicle_type == "iris":
+        model_directory = "rotors_description"
+        model_file = "urdf/iris_base.xacro"
+    elif vehicle_type == "delta_wing":
+        model_directory = "delta_wing"
+        model_file = "delta_wing.sdf"
+
+    model_pathname = os.path.join(
         os.path.dirname(__file__), '..', '..', '..', '..',
         'share', 'uctf', 'models',
-        '%s' % vehicle_type, '%s.sdf' % vehicle_type)
+        '%s' % model_directory)
+    model_filename = os.path.join(
+        model_pathname, '%s' % model_file)
     with open(model_filename, 'r') as h:
         model_xml = h.read()
 
@@ -227,9 +237,20 @@ def spawn_model(
             'mavlink_udp_port': str(baseport),
         },
     }
+    # some default args for iris (see sitl_gazebo cmake file for list)
+    kwargs['mappings']['enable_mavlink_interface'] = "true"
+    kwargs['mappings']['enable_ground_truth'] = "false"
+    kwargs['mappings']['enable_logging'] = "false"
+    kwargs['mappings']['enable_camera'] = "false"
+    # ros commandline arguments
+    kwargs['mappings']['rotors_description_dir'] = model_pathname
+    kwargs['mappings']['scripts_dir'] = os.path.join(
+        os.path.dirname(__file__), '..', '..', '..', '..',
+        'share', 'uctf', 'sitl_gazebo_scripts')
+    # additional xacro params for uctf
     if color:
-        material_name = 'Gazebo/%s' % color.capitalize()
-        kwargs['mappings']['visual_material'] = material_name
+        # material_name = 'Gazebo/%s' % color.capitalize()
+        kwargs['mappings']['visual_material'] = color.capitalize()
     if mavlink_address:
         kwargs['mappings']['mavlink_addr'] = mavlink_address
     model_xml = xacro(model_xml, **kwargs)

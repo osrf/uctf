@@ -373,6 +373,15 @@
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
       <motorSpeedPubTopic>/motor_speed/0</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <gazebo_joint_control_pid>
+        <p>0.1</p>
+        <i>0</i>
+        <d>0</d>
+        <iMax>0</iMax>
+        <iMin>0</iMin>
+        <cmdMax>3</cmdMax>
+        <cmdMin>-3</cmdMin>
+      </gazebo_joint_control_pid>
     </plugin>
     <plugin name='back_left_motor_model' filename='librotors_gazebo_motor_model.so'>
       <robotNamespace>iris</robotNamespace>
@@ -390,6 +399,15 @@
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
       <motorSpeedPubTopic>/motor_speed/1</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <gazebo_joint_control_pid>
+        <p>0.1</p>
+        <i>0</i>
+        <d>0</d>
+        <iMax>0</iMax>
+        <iMin>0</iMin>
+        <cmdMax>3</cmdMax>
+        <cmdMin>-3</cmdMin>
+      </gazebo_joint_control_pid>
     </plugin>
     <plugin name='front_left_motor_model' filename='librotors_gazebo_motor_model.so'>
       <robotNamespace>iris</robotNamespace>
@@ -407,6 +425,15 @@
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
       <motorSpeedPubTopic>/motor_speed/2</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <gazebo_joint_control_pid>
+        <p>0.1</p>
+        <i>0</i>
+        <d>0</d>
+        <iMax>0</iMax>
+        <iMin>0</iMin>
+        <cmdMax>3</cmdMax>
+        <cmdMin>-3</cmdMin>
+      </gazebo_joint_control_pid>
     </plugin>
     <plugin name='back_right_motor_model' filename='librotors_gazebo_motor_model.so'>
       <robotNamespace>iris</robotNamespace>
@@ -424,6 +451,15 @@
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
       <motorSpeedPubTopic>/motor_speed/3</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <gazebo_joint_control_pid>
+        <p>0.1</p>
+        <i>0</i>
+        <d>0</d>
+        <iMax>0</iMax>
+        <iMin>0</iMin>
+        <cmdMax>3</cmdMax>
+        <cmdMin>-3</cmdMin>
+      </gazebo_joint_control_pid>
     </plugin>
     <plugin name='mavlink_interface' filename='librotors_gazebo_mavlink_interface.so'>
       <robotNamespace>iris</robotNamespace>

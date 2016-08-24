@@ -85,7 +85,7 @@ class Widget(QGraphicsView):
                 QPointF(3, -3),
                 QPointF(0, 0),
             ]))
-        elif namespace.startswith('plane'):
+        elif namespace.startswith('delta_wing'):
             # draw circle
             item = QGraphicsEllipseItem(-3, -3, 6, 6)
         else:

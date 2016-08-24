@@ -49,8 +49,8 @@ def get_namespaces(color):
             mav_sys_id += 100
 
         # the first 25 vehicles per team are iris
-        # the second 25 vehicles per team are plane
-        vehicle_type = 'iris' if i <= 25 else 'plane'
+        # the second 25 vehicles per team are delta_wing
+        vehicle_type = 'iris' if i <= 25 else 'delta_wing'
 
         namespaces.append('%s_%d' % (vehicle_type, mav_sys_id))
     return namespaces

@@ -24,7 +24,7 @@ install(DIRECTORY
   DESTINATION lib/python/site-packages
 )
 install(DIRECTORY
-  "launch" "media" "models" "worlds"
+  "launch" "media" "worlds"
   DESTINATION share/${PROJECT_NAME}
 )
 
@@ -66,12 +66,12 @@ install(PROGRAMS
 )
 install(FILES
   "Firmware/ROMFS/px4fmu_common/mixers/quad_w.main.mix"
-  "Firmware/ROMFS/sitl/mixers/plane_sitl.main.mix"
+  "Firmware/ROMFS/sitl/mixers/delta_wing_sitl.main.mix"
   DESTINATION share/${PROJECT_NAME}/mixers
 )
 install(FILES
   "Firmware/posix-configs/SITL/init/rcS_gazebo_iris"
-  "Firmware/posix-configs/SITL/init/rcS_gazebo_plane"
+  "Firmware/posix-configs/SITL/init/rcS_gazebo_delta_wing"
   DESTINATION share/${PROJECT_NAME}/SITLinit
 )
 
@@ -84,6 +84,21 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/parameters" "")
 install(FILES
   "${CMAKE_CURRENT_BINARY_DIR}/parameters"
   DESTINATION share/${PROJECT_NAME}/rootfs/eeprom
+)
+
+install(
+  # these models are copied into install directory, but when we spawn team
+  # models, we use xacro and generate a new model with arguments such
+  # as mavlink_addr and mavlink_udp_port
+  DIRECTORY ${firmware_path}/Tools/sitl_gazebo/models/rotors_description
+            ${firmware_path}/Tools/sitl_gazebo/models/delta_wing
+  DESTINATION share/${PROJECT_NAME}/models
+)
+
+install(
+  # scripts for generating models with xacro macros
+  DIRECTORY ${firmware_path}/Tools/sitl_gazebo/scripts
+  DESTINATION share/${PROJECT_NAME}/sitl_gazebo_scripts
 )
 
 install(FILES
