@@ -23,8 +23,6 @@ sudo apt install ros-kinetic-gazebo-ros ros-kinetic-mavros ros-kinetic-opencv3 r
 
 ## Install uctf package
 
-TODO(dirk-thomas) This Debian package has not been created yet.
-
 Setup your computer to accept software from <http://packages.osrfoundation.org>:
 
 ```console

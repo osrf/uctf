@@ -14,8 +14,6 @@ sudo apt update
 sudo apt install git protobuf-compiler
 ```
 
-TODO(dirk-thomas) This repository is private at the moment.
-
 Get the source code of `uctf` (including its submodules):
 
 ```console
