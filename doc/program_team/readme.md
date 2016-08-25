@@ -1,6 +1,6 @@
 # Program your own team
 
-TODO to be written
+TODO to be written, this should simply be yet another payload like the greedy shoorter
 
 ---
 

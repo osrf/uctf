@@ -1,6 +1,8 @@
 # Run the example
 
-After setting up your system running the example will make sure everything works as expected.
+After setting up your system running the greedy shooter will make sure everything works as expected.
+
+**TODO this example does not yet work with the greedy shooter**
 
 ## Environment setup
 
@@ -8,7 +10,7 @@ In order to use the installed software some environment variables need to be set
 This has to happen for each terminal:
 
 ```console
-. /opt/ros/kinetic/setup.bash
+. <ws-payload>/setup.bash
 . /usr/share/uctf/setup.sh
 ```
 
@@ -45,12 +47,13 @@ The two scripts `spawn_blue` and `spawn_gold` can be used to perform the followi
   But a subset of these ids (1 - 50) can be passed to reduce the set.
   For information about the unique vehicle ids please see the [intro](../intro/readme.md)
 
-* For each vehicle a custom init script for PX4 is being generated which contains specific port numbers.
+* For each vehicle a custom init script for PX4 is being generated which contains specific ids and port numbers.
 
 * For the set of spawned vehicles a single ROS launch file is being generated.
   This launch configuration starts a PX4 controller as well as a MAVLink-to-ROS bridge for each vehicle.
+  Each vehicle uses a separate ROS master to isolate the payloads from each vehicle.
 
-For this example we will only spawn two vehicles (one quadcopter (1), one fixed wing (26)) for a single team and automatically start the generated `roslaunch` file:
+For this example we will only spawn two vehicles (one quadcopter (1), one fixed wing (26)) for a single team and automatically start the generated `roslaunch` files:
 
 ```console
 spawn_blue 1 26 --launch
@@ -59,7 +62,8 @@ spawn_blue 1 26 --launch
 ### 2D visualization
 
 Since the vehicles are so small compared to the environment size it is impossible to observe them all at the same time in Gazebo.
-A simplified 2D visualization (which is not to scale) can provide that overview as a `rqt plugin`:
+A simplified 2D visualization (which is not to scale) can provide that overview as a `rqt plugin`.
+The plugin listens to the mavlink messages of each vehicle:
 
 ```console
 rqt_uctf
@@ -94,6 +98,8 @@ Now you should see both vehicles at a location in Zurich, Switzerland (which are
 All vehicles have the same shape in this application despite one of them being a quadcopter.
 
 ### Start example controller
+
+**TODO this needs to be replaced with the instructions to start the greedy shooter**
 
 The two scripts `control_team_blue` and `control_team_gold` implement a simple behavior using the ROS topics and services provided by each vehicle.
 Each vehicle publishing state information is automatically being armed and then flies a short mission which consists of a takeoff command and two waypoints in the middle of the game cube.

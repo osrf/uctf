@@ -5,6 +5,42 @@ Therefore first follow the instructions from the section *Install dependencies* 
 
 If you want to look into building any of them from source please follow their tutorials ([ROS](http://wiki.ros.org/kinetic/Installation/Source), [Gazebo](http://gazebosim.org/tutorials?tut=install_from_source)).
 
+## Install acs software
+
+### Payload
+
+The payload is being compiled in a catkin workspace.
+Clone the following repositories and then build the workspace:
+
+* `autonomy-payload`
+* `autopilot_bridge`
+
+### Arbiter
+
+Since the arbiter uses Python 3 we setup a virtual environment:
+
+```console
+mkdir venv
+pyvenv venv
+. venv/activate.sh
+```
+
+Then install the following Python packages into the venv using `python setup.py install`:
+
+* acs_lib
+* acs_dashboards
+* arbiter
+
+You will likely need addition dependencies in the venv:
+
+```console
+pip install image netifaces pyqt5 urllib3
+```
+
+In order to avoid a dependency on `atcommander` you need to patch the file
+`acs_lib/acs_network/acs_network_ground.py` and move the module level import of
+`atcommander` to a local scope where it is being used.
+
 ## Build uctf package
 
 Install the dependencies to fetch and build the source code:

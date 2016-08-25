@@ -1,4 +1,4 @@
 [submodule "Firmware"]
 	path = Firmware
 	url = https://github.com/osrf/Firmware.git
-	branch = zephyr
+	branch = zephyr_and_sysid_thismav
