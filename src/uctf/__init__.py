@@ -145,6 +145,12 @@ def generate_init_script(
             init_lines[i + 1:i + 1] = ['param set MAV_SYS_ID %d' % mav_sys_id]
             init_lines[i + 2:i + 2] = \
                 ['param set SYSID_THISMAV %d' % mav_sys_id]
+            init_lines[i + 3:i + 3] = \
+                ['param set ALT_HOLD_RTL 10000.000000']
+            init_lines[i + 4:i + 4] = \
+                ['param set FENCE_RETALT 100.000000']
+            init_lines[i + 5:i + 5] = \
+                ['param set RALLY_TOTAL 1.000000']
             break
     else:
         raise RuntimeError("Could not find line starting with '%s'" % prefix)

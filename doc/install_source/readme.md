@@ -9,8 +9,8 @@ If you want to look into building any of them from source please follow their tu
 
 ### Payload
 
-The payload is being compiled in a catkin workspace.
-Clone the following repositories and then build the workspace:
+The payload is being compiled in a catkin workspace names `ws_payload`.
+Clone the following repositories and then build the workspace with `catkin_make`:
 
 * `autonomy-payload`
 * `autopilot_bridge`
@@ -20,12 +20,12 @@ Clone the following repositories and then build the workspace:
 Since the arbiter uses Python 3 we setup a virtual environment:
 
 ```console
-mkdir venv
-pyvenv venv
-. venv/activate.sh
+mkdir venv3
+pyvenv venv3
+. venv3/bin/activate.sh
 ```
 
-Then install the following Python packages into the venv using `python setup.py install`:
+Then install the following Python packages into the venv using `python setup.py develop`:
 
 * acs_lib
 * acs_dashboards
