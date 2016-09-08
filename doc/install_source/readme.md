@@ -34,7 +34,7 @@ Then install the following Python packages into the venv using `python setup.py 
 You will likely need addition dependencies in the venv:
 
 ```console
-pip install image netifaces pyqt5 urllib3
+pip install image netifaces pyqt5 urllib3 wheel
 ```
 
 In order to avoid a dependency on `atcommander` you need to patch the file
