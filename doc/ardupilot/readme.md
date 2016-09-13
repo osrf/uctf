@@ -19,7 +19,7 @@ Check out gazebo and get on the right branch:
 cd ~/uctf-ardu
 hg clone ssh://hg@bitbucket.org/osrf/gazebo
 cd gazebo
-hg checkout aero_default
+hg checkout ardupilot
 ~~~
 
 Check out gazebo_models and get on the right branch:
