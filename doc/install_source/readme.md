@@ -1,7 +1,7 @@
 # Build package from source
 
 For this tutorial we will assume you are still using ROS and Gazebo from binary packages.
-Therefore first follow the instructions from the section *Install dependencies* in the [Install binary packages](../install_binary.md) documentation.
+Therefore first follow the instructions from the section *Install dependencies* in the [Install binary packages](../install_binary/readme.md) documentation.
 
 If you want to look into building any of them from source please follow their tutorials ([ROS](http://wiki.ros.org/kinetic/Installation/Source), [Gazebo](http://gazebosim.org/tutorials?tut=install_from_source)).
 
