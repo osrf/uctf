@@ -6,6 +6,7 @@ It's very much a work in progress and is primarily intended to assist the intern
 ## Install prerequisites
 
 * Follow the Gazebo build-from-source instructions to [install prerequisites](http://gazebosim.org/tutorials?tut=install_from_source&cat=install#InstallRequiredDependencies), [build and install ignition math](http://gazebosim.org/tutorials?tut=install_from_source&cat=install#BuildAndInstallignitionmath), and [build and install sdformat](http://gazebosim.org/tutorials?tut=install_from_source&cat=install#BuildAndInstallSDFormat) (don't actually download and install Gazebo here; we'll do that below to get a particular branch).
+* Note: you also need to build `ign-msgs` as you did `ign-math`. It's missing from the Gazebo tutorial: [ticket](https://bitbucket.org/osrf/gazebo_tutorials/issues/66/add-ign-msgs-to-build-from-source).
 
 Additional new dependency needed is `libqwt-dev`.
 
