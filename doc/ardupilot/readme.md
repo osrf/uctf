@@ -7,6 +7,8 @@ It's very much a work in progress and is primarily intended to assist the intern
 
 * Follow the Gazebo build-from-source instructions to [install prerequisites](http://gazebosim.org/tutorials?tut=install_from_source&cat=install#InstallRequiredDependencies), [build and install ignition math](http://gazebosim.org/tutorials?tut=install_from_source&cat=install#BuildAndInstallignitionmath), and [build and install sdformat](http://gazebosim.org/tutorials?tut=install_from_source&cat=install#BuildAndInstallSDFormat) (don't actually download and install Gazebo here; we'll do that below to get a particular branch).
 
+Additional new dependency needed is `libqwt-dev`.
+
 ## Get the code
 
 Create a place to work:
