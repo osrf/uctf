@@ -53,7 +53,20 @@ git submodule checkout --init --recursive
 (cd ArduPlane && make sitl)
 ~~~
 
-## Start ArduPilot/ArduPlane
+## Run ArduPilot
+
+### Start Gazebo
+
+~~~
+gazebo --verbose worlds/iris_arducopter_demo.world
+~~~
+
+~~~
+gazebo --verbose worlds/zephyr_ardupilot_demo.world
+~~~
+
+
+### Start ArduPilot/ArduPlane
 
 ~~~
 export PATH=$PATH:[path to ardupilot]]/Tools/autotest
