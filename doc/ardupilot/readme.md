@@ -35,7 +35,7 @@ Check out ardupilot from a fork and get on the right branch:
 cd ~/uctf-ardu
 git clone https://github.com/hsu/ardupilot.git
 cd ardupilot
-git checkout gazebo_sitl_zephyr
+git checkout gazebo_sitl
 ~~~
 
 ## Build everything
