@@ -71,12 +71,12 @@ gazebo --verbose worlds/zephyr_ardupilot_demo.world
 
 ~~~
 export PATH=$PATH:[path to ardupilot]]/Tools/autotest
-sim_vehicles.py -f GazeboIris -S 1000
+sim_vehicles.py -f GazeboIris -S 1000 -v ArduCopter
 ~~~
 
 ~~~
 export PATH=$PATH:[path to ardupilot]]/Tools/autotest
-sim_vehicles.py -f GazeboZephyr -S 1000
+sim_vehicles.py -f GazeboZephyr -S 1000 -v ArduPlane
 ~~~
 
 
