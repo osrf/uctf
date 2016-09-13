@@ -40,4 +40,27 @@ git checkout gazebo_sitl
 
 ## Build everything
 
-TODO
+### Build ArduPilot SITL
+
+~~~
+export PATH=$PATH:[path to ardupilot]]/Tools/autotest
+cd ardupilot
+./Tools/scripts/install-prereqs-ubuntu.sh
+git submodule checkout --init --recursive
+(cd ArduCopter && make sitl)
+(cd ArduPlane && make sitl)
+~~~
+
+## Start ArduPilot/ArduPlane
+
+~~~
+export PATH=$PATH:[path to ardupilot]]/Tools/autotest
+sim_vehicles.py -f GazeboIris -S 1000
+~~~
+
+~~~
+export PATH=$PATH:[path to ardupilot]]/Tools/autotest
+sim_vehicles.py -f GazeboZephyr -S 1000
+~~~
+
+
