@@ -74,6 +74,23 @@ export PATH=$PATH:[path to ardupilot]]/Tools/autotest
 sim_vehicles.py -f GazeboIris -S 1000 -v ArduCopter
 ~~~
 
+#### Test fly the vehicle manually
+Inside the mavproxy you can now try flying it. 
+
+The following will raise the ekf thresholds to account for simulation errors.
+And the 2nd line will remove the timeout on being armed, otherwise you need to type very fast.
+
+```
+param set FS_EKF_THRESH 1
+param set DISARM_DELAY 0
+```
+
+Now you can takeoff
+```
+arm throttle
+takeoff 5
+```
+
 ~~~
 export PATH=$PATH:[path to ardupilot]]/Tools/autotest
 sim_vehicles.py -f GazeboZephyr -S 1000 -v ArduPlane
