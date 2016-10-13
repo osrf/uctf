@@ -64,6 +64,9 @@ rosdep install --from-path ${SRC_SPACE} --ignore-src
 ~~~
 
 Additional new dependency needed is `libqwt-dev`.
+~~~
+sudo apt-get install libqwt-dev python-future
+~~~
 
 ## Build the workspace
 
@@ -83,12 +86,12 @@ cd ardupilot
 git checkout gazebo_sitl
 ~~~
 
-### Setup a python3 venv to build and run the ardupilot
+### Setup a python venv to install mavproxy
 ~~~
 mkdir ~/uctf-ardu/ardu-venv
-pyvenv ~/uctf-ardu/ardu-venv
+virtualenv ~/uctf-ardu/ardu-venv
 . ~/uctf-ardu/ardu-venv/bin/activate
-pip install future
+pip install mavproxy
 ~~~
 
 ### Build ArduPilot SITL
@@ -127,7 +130,8 @@ gazebo --verbose worlds/zephyr_ardupilot_demo.world
 ### Start ArduPilot/ArduPlane
 
 ~~~
-export PATH=$PATH:[path to ardupilot]]/Tools/autotest
+. ~/uctf-ardu/ardu-venv/bin/activate
+export PATH=$PATH:~/uctf-ardu/ardupilot/Tools/autotest
 sim_vehicle.py -f GazeboIris -S 1000 -v ArduCopter
 ~~~
 
@@ -149,6 +153,7 @@ takeoff 5
 ```
 
 ~~~
+. ~/uctf-ardu/ardu-venv/bin/activate
 export PATH=$PATH:[path to ardupilot]]/Tools/autotest
 sim_vehicle.py -f GazeboZephyr -S 1000 -v ArduPlane
 ~~~
