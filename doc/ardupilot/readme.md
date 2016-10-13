@@ -83,10 +83,18 @@ cd ardupilot
 git checkout gazebo_sitl
 ~~~
 
+### Setup a python3 venv to build and run the ardupilot
+~~~
+mkdir ~/uctf-ardu/ardu-venv
+pyvenv ~/uctf-ardu/ardu-venv
+. ~/uctf-ardu/ardu-venv/bin/activate
+pip install future
+~~~
+
 ### Build ArduPilot SITL
 
 ~~~
-export PATH=$PATH:[path to ardupilot]]/Tools/autotest
+export PATH=$PATH:~/uctf-ardu/ardupilot/Tools/autotest
 cd ardupilot
 ./Tools/scripts/install-prereqs-ubuntu.sh
 git submodule checkout --init --recursive
