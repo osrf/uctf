@@ -8,7 +8,9 @@ It's very much a work in progress and is primarily intended to assist the intern
 
 Create a place to work:
 ~~~
-mkdir -p ~/uctf-ardu/src
+export SRC_SPACE=~/uctf-ardu/src
+
+mkdir -p ${SRC_SPACE}
 ~~~
 
 
@@ -48,7 +50,6 @@ vcs import --input /tmp/gazebo_uctf.repos ~/uctf-ardu/src
 
 Fetch package.xml files:
 ~~~
-export SRC_SPACE=~/uctf-ardu/src
 curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_gazebo.xml > ${SRC_SPACE}/gazebo/package.xml
 curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_ign-math.xml > ${SRC_SPACE}/ign-math/packages.xml
 curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_ign-msgs.xml > ${SRC_SPACE}/ign-msgs/packages.xml
@@ -59,7 +60,7 @@ curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_sd
 ## Install prerequisites
 
 ~~~
-rosdep install --from-path ~/uctf-ardu/src --ignore-src
+rosdep install --from-path ${SRC_SPACE} --ignore-src
 ~~~
 
 Additional new dependency needed is `libqwt-dev`.
@@ -67,7 +68,8 @@ Additional new dependency needed is `libqwt-dev`.
 ## Build the workspace
 
 ~~~
-cd ~/uctf-ardu
+cd ${SRC_SPACE}
+. /opt/ros/kinetic/setup.bash
 catkin build
 ~~~
 
