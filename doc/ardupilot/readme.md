@@ -81,17 +81,8 @@ catkin build
 Check out ardupilot from a fork and get on the right branch:
 ~~~
 cd ~/uctf-ardu
-git clone https://github.com/hsu/ardupilot.git
+git clone https://github.com/ArduPilot/ardupilot.git
 cd ardupilot
-git checkout gazebo_sitl
-~~~
-
-### Setup a python venv to install mavproxy
-~~~
-mkdir ~/uctf-ardu/ardu-venv
-virtualenv ~/uctf-ardu/ardu-venv
-. ~/uctf-ardu/ardu-venv/bin/activate
-pip install mavproxy
 ~~~
 
 ### Build ArduPilot SITL
@@ -101,8 +92,8 @@ export PATH=$PATH:~/uctf-ardu/ardupilot/Tools/autotest
 cd ardupilot
 ./Tools/scripts/install-prereqs-ubuntu.sh
 git submodule checkout --init --recursive
-(cd ArduCopter && make sitl)
-(cd ArduPlane && make sitl)
+./waf configure
+./waf
 ~~~
 
 ## Run ArduPilot
@@ -128,11 +119,10 @@ gazebo --verbose worlds/zephyr_ardupilot_demo.world
 
 
 ### Start ArduPilot/ArduPlane
-
+S parameter will speedup the simulation
 ~~~
-. ~/uctf-ardu/ardu-venv/bin/activate
 export PATH=$PATH:~/uctf-ardu/ardupilot/Tools/autotest
-sim_vehicle.py -f GazeboIris -S 1000 -v ArduCopter
+sim_vehicle.py -f gazebo-iris -S 10 -v ArduCopter
 ~~~
 
 #### Test fly the vehicle manually
@@ -146,14 +136,16 @@ param set FS_EKF_THRESH 1
 param set DISARM_DELAY 0
 ```
 
-Now you can takeoff
+Switch to a GPS mode (simpler to command)
+Now you can takeoff when simulated GPS is ready (about 10s)
 ```
+mode guided
 arm throttle
 takeoff 5
 ```
 
 ~~~
 . ~/uctf-ardu/ardu-venv/bin/activate
-export PATH=$PATH:[path to ardupilot]]/Tools/autotest
-sim_vehicle.py -f GazeboZephyr -S 1000 -v ArduPlane
+export PATH=$PATH:[path to ardupilot]/Tools/autotest
+sim_vehicle.py -f gazebo-zephyr -S 10 -v ArduPlane
 ~~~
