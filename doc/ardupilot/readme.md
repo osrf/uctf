@@ -145,7 +145,6 @@ takeoff 5
 ```
 
 ~~~
-. ~/uctf-ardu/ardu-venv/bin/activate
-export PATH=$PATH:[path to ardupilot]/Tools/autotest
+export PATH=$PATH:~/uctf-ardu/ardupilot/Tools/autotest
 sim_vehicle.py -f gazebo-zephyr -S 10 -v ArduPlane
 ~~~
