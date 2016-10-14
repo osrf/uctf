@@ -25,6 +25,10 @@ repositories:
     type: hg
     url: ssh://hg@bitbucket.org/osrf/gazebo_models
     version: zephyr_demos
+  gazebo_ros_pkgs:
+    type: git
+    url: git@github.com:ros-simulation/gazebo_ros_pkgs.git
+    version: kinetic-devel
   ign-math:
     type: hg
     url: https://bitbucket.org/ignitionrobotics/ign-math
@@ -41,6 +45,10 @@ repositories:
     type: hg
     url: https://bitbucket.org/osrf/sdformat
     version: default
+  uctf:
+    type: git
+    url: git@github.com:osrf/uctf
+    version: add_ardupilot
 ~~~
 
 Check out gazebo and get on the right branch:
