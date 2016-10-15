@@ -130,7 +130,7 @@ gazebo --verbose worlds/zephyr_ardupilot_demo.world
 S parameter will speedup the simulation
 ~~~
 export PATH=$PATH:~/uctf-ardu/ardupilot/Tools/autotest
-sim_vehicle.py -f gazebo-iris -S 10 -v ArduCopter
+sim_vehicle.py -f gazebo-iris -S 10 -v ArduCopter -m --mav10
 ~~~
 
 #### Test fly the vehicle manually
@@ -154,5 +154,5 @@ takeoff 5
 
 ~~~
 export PATH=$PATH:~/uctf-ardu/ardupilot/Tools/autotest
-sim_vehicle.py -f gazebo-zephyr -S 10 -v ArduPlane
+sim_vehicle.py -f gazebo-zephyr -S 10 -v ArduPlane -m --mav10
 ~~~
