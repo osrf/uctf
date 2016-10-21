@@ -99,7 +99,7 @@ cd ardupilot
 export PATH=$PATH:~/uctf-ardu/ardupilot/Tools/autotest
 cd ardupilot
 ./Tools/scripts/install-prereqs-ubuntu.sh
-git submodule checkout --init --recursive
+git submodule update --init --recursive
 ./waf configure
 ./waf
 ~~~
