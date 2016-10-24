@@ -62,6 +62,9 @@ install(PROGRAMS
 )
 install(PROGRAMS
   "script/px4.sh"
+  "script/arduplane.sh"
+  "script/mavproxy.sh"
+  "script/arducopter.sh"
   DESTINATION share/${PROJECT_NAME}
 )
 install(FILES
@@ -90,8 +93,12 @@ install(
   # these models are copied into install directory, but when we spawn team
   # models, we use xacro and generate a new model with arguments such
   # as mavlink_addr and mavlink_udp_port
+  # TODO Don't have a copy of the ardupilot models locally
+  # TODO parameterize the ardupilot models
   DIRECTORY ${firmware_path}/Tools/sitl_gazebo/models/rotors_description
             ${firmware_path}/Tools/sitl_gazebo/models/delta_wing
+            ${CMAKE_CURRENT_SOURCE_DIR}/models/zephyr_delta_wing_ardupilot_demo
+            ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_standoffs_demo
   DESTINATION share/${PROJECT_NAME}/models
 )
 

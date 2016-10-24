@@ -1,9 +1,10 @@
 import argparse
 import subprocess
 
-from uctf import generate_init_script
+from uctf import generate_config
 from uctf import get_ground_control_port
 from uctf import get_launch_snippet
+from uctf import get_vehicle_base_port
 from uctf import get_vehicle_pose
 from uctf import delete_model
 from uctf import spawn_model
@@ -54,7 +55,9 @@ def spawn_team(color):
         '--delete', action='store_true',
         help='Despawn when killed')
     parser.add_argument('--debug', action='store_true')
+    parser.add_argument('--px4', action='store_true', default=False)
     args = parser.parse_args()
+    autopilot = 'px4' if args.px4 else 'ardupilot'
 
     # ensure valid team color
     assert color in ['blue', 'gold']
@@ -70,10 +73,10 @@ def spawn_team(color):
         # the first one is VEHICLE_BASE_PORT + MAV_SYS_IDs
         # the first two are used between the mavlink gazebo plugin and the px4
         # the second two are used between the px4 and and the mavros node
-        vehicle_base_port = VEHICLE_BASE_PORT + mav_sys_id * 4
+        vehicle_base_port = get_vehicle_base_port(mav_sys_id)
 
         # generate the vehicle specific init script
-        init_script_path = generate_init_script(
+        init_script_path = generate_config(
             mav_sys_id, vehicle_type, vehicle_base_port,
             get_ground_control_port(color))
 
@@ -83,10 +86,10 @@ def spawn_team(color):
             mav_sys_id, vehicle_type, vehicle_base_port, color, vehicle_pose,
             ros_master_uri=args.gazebo_ros_master_uri,
             mavlink_address=args.mavlink_address,
-            debug=args.debug)
+            debug=args.debug, autopilot=autopilot)
 
         launch_snippet += get_launch_snippet(
-            mav_sys_id, vehicle_type, vehicle_base_port, init_script_path)
+            mav_sys_id, vehicle_type, vehicle_base_port, init_script_path,  autopilot=autopilot)
 
     launch_path = write_launch_file(launch_snippet)
     cmd = ['roslaunch', launch_path]
