@@ -84,7 +84,7 @@ cd ${SRC_SPACE}
 catkin build
 ~~~
 
-## Checkout Audupilot
+## Checkout Ardupilot
 
 Check out ardupilot from a fork and get on the right branch:
 ~~~
