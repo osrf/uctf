@@ -5,7 +5,7 @@
   <xacro:arg name='fdm_port_in' default='9002' />
   <xacro:arg name='fdm_port_out' default='9003' />
   <model name="zephyr_delta_wing_ardupilot_demo">
-    <pose>0 0 0 0 0 0</pose>
+    <pose>0 0 0 0 0 1.5707</pose>
     <include>
       <uri>model://zephyr_delta_wing</uri>
       <!--
@@ -121,8 +121,8 @@
       <fdm_port_out>$(arg fdm_port_out)</fdm_port_out>
       <modelXYZToAirplaneXForwardZDown>0 0 0 3.141593 0 -1.57079</modelXYZToAirplaneXForwardZDown>
       <gazeboXYZToNED>0 0 0 3.141593 0 -1.57079</gazeboXYZToNED>
-      <imuName>zephyr_delta_wing_ardupilot_demo::zephyr_delta_wing::wing::imu_sensor</imuName>
-      <!-- <imuName>imu_sensor</imuName> -->
+      <!-- <imuName>zephyr_delta_wing_ardupilot_demo::zephyr_delta_wing::wing::imu_sensor</imuName> -->
+      <imuName>imu_sensor</imuName>
       <connectionTimeoutMaxCount>5</connectionTimeoutMaxCount>
       <control channel="2">
         <!--
