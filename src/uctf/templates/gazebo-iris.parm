@@ -38,4 +38,4 @@ MOT_THST_HOVER  0.36
 FS_EKF_THRESH 1
 DISARM_DELAY 0
 
-@{if mav_sys_id}SYSID_THISMAV    @(mav_sys_id)@{endif}@
+@[if mav_sys_id]SYSID_THISMAV    @(mav_sys_id)@[end if]

@@ -64,7 +64,6 @@ install(PROGRAMS
   "script/px4.sh"
   "script/arduplane.sh"
   "script/mavproxy.sh"
-  "script/arducopter.sh"
   DESTINATION share/${PROJECT_NAME}
 )
 install(FILES

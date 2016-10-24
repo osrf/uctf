@@ -2,7 +2,7 @@
     name="ardupilot_@(vehicle_type)_@(mav_sys_id)"
     pkg="uctf"
     type="arduplane.sh"
-    args="@(mav_sys_id) @(base_port) @(rc_in_port) @(gazebo_port_in) @(gazebo_port_out) @(default_params)"
+    args="@(executable) @(mav_sys_id) @(base_port) @(rc_in_port) @(gazebo_port_in) @(gazebo_port_out) @(default_params) @(model)"
     cwd="node"
     ns="/@(vehicle_type)_@(mav_sys_id)"
     output="screen" />

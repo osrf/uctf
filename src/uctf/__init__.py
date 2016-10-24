@@ -151,7 +151,10 @@ def generate_default_params(
     print("DATA IS %s" % data)
     fd, path = tempfile.mkstemp(prefix='%s_%d_' % (vehicle_type, mav_sys_id))
     with os.fdopen(fd, 'w') as h:
-        h.write(empy('gazebo-zephyr.parm', data))
+        if vehicle_type == 'iris':
+            h.write(empy('gazebo-iris.parm', data))
+        else:
+            h.write(empy('gazebo-zephyr.parm', data))
     return path
 
 def generate_init_script(
@@ -381,6 +384,12 @@ def get_launch_snippet(
             'mav_sys_id': mav_sys_id,
             'pkg_share_path': pkg_share_path,
         }
+        if vehicle_type == 'iris':
+            data['executable'] = '/home/tfoote/uctf-ardu/ardupilot/build/sitl/bin/arducopter-quad'
+            data['model'] = 'gazebo-iris'
+        else:
+            data['executable'] = '/home/tfoote/uctf-ardu/ardupilot/build/sitl/bin/arduplane'
+            data['model'] = 'gazebo-zephyr'
         return empy('ardupilot_and_mavros.launch.em', data)
 
 def write_launch_file(launch_snippet):
