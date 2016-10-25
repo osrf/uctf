@@ -374,7 +374,7 @@ def get_launch_snippet(
         data = {
             'default_params': init_script_path,
             'base_port': vehicle_base_port,
-            'mavproxy_arguments': '--master tcp:127.0.0.1:%d --out 127.0.0.1:%s' % (vehicle_base_port, ground_port),
+            'mavproxy_arguments': '--master tcp:127.0.0.1:%d --out 127.0.0.1:%s --out 127.0.0.1:%s' % (vehicle_base_port, ground_port, vehicle_base_port + 3),
             'rc_in_port': vehicle_base_port + 1,
             'gazebo_port_in': vehicle_base_port + 4,
             'gazebo_port_out': vehicle_base_port + 5,
