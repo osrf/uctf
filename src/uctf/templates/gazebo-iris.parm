@@ -32,10 +32,15 @@ INS_ACC3SCAL_X   1.000
 INS_ACC3SCAL_Y   1.000
 INS_ACC3SCAL_Z   1.000
 
+# Set non-default min-max for RC Calibration check
+RC3_MIN 1101
+RC3_MAX 1901
+
 MOT_THST_EXPO 0.5
 MOT_THST_HOVER  0.36
 
 FS_EKF_THRESH 1
 DISARM_DELAY 0
+ARMING_CHECK 0
 
 @[if mav_sys_id]SYSID_THISMAV    @(mav_sys_id)@[end if]
