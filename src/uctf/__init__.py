@@ -113,7 +113,7 @@ def spawn_one():
 
     config_path = generate_config(
         args.mav_sys_id, args.vehicle_type, args.baseport, args.groundport,
-        args.debug, autopilot)
+        args.debug, autopilot=autopilot)
 
     spawn_model(
         args.mav_sys_id,

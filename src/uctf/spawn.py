@@ -78,7 +78,7 @@ def spawn_team(color):
         # generate the vehicle specific init script
         init_script_path = generate_config(
             mav_sys_id, vehicle_type, vehicle_base_port,
-            get_ground_control_port(color))
+            get_ground_control_port(color), autopilot=autopilot)
 
         # spawn the vehicle model in gazebo
         vehicle_pose = get_vehicle_pose(mav_sys_id, vehicle_type, color)
