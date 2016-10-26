@@ -89,11 +89,7 @@ def spawn_one():
         elif args.mav_sys_id < 201:
             args.color = 'gold'
     if args.groundport is None:
-        args.groundport = 14000
-        if args.color == 'blue':
-            args.groundport += 1
-        if args.color == 'gold':
-            args.groundport += 2
+        args.groundport = get_ground_control_port(args.color)
     if args.x is None and args.y is None:
         # arrange in 10 by 10 blocks
         offset_x = ((args.mav_sys_id - 1) // 10) % 10

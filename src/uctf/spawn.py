@@ -89,7 +89,7 @@ def spawn_team(color):
             debug=args.debug, autopilot=autopilot)
 
         launch_snippet += get_launch_snippet(
-            mav_sys_id, vehicle_type, vehicle_base_port, init_script_path,  autopilot=autopilot)
+            mav_sys_id, vehicle_type, vehicle_base_port, init_script_path, ground_port=get_ground_control_port(color), autopilot=autopilot)
 
     launch_path = write_launch_file(launch_snippet)
     cmd = ['roslaunch', launch_path]
