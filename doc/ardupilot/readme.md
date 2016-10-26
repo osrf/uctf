@@ -89,7 +89,7 @@ catkin build
 Check out ardupilot from a fork and get on the right branch:
 ~~~
 cd ~/uctf-ardu
-git clone https://github.com/ArduPilot/ardupilot.git
+git clone https://github.com/tfoote/ardupilot.git -b uctf-dev
 cd ardupilot
 ~~~
 
@@ -104,17 +104,53 @@ git submodule update --init --recursive
 ./waf
 ~~~
 
-## Run ArduPilot
+# Run Simulation
 
-### Start Gazebo
 
-In a terminal source the workspace and gazebo path and add gazebo models to the path.
+## Terminal setup
+
+In each terminal instructed to open run the following commands.
 
 ~~~
 . ~/uctf-ardu/devel/setup.bash
-. ~/uctf-ardu/devel/share/gazebo/setup.sh
+. ~/uctf-ardu/devel/share/gazebo-8/setup.sh
+. ~/uctf-ardu/devel/share/uctf/setup.sh
 export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/uctf-ardu/src/gazebo_models
 ~~~
+
+## Start Gazebo
+
+Open a terminal source the above and run:
+
+~~~
+roslaunch ~/uctf-ardu/devel/share/uctf/launch/uctf.launch
+~~~
+
+## Launch Drones
+
+Blue team in a new terminal 
+
+~~~
+spawn_blue --launch --delete 1 2 26 27
+~~~
+
+Gold team in a new terminal
+~~~
+spawn_gold --launch --delete 1 2 26 27
+~~~
+
+## Ground control
+If you'd like to see your drones in a Ground Control Station. 
+
+For the blue team connect to port: `14000`
+For the gold team connect to port: `14001`
+
+You can use `qgroundcontrol` or `apmplanner2`
+
+
+
+# Deprecated Instructions
+
 
 The run one of the below simulations
 ~~~
@@ -125,9 +161,8 @@ gazebo --verbose worlds/iris_arducopter_demo.world
 gazebo --verbose worlds/zephyr_ardupilot_demo.world
 ~~~
 
-
 ### Start ArduPilot/ArduPlane
-S parameter will speedup the simulation
+`-S` parameter will speedup the simulation
 ~~~
 export PATH=$PATH:~/uctf-ardu/ardupilot/Tools/autotest
 sim_vehicle.py -f gazebo-iris -S 10 -v ArduCopter -m --mav10
