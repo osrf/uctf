@@ -14,46 +14,50 @@ mkdir -p ${SRC_SPACE}
 ~~~
 
 
-Create a file `/tmp/gazebo_uctf.repos` with this content:
+Create a file `/tmp/gazebo_uctf.rosinstall` with this content:
 ~~~
-repositories:
-  gazebo:
-    type: hg
-    url: ssh://hg@bitbucket.org/osrf/gazebo
-    version: ardupilot
-  gazebo_models:
-    type: hg
-    url: ssh://hg@bitbucket.org/osrf/gazebo_models
-    version: zephyr_demos
-  gazebo_ros_pkgs:
-    type: git
-    url: git@github.com:ros-simulation/gazebo_ros_pkgs.git
+- tar:
+    local-name: gazebo
+    uri: https://bitbucket.org/osrf/gazebo/get/594248df0a49.tar.gz
+    version: osrf-gazebo-594248df0a49
+- tar:
+    local-name: gazebo_models
+    uri: https://bitbucket.org/osrf/gazebo_models/get/ca17c6407082.tar.gz
+    version: osrf-gazebo_models-ca17c6407082
+- git:
+    local-name: gazebo_ros_pkgs
+    uri: git@github.com:ros-simulation/gazebo_ros_pkgs.git
     version: kinetic-devel
-  ign-math:
-    type: hg
-    url: https://bitbucket.org/ignitionrobotics/ign-math
+- hg:
+    local-name: ign-math
+    uri: https://bitbucket.org/ignitionrobotics/ign-math
     version: default
-  ign-msgs:
-    type: hg
-    url: ssh://hg@bitbucket.org/ignitionrobotics/ign-msgs
+- hg:
+    local-name: ign-msgs
+    uri: https://bitbucket.org/ignitionrobotics/ign-msgs
     version: default
-  ign-tools:
-    type: hg
-    url: ssh://hg@bitbucket.org/ignitionrobotics/ign-tools
+- hg:
+    local-name: ign-tools
+    uri: https://bitbucket.org/ignitionrobotics/ign-tools
     version: default
-  sdformat:
-    type: hg
-    url: https://bitbucket.org/osrf/sdformat
+- hg:
+    local-name: ign-tools
+    uri: https://bitbucket.org/ignitionrobotics/ign-tools
     version: default
-  uctf:
-    type: git
-    url: git@github.com:osrf/uctf
+- hg:
+    local-name: sdformat
+    uri: https://bitbucket.org/osrf/sdformat
+    version: default
+- git:
+    local-name: uctf
+    uri: git@github.com:osrf/uctf
     version: add_ardupilot
+
 ~~~
 
 Check out gazebo and get on the right branch:
 ~~~
-vcs import --input /tmp/gazebo_uctf.repos ~/uctf-ardu/src
+rosinstall ~/uctf-ardu/src /tmp/gazebo_uctf.rosinstall
 ~~~
 
 Fetch package.xml files:
@@ -83,6 +87,7 @@ cd ${SRC_SPACE}
 catkin config --init --extend /opt/ros/kinetic -i /opt/sasc --install --isolate-devel
 sudo mkdir -p /opt/sasc
 sudo chown -R $USER:$USER
+(cd src/uctf && git submodule update --init --recursive)
 catkin build
 ~~~
 
@@ -115,10 +120,10 @@ git submodule update --init --recursive
 In each terminal instructed to open run the following commands.
 
 ~~~
-. ~/uctf-ardu/devel/setup.bash
-. ~/uctf-ardu/devel/share/gazebo-8/setup.sh
-. ~/uctf-ardu/devel/share/uctf/setup.sh
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/uctf-ardu/src/gazebo_models
+. /opt/sasc/setup.bash
+. /opt/sasc/share/gazebo-8/setup.sh
+. /opt/sasc/share/uctf/setup.sh
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/sasc/share/gazebo_models
 ~~~
 
 ## Start Gazebo
@@ -152,12 +157,7 @@ You can use `qgroundcontrol` or `apmplanner2`
 
 # Run simulation from installation
 
-~~~
-. /opt/sasc/setup.bash
-. /opt/sasc/share/gazebo-8/setup.sh
-. /opt/sasc/share/uctf/setup.sh
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/uctf-ardu/src/gazebo_models
-~~~
+
 
 # Deprecated Instructions
 
