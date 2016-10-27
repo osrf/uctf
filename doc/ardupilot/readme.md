@@ -55,6 +55,16 @@ Create a file `/tmp/gazebo_uctf.rosinstall` with this content:
 
 ~~~
 
+If you're developing use this for gazebo instead of the tarball.
+~~~
+tar:
+   local-name: gazebo
+   uri: ssh://hg@bitbucket.org/osrf/gazebo
+   version: ardupilot
+~~~
+
+
+
 Check out gazebo and get on the right branch:
 ~~~
 rosinstall ~/uctf-ardu/src /tmp/gazebo_uctf.rosinstall
@@ -89,6 +99,7 @@ sudo mkdir -p /opt/sasc
 sudo chown -R $USER:$USER
 (cd src/uctf && git submodule update --init --recursive)
 catkin build
+cp -r ~/uctf-ardu/src/gazebo_models /opt/sasc/share
 ~~~
 
 ## Checkout Ardupilot
