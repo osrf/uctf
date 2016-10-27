@@ -381,10 +381,10 @@ def get_launch_snippet(
             'pkg_share_path': pkg_share_path,
         }
         if vehicle_type == 'iris':
-            data['executable'] = '/home/tfoote/uctf-ardu/ardupilot/build/sitl/bin/arducopter-quad'
+            data['executable'] = 'arducopter-quad'
             data['model'] = 'gazebo-iris'
         else:
-            data['executable'] = '/home/tfoote/uctf-ardu/ardupilot/build/sitl/bin/arduplane'
+            data['executable'] = 'arduplane'
             data['model'] = 'gazebo-zephyr'
         return empy('ardupilot_and_mavros.launch.em', data)
 

@@ -80,7 +80,9 @@ sudo apt-get install libqwt-dev python-future
 
 ~~~
 cd ${SRC_SPACE}
-. /opt/ros/kinetic/setup.bash
+catkin config --init --extend /opt/ros/kinetic -i /opt/sasc --install --isolate-devel
+sudo mkdir -p /opt/sasc
+sudo chown -R $USER:$USER
 catkin build
 ~~~
 
@@ -100,11 +102,12 @@ export PATH=$PATH:~/uctf-ardu/ardupilot/Tools/autotest
 cd ardupilot
 ./Tools/scripts/install-prereqs-ubuntu.sh
 git submodule update --init --recursive
-./waf configure
+./waf configure --prefix=/opt/sasc
 ./waf
+./waf install
 ~~~
 
-# Run Simulation
+# Run Simulation from source
 
 
 ## Terminal setup
@@ -123,7 +126,7 @@ export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/uctf-ardu/src/gazebo_models
 Open a terminal source the above and run:
 
 ~~~
-roslaunch ~/uctf-ardu/devel/share/uctf/launch/uctf.launch
+roslaunch uctf uctf.launch
 ~~~
 
 ## Launch Drones
@@ -147,7 +150,14 @@ For the gold team connect to port: `14001`
 
 You can use `qgroundcontrol` or `apmplanner2`
 
+# Run simulation from installation
 
+~~~
+. /opt/sasc/setup.bash
+. /opt/sasc/share/gazebo-8/setup.sh
+. /opt/sasc/share/uctf/setup.sh
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/uctf-ardu/src/gazebo_models
+~~~
 
 # Deprecated Instructions
 
