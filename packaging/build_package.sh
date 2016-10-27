@@ -13,6 +13,8 @@ mkdir -p ${WS}/src
 
 echo "Cloning from ${REPOS} into ${WS}/src..."
 vcs import --input ${REPOS} ${WS}/src
+cd ${WS}/src/uctf
+git submodule update --init --recursive
 
 echo "Downloading pacakge.xml files for Gazebo pacakges..."
 curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_gazebo.xml > ${WS}/src/gazebo/package.xml
