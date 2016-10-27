@@ -93,10 +93,10 @@ sudo apt-get install libqwt-dev python-future
 ## Build the workspace
 
 ~~~
-cd ${SRC_SPACE}
+cd ${SRC_SPACE}/..
 catkin config --init --extend /opt/ros/kinetic -i /opt/sasc --install --isolate-devel
 sudo mkdir -p /opt/sasc
-sudo chown -R $USER:$USER
+sudo chown -R $USER:$USER /opt/sasc
 (cd src/uctf && git submodule update --init --recursive)
 catkin build
 cp -r ~/uctf-ardu/src/gazebo_models /opt/sasc/share
