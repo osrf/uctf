@@ -124,8 +124,10 @@ git submodule update --init --recursive
 ~~~
 
 ### Install mavproxy
+
+You will need mavproxy installed from pip on your system.
 ~~~
-sudo pip install --target=/opt/sasc/lib/python/site-packages/ mavproxy --install-option="--install-scripts=/opt/sasc/bin"
+sudo pip install mavproxy
 ~~~
 
 # Run Simulation from binary installation

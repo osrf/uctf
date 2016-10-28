@@ -39,7 +39,7 @@ git clone https://github.com/tfoote/ardupilot.git -b uctf-dev
 echo "Building Ardupilot..."
 cd ardupilot
 export PATH=${PATH}:${WS}/ardupilot/Tools/autotest
-./Tools/scripts/install-prereqs-ubuntu.sh
+# ./Tools/scripts/install-prereqs-ubuntu.sh
 git submodule update --init --recursive
 ./waf configure --prefix=${INSTALL}
 ./waf
@@ -47,7 +47,7 @@ git submodule update --init --recursive
 
 
 echo "Installing mavproxy"
-pip install mavproxy --target=${INSTALL}/lib/python/site-packages/ --install-option="--install-scripts=/opt/sasc/bin"
+pip install mavproxy --system --target=${INSTALL}/lib/python/site-packages/ --install-option="--install-scripts=/opt/sasc/bin"
 
 
 echo "generating control file"
