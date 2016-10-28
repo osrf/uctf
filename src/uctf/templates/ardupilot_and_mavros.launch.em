@@ -11,7 +11,7 @@
     pkg="uctf"
     type="mavproxy.sh"
     args="@(mavproxy_arguments)"
-    cwd="node"
+    cwd="ROS_HOME"
     ns="/@(vehicle_type)_@(mav_sys_id)"
     output="screen" />
   <include file="$(find mavros)/launch/apm.launch" ns="/@(vehicle_type)_@(mav_sys_id)">

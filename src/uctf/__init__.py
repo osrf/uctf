@@ -344,6 +344,7 @@ def get_launch_snippet(
     mav_sys_id, vehicle_type, vehicle_base_port, init_script_path, debug=False,
     autopilot='px4', ground_port='14000',
 ):
+    vehicle_name = "%s_%d" % (vehicle_type, mav_sys_id)
     pkg_share_path = os.path.normpath(os.path.join(
         os.path.dirname(__file__), '..', '..', '..', '..',
         'share', 'uctf'))
@@ -352,9 +353,9 @@ def get_launch_snippet(
         print('  cd %s && mainapp %s' % (pkg_share_path, init_script_path))
         print(
             '  roslaunch px4 mavros.launch fcu_url:=udp://:%d@localhost:%d '
-            'tgt_system:=%d ns:=/%s_%d' % (
+            'tgt_system:=%d ns:=/%s' % (
                 vehicle_base_port + 3, vehicle_base_port + 2,
-                mav_sys_id, vehicle_type, mav_sys_id))
+                mav_sys_id, vehicle_name))
     print('autopilot is %s' % autopilot)
     if autopilot=='px4':
         data = {
@@ -370,7 +371,7 @@ def get_launch_snippet(
         data = {
             'default_params': init_script_path,
             'base_port': vehicle_base_port,
-            'mavproxy_arguments': '--master tcp:127.0.0.1:%d --out 127.0.0.1:%s --out 127.0.0.1:%s' % (vehicle_base_port, ground_port, vehicle_base_port + 3),
+            'mavproxy_arguments': '--master tcp:127.0.0.1:%d --out 127.0.0.1:%s --out 127.0.0.1:%s --aircraft %s' % (vehicle_base_port, ground_port, vehicle_base_port + 3, vehicle_name),
             'rc_in_port': vehicle_base_port + 1,
             'gazebo_port_in': vehicle_base_port + 4,
             'gazebo_port_out': vehicle_base_port + 5,
