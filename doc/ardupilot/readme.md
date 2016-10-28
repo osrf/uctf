@@ -123,7 +123,12 @@ git submodule update --init --recursive
 ./waf install
 ~~~
 
-# Run Simulation from source
+### Install mavproxy
+~~~
+sudo pip install --target=/opt/sasc/lib/python/site-packages/ mavproxy --install-option="--install-scripts=/opt/sasc/bin"
+~~~
+
+# Run Simulation from binary installation
 
 
 ## Terminal setup

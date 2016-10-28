@@ -46,6 +46,9 @@ git submodule update --init --recursive
 ./waf install
 
 
+echo "Installing mavproxy"
+pip install mavproxy --target=${INSTALL}/lib/python/site-packages/ --install-option="--install-scripts=/opt/sasc/bin"
+
 
 echo "generating control file"
 
