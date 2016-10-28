@@ -1,0 +1,27 @@
+### Commented entries have reasonable defaults.
+### Uncomment to edit them.
+# Source: <source package name; defaults to package name>
+Section: misc
+Priority: optional
+# Homepage: <enter URL here; no default>
+Standards-Version: 3.9.2
+
+Package: sasc-gazebo-sitl
+Version: 1.0
+# Maintainer: Your Name <yourname@example.com>
+# Pre-Depends: <comma-separated list of packages>
+Depends: ros-kinetic-rosconsole, ros-kinetic-camera-info-manager, ros-kinetic-catkin, ros-kinetic-angles, libtar-dev, libfreeimage-dev, ros-kinetic-transmission-interface, ros-kinetic-urdf, ros-kinetic-hardware-interface, ros-kinetic-diagnostic-updater, ros-kinetic-cmake-modules, ros-kinetic-polled-camera, ros-kinetic-tf, libcurl4-openssl-dev, curl, libignition-transport, libprotobuf-dev, protobuf-compiler, libprotoc-dev, ros-kinetic-mavros, ros-kinetic-nav-msgs, cmake, ros-kinetic-roscpp, ros-kinetic-controller-manager, ros-kinetic-nodelet, ros-kinetic-cv-bridge, ros-kinetic-roslib, libqt4-dev, ros-kinetic-rostest, ros-kinetic-tf2-ros, ros-kinetic-message-generation, ros-kinetic-std-srvs, libboost-all-dev, ros-kinetic-dynamic-reconfigure, ros-kinetic-rqt, ros-kinetic-trajectory-msgs, libqwt-dev, python-future
+# Recommends: <comma-separated list of packages>
+# Suggests: <comma-separated list of packages>
+# Provides: <comma-separated list of packages>
+# Replaces: <comma-separated list of packages>
+# Architecture: all
+# Multi-Arch: <one of: foreign|same|allowed>
+# Copyright: <copyright file; defaults to GPL2>
+# Changelog: <changelog file; defaults to a generic changelog>
+# Readme: <README.Debian file; defaults to a generic one>
+# Extra-Files: <comma-separated list of additional files for the doc directory>
+# Files: <pair of space-separated paths; First is file to include, second is destination>
+#  <more pairs, if there's more than one file to include. Notice the starting space>
+Description: Service Academies Swarm Challenge (SASC) Gazebo simulation
+ This package provides the software necessary to participate in the SASC.

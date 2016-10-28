@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WS=`pwd`/ws
-INSTALL=/opt/sasc-foo
+INSTALL=/opt/sasc
 REPOS=./gazebo_uctf.rosinstall
 
 if test -d ${INSTALL}; then
@@ -44,3 +44,13 @@ git submodule update --init --recursive
 ./waf configure --prefix=${INSTALL}
 ./waf
 ./waf install
+
+
+
+echo "generating control file"
+
+cp ${WS}/src/uctf/packaging/sasc-control.base ${WS}/sasc-control
+echo -n "Files:" >> ${WS}/sasc-control
+find -L /opt/sasc -type f | xargs -I {} echo " {} /" >> ${WS}/sasc-control
+cd ${WS}
+equivs-build ${WS}/sasc-control
