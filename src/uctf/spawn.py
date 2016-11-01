@@ -49,10 +49,10 @@ def spawn_team(color):
         '--mavlink-address',
         help='The IP address for mavlink (default: INADDR_ANY)')
     parser.add_argument(
-        '--launch', action='store_true',
+        '--no-launch', action='store_false', dest='launch',
         help='Run generate launch file')
     parser.add_argument(
-        '--delete', action='store_true',
+        '--no-delete', action='store_false', dest='delete',
         help='Despawn when killed')
     parser.add_argument('--debug', action='store_true')
     parser.add_argument('--px4', action='store_true', default=False)
