@@ -47,7 +47,7 @@ git submodule update --init --recursive
 
 
 echo "Installing mavproxy"
-pip install mavproxy --system --target=${INSTALL}/lib/python/site-packages/ --install-option="--install-scripts=/opt/sasc/bin"
+pip install mavproxy --system --target=${INSTALL}/lib/python/site-packages/ --install-option="--install-scripts=${INSTALL}/bin"
 
 
 echo "generating control file"
