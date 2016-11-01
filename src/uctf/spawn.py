@@ -103,7 +103,7 @@ def spawn_team(color):
             pass
     if args.delete:
         for i in args.vehicle_id:
-            _, mav_sys_id = vehicle_type_and_mav_sys_id(i, color)
+            vehicle_type, mav_sys_id = vehicle_type_and_mav_sys_id(i, color)
             delete_model(
                 mav_sys_id,
                 vehicle_type,

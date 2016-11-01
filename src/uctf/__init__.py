@@ -440,7 +440,7 @@ def delete_model(mav_sys_id, vehicle_type, ros_master_uri=None):
         print(resp.status_message, '(%s)' % unique_name)
         return 0
     else:
-        print(resp.status_message, file=sys.stderr)
+        print("failed to delete model [%s]: %s" % (unique_name, resp.status_message), file=sys.stderr)
         return 1
 
 
