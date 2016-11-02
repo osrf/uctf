@@ -30,6 +30,12 @@ MAX_LATITUDE = 47.402251
 MIN_LONGITUDE = 8.5389317
 MAX_LONGITUDE = 8.5455939
 
+ORIGIN_ALTITUDE = 50.0
+ORIGIN_HEADING = 353.0
+ORIGIN_LATITUDE = 47.397742
+ORIGIN_LONGITUDE = 8.545594
+
+
 VEHICLE_BASE_PORT = 14000
 GROUND_CONTROL_PORT_BLUE = 14000
 GROUND_CONTROL_PORT_GOLD = 14001
@@ -380,6 +386,7 @@ def get_launch_snippet(
             'vehicle_type': vehicle_type,
             'mav_sys_id': mav_sys_id,
             'pkg_share_path': pkg_share_path,
+            'home_str': "%s,%s,%s,%s" % (ORIGIN_LATITUDE, ORIGIN_LONGITUDE, ORIGIN_ALTITUDE, ORIGIN_HEADING),
         }
         if vehicle_type == 'iris':
             data['executable'] = 'arducopter-quad'
