@@ -157,12 +157,12 @@ roslaunch uctf uctf.launch
 Blue team in a new terminal 
 
 ~~~
-spawn_blue --launch --delete 1 2 26 27
+spawn_blue 1 2 26 27
 ~~~
 
 Gold team in a new terminal
 ~~~
-spawn_gold --launch --delete 1 2 26 27
+spawn_gold 1 2 26 27
 ~~~
 
 ## Ground control
