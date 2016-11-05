@@ -120,7 +120,7 @@
       <fdm_port_in>$(arg fdm_port_in)</fdm_port_in>
       <fdm_port_out>$(arg fdm_port_out)</fdm_port_out>
       <modelXYZToAirplaneXForwardZDown>0 0 0 3.141593 0 -1.57079</modelXYZToAirplaneXForwardZDown>
-      <gazeboXYZToNED>0 0 0 3.141593 0 -1.57079</gazeboXYZToNED>
+      <gazeboXYZToNED>0 0 0 3.141593 0 0</gazeboXYZToNED>
       <!-- <imuName>zephyr_delta_wing_ardupilot_demo::zephyr_delta_wing::wing::imu_sensor</imuName> -->
       <imuName>imu_sensor</imuName>
       <connectionTimeoutMaxCount>5</connectionTimeoutMaxCount>
