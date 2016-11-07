@@ -1,11 +1,11 @@
 #!/bin/bash
 
 WS=`pwd`/ws
-INSTALL=/opt/sasc
+INSTALL_SPACE=/opt/sasc
 REPOS=./gazebo_uctf.rosinstall
 
-if test -d ${INSTALL}; then
-  echo "Error: Install directory ${INSTALL} exists. Please delete it and try again."
+if test -d ${INSTALL_SPACE}; then
+  echo "Error: Install directory ${INSTALL_SPACE} exists. Please delete it and try again."
   exit 1
 fi
 
@@ -28,11 +28,11 @@ rosdep install --from-path ${WS}/src --ignore-src -y|| true
 
 echo "Building Gazebo and friends..."
 cd ${WS}
-catkin config --init --extend /opt/ros/kinetic -i ${INSTALL} --install --isolate-devel
-sudo mkdir -p ${INSTALL}
-sudo chown -R ${USER}:${USER} ${INSTALL}
+catkin config --init --extend /opt/ros/kinetic -i ${INSTALL_SPACE} --install --isolate-devel
+sudo mkdir -p ${INSTALL_SPACE}
+sudo chown -R ${USER}:${USER} ${INSTALL_SPACE}
 catkin build
-cp -r ${WS}/src/gazebo_models ${INSTALL}/share
+cp -r ${WS}/src/gazebo_models ${INSTALL_SPACE}/share
 
 echo "Cloning Ardupilot..."
 git clone https://github.com/tfoote/ardupilot.git -b uctf-dev
@@ -41,14 +41,14 @@ cd ardupilot
 export PATH=${PATH}:${WS}/ardupilot/Tools/autotest
 # ./Tools/scripts/install-prereqs-ubuntu.sh
 git submodule update --init --recursive
-./waf configure --prefix=${INSTALL}
+./waf configure --prefix=${INSTALL_SPACE}
 ./waf
 ./waf install
 
 
 sudo apt-get install -y libxslt1-dev
 echo "Installing mavproxy"
-pip install mavproxy --system --target=${INSTALL}/lib/python/site-packages/ --install-option="--install-scripts=${INSTALL}/bin"
+pip install mavproxy --system --target=${INSTALL_SPACE}/lib/python/site-packages/ --install-option="--install-scripts=${INSTALL_SPACE}/bin"
 
 echo "installing qgroundcontrol"
 

@@ -96,19 +96,19 @@ sudo apt-get install libqwt-dev python-future
 
 ~~~
 cd ${SRC_SPACE}/..
-catkin config --init --extend /opt/ros/kinetic -i /opt/sasc-dev --install --isolate-devel
+catkin config --init --extend /opt/ros/kinetic -i ${INSTALL_SPACE} --install --isolate-devel
 sudo mkdir -p ${INSTALL_SPACE}
 sudo chown -R $USER:$USER ${INSTALL_SPACE}
-(cd src/uctf && git submodule update --init --recursive)
+(cd ${SRC_SPACE}/uctf && git submodule update --init --recursive)
 catkin build
-cp -r ${SRC_SPACE}/gazebo_models ${INSTALL_SPACE}/share
+rsync -av ${SRC_SPACE}/gazebo_models ${INSTALL_SPACE}/share
 ~~~
 
 ## Checkout Ardupilot
 
 Check out ardupilot from a fork and get on the right branch:
 ~~~
-cd ~/uctf-ardu
+cd ${SRC_SPACE}/..
 git clone https://github.com/tfoote/ardupilot.git -b uctf-dev
 cd ardupilot
 ~~~
@@ -129,7 +129,7 @@ git submodule update --init --recursive
 
 You will need mavproxy installed from pip on your system.
 ~~~
-sudo pip install mavproxy
+pip install mavproxy --system --target=${INSTALL_SPACE}/lib/python/site-packages/ --install-option="--install-scripts=${INSTALL_SPACE}/bin"
 ~~~
 
 ## Terminal setup
