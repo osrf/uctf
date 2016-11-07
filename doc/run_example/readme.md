@@ -8,8 +8,10 @@ In order to use the installed software some environment variables need to be set
 This has to happen for each terminal:
 
 ```console
-. /opt/ros/kinetic/setup.bash
-. /usr/share/uctf/setup.sh
+. /opt/sasc/setup.bash
+. /opt/sasc/share/gazebo-8/setup.sh
+. /opt/sasc/share/uctf/setup.sh
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/sasc/share/gazebo_models
 ```
 
 You can check the values of the environment variables with:
@@ -53,7 +55,7 @@ The two scripts `spawn_blue` and `spawn_gold` can be used to perform the followi
 For this example we will only spawn two vehicles (one quadcopter (1), one fixed wing (26)) for a single team and automatically start the generated `roslaunch` file:
 
 ```console
-spawn_blue 1 26 --launch
+spawn_blue 1 26
 ```
 
 ### 2D visualization
@@ -75,8 +77,7 @@ The ground control station provides even more information and has the ability to
 For this example the QGroundControl application must be running and be connected to the teams which are being controlled:
 
 ```console
-cd <path-to-qgc>
-./qgroundcontrol-start.sh
+qgroundcontrol
 ```
 
 To connect it with the port of the *blue* team the following steps are necessary:
@@ -93,6 +94,20 @@ To connect it with the port of the *blue* team the following steps are necessary
 Now you should see both vehicles at a location in Zurich, Switzerland (which are the default GPS coordinates of the PX4).
 All vehicles have the same shape in this application despite one of them being a quadcopter.
 
+At this point you can control the vehicles from `qgroundcontrol` like they were real vehicles.
+
+#### Fly
+
+To get started quickly. 
+
+For the quadcopters: First arm them and then takeoff. You can also create a mission and upload it to the vehicle via the standard mission interface. 
+
+For the planes, the quickest way to takeoff is to `arm` the vehicle then set it to RTL mode.
+
+Note: Not all commands from `qgroundcontrol` get through and they might require repeated commands. You can watch the console of the drones' spawn command to see if the command was received.
+
+
+<!--
 ### Start example controller
 
 The two scripts `control_team_blue` and `control_team_gold` implement a simple behavior using the ROS topics and services provided by each vehicle.
@@ -138,3 +153,4 @@ spawn_blue 2 27 --mavlink-addr <this-ip-address> --launch
 ---
 
 Next: [Program your own team](../program_team/readme.md)
+-->

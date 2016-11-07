@@ -171,32 +171,11 @@ If you'd like to see your drones in a Ground Control Station.
 For the blue team connect to port: `14000`
 For the gold team connect to port: `14001`
 
-You can use `qgroundcontrol` or `apmplanner2`
+You can use `qgroundcontrol`
 
-# Run simulation from installation
-
-
-
-# Deprecated Instructions
-
-
-The run one of the below simulations
-~~~
-gazebo --verbose worlds/iris_arducopter_demo.world
-~~~
-
-~~~
-gazebo --verbose worlds/zephyr_ardupilot_demo.world
-~~~
-
-### Start ArduPilot/ArduPlane
-`-S` parameter will speedup the simulation
-~~~
-export PATH=$PATH:~/uctf-ardu/ardupilot/Tools/autotest
-sim_vehicle.py -f gazebo-iris -S 10 -v ArduCopter -m --mav10
-~~~
 
 #### Test fly the vehicle manually
+
 Inside the mavproxy you can now try flying it. 
 
 The following will raise the ekf thresholds to account for simulation errors.
