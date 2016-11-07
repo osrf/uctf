@@ -8,7 +8,6 @@ from uctf import get_vehicle_base_port
 from uctf import get_vehicle_pose
 from uctf import delete_model
 from uctf import spawn_model
-from uctf import VEHICLE_BASE_PORT
 from uctf import write_launch_file
 
 
@@ -69,10 +68,6 @@ def spawn_team(color):
 
         vehicle_type, mav_sys_id = vehicle_type_and_mav_sys_id(i, color)
 
-        # each vehicle uses 4 consecutive ports
-        # the first one is VEHICLE_BASE_PORT + MAV_SYS_IDs
-        # the first two are used between the mavlink gazebo plugin and the px4
-        # the second two are used between the px4 and and the mavros node
         vehicle_base_port = get_vehicle_base_port(mav_sys_id)
 
         # generate the vehicle specific init script
@@ -89,7 +84,8 @@ def spawn_team(color):
             debug=args.debug, autopilot=autopilot)
 
         launch_snippet += get_launch_snippet(
-            mav_sys_id, vehicle_type, vehicle_base_port, init_script_path, ground_port=get_ground_control_port(color), autopilot=autopilot)
+            mav_sys_id, vehicle_type, vehicle_base_port, init_script_path,
+            ground_port=get_ground_control_port(color), autopilot=autopilot)
 
     launch_path = write_launch_file(launch_snippet)
     cmd = ['roslaunch', launch_path]
