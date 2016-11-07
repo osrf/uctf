@@ -47,7 +47,7 @@ def get_ground_control_port(color):
 
 
 def get_vehicle_base_port(mav_sys_id):
-    #px4 needs a step siez of 4 apm needs 6
+    # px4 needs a step siez of 4 apm needs 6
     return VEHICLE_BASE_PORT + mav_sys_id * 10
 
 
@@ -132,17 +132,22 @@ def spawn_one():
 
     spawn_launch_file(launch_file)
 
+
 def generate_config(
-    mav_sys_id, vehicle_type, baseport, ground_port, debug=False, autopilot='ardupilot'
+    mav_sys_id, vehicle_type, baseport, ground_port,
+    debug=False, autopilot='ardupilot'
 ):
     if autopilot == 'px4':
         print("CONFIG FOR PX4")
-        return generate_init_script(mav_sys_id, vehicle_type, baseport, ground_port, debug=False)
+        return generate_init_script(mav_sys_id, vehicle_type, baseport,
+                                    ground_port, debug=False)
     elif autopilot == 'ardupilot':
         print("CONFIG FOR ARDUPILOT")
-        return generate_default_params(mav_sys_id, vehicle_type, baseport, ground_port, debug=False)
+        return generate_default_params(mav_sys_id, vehicle_type, baseport,
+                                       ground_port, debug=False)
     else:
         raise RuntimeError("unsupported autopilot %s" % autopilot)
+
 
 def generate_default_params(
     mav_sys_id, vehicle_type, baseport, ground_port, debug=False
@@ -158,6 +163,7 @@ def generate_default_params(
         else:
             h.write(empy('gazebo-zephyr.parm', data))
     return path
+
 
 def generate_init_script(
     mav_sys_id, vehicle_type, baseport, ground_port, debug=False
@@ -294,8 +300,10 @@ def spawn_model(
     if mavlink_address:
         kwargs['mappings']['mavlink_addr'] = mavlink_address
     if autopilot == 'ardupilot':
-        kwargs['mappings']['fdm_port_in'] = str(baseport + 5)  # fdm in is gazebo out
-        kwargs['mappings']['fdm_port_out'] = str(baseport + 4)  # fdm out is gazebo in
+        # fdm in is gazebo out
+        kwargs['mappings']['fdm_port_in'] = str(baseport + 5)
+        # fdm out is gazebo in
+        kwargs['mappings']['fdm_port_out'] = str(baseport + 4)
 
     model_xml = xacro(model_xml, **kwargs)
     if debug:
@@ -337,10 +345,12 @@ def xacro(template_xml, **kwargs):
 
 
 def generate_launch_file(
-    mav_sys_id, vehicle_type, baseport, config_path, debug, autopilot, ground_port,
+    mav_sys_id, vehicle_type, baseport, config_path, debug,
+    autopilot, ground_port,
 ):
     launch_snippet = get_launch_snippet(
-        mav_sys_id, vehicle_type, baseport, config_path, debug, autopilot=autopilot, ground_port=ground_port)
+        mav_sys_id, vehicle_type, baseport, config_path, debug,
+        autopilot=autopilot, ground_port=ground_port)
     if debug:
         print(launch_snippet)
     return write_launch_file(launch_snippet)
@@ -354,7 +364,7 @@ def get_launch_snippet(
     pkg_share_path = os.path.normpath(os.path.join(
         os.path.dirname(__file__), '..', '..', '..', '..',
         'share', 'uctf'))
-    if debug and autopilot=='px4':
+    if debug and autopilot == 'px4':
         print('For manual invocation run:')
         print('  cd %s && mainapp %s' % (pkg_share_path, init_script_path))
         print(
@@ -363,7 +373,7 @@ def get_launch_snippet(
                 vehicle_base_port + 3, vehicle_base_port + 2,
                 mav_sys_id, vehicle_name))
     print('autopilot is %s' % autopilot)
-    if autopilot=='px4':
+    if autopilot == 'px4':
         data = {
             'controller_config_path': init_script_path,
             'ros_interface_port3': vehicle_base_port + 2,
@@ -377,7 +387,14 @@ def get_launch_snippet(
         data = {
             'default_params': init_script_path,
             'base_port': vehicle_base_port,
-            'mavproxy_arguments': '--master tcp:127.0.0.1:%d --out 127.0.0.1:%s --out 127.0.0.1:%s --aircraft %s' % (vehicle_base_port, ground_port, vehicle_base_port + 3, vehicle_name),
+            'mavproxy_arguments': '--master tcp:127.0.0.1:%d '
+                                  '--out 127.0.0.1:%s '
+                                  '--out 127.0.0.1:%s '
+                                  '--aircraft %s'
+                                  % (vehicle_base_port,
+                                     ground_port,
+                                     vehicle_base_port + 3,
+                                     vehicle_name),
             'rc_in_port': vehicle_base_port + 1,
             'gazebo_port_in': vehicle_base_port + 4,
             'gazebo_port_out': vehicle_base_port + 5,
@@ -386,7 +403,10 @@ def get_launch_snippet(
             'vehicle_type': vehicle_type,
             'mav_sys_id': mav_sys_id,
             'pkg_share_path': pkg_share_path,
-            'home_str': "%s,%s,%s,%s" % (ORIGIN_LATITUDE, ORIGIN_LONGITUDE, ORIGIN_ALTITUDE, ORIGIN_HEADING),
+            'home_str': "%s,%s,%s,%s" % (ORIGIN_LATITUDE,
+                                         ORIGIN_LONGITUDE,
+                                         ORIGIN_ALTITUDE,
+                                         ORIGIN_HEADING),
         }
         if vehicle_type == 'iris':
             data['executable'] = 'arducopter-quad'
@@ -395,6 +415,7 @@ def get_launch_snippet(
             data['executable'] = 'arduplane'
             data['model'] = 'gazebo-zephyr'
         return empy('ardupilot_and_mavros.launch.em', data)
+
 
 def write_launch_file(launch_snippet):
     fd, path = tempfile.mkstemp(prefix='uctf_', suffix='.launch')
@@ -447,7 +468,8 @@ def delete_model(mav_sys_id, vehicle_type, ros_master_uri=None):
         print(resp.status_message, '(%s)' % unique_name)
         return 0
     else:
-        print("failed to delete model [%s]: %s" % (unique_name, resp.status_message), file=sys.stderr)
+        print("failed to delete model [%s]: %s" %
+              (unique_name, resp.status_message), file=sys.stderr)
         return 1
 
 

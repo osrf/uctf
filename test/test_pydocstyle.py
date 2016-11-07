@@ -12,6 +12,7 @@ log.setLevel(logging.WARNING)
 def empty(*args, **kwargs):
     pass
 
+
 log.setLevel = empty
 
 
