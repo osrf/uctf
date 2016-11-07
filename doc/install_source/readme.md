@@ -69,7 +69,7 @@ tar:
 
 Check out gazebo and get on the right branch:
 ~~~
-rosinstall ~/uctf-ardu/src /tmp/gazebo_uctf.rosinstall
+rosinstall ${SRC_SPACE} /tmp/gazebo_uctf.rosinstall
 ~~~
 
 Fetch package.xml files:
@@ -101,7 +101,7 @@ sudo mkdir -p ${INSTALL_SPACE}
 sudo chown -R $USER:$USER ${INSTALL_SPACE}
 (cd src/uctf && git submodule update --init --recursive)
 catkin build
-cp -r ~/uctf-ardu/src/gazebo_models ${INSTALL_SPACE}/share
+cp -r ${SRC_SPACE}/gazebo_models ${INSTALL_SPACE}/share
 ~~~
 
 ## Checkout Ardupilot
