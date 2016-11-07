@@ -51,7 +51,7 @@ Create a file `/tmp/gazebo_uctf.rosinstall` with this content:
 - git:
     local-name: uctf
     uri: git@github.com:osrf/uctf
-    version: add_ardupilot
+    version: master
 
 ~~~
 
