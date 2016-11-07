@@ -11,7 +11,7 @@ If you want to look into building any of them from source please follow their tu
 Create a place to work:
 ~~~
 export SRC_SPACE=~/uctf-ardu/src
-
+export INSTALL_SPACE=/opt/sasc-dev
 mkdir -p ${SRC_SPACE}
 ~~~
 
@@ -96,12 +96,12 @@ sudo apt-get install libqwt-dev python-future
 
 ~~~
 cd ${SRC_SPACE}/..
-catkin config --init --extend /opt/ros/kinetic -i /opt/sasc --install --isolate-devel
-sudo mkdir -p /opt/sasc
-sudo chown -R $USER:$USER /opt/sasc
+catkin config --init --extend /opt/ros/kinetic -i /opt/sasc-dev --install --isolate-devel
+sudo mkdir -p ${INSTALL_SPACE}
+sudo chown -R $USER:$USER ${INSTALL_SPACE}
 (cd src/uctf && git submodule update --init --recursive)
 catkin build
-cp -r ~/uctf-ardu/src/gazebo_models /opt/sasc/share
+cp -r ~/uctf-ardu/src/gazebo_models ${INSTALL_SPACE}/share
 ~~~
 
 ## Checkout Ardupilot
@@ -116,11 +116,11 @@ cd ardupilot
 ### Build ArduPilot SITL
 
 ~~~
-export PATH=$PATH:~/uctf-ardu/ardupilot/Tools/autotest
+export INSTALL_SPACE=/opt/sasc-dev
 cd ardupilot
 ./Tools/scripts/install-prereqs-ubuntu.sh
 git submodule update --init --recursive
-./waf configure --prefix=/opt/sasc
+./waf configure --prefix=${INSTALL_SPACE}
 ./waf
 ./waf install
 ~~~
@@ -137,10 +137,11 @@ sudo pip install mavproxy
 To use this installation in each terminal instructed to open run the following commands.
 
 ~~~
-. /opt/sasc/setup.bash
-. /opt/sasc/share/gazebo-8/setup.sh
-. /opt/sasc/share/uctf/setup.sh
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/sasc/share/gazebo_models
+export INSTALL_SPACE=/opt/sasc-dev
+. ${INSTALL_SPACE}/setup.bash
+. ${INSTALL_SPACE}/share/gazebo-8/setup.sh
+. ${INSTALL_SPACE}/share/uctf/setup.sh
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${INSTALL_SPACE}/share/gazebo_models
 ~~~
 
 ---

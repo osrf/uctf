@@ -7,12 +7,7 @@ After setting up your system running the example will make sure everything works
 In order to use the installed software some environment variables need to be setup.
 This has to happen for each terminal:
 
-```console
-. /opt/sasc/setup.bash
-. /opt/sasc/share/gazebo-8/setup.sh
-. /opt/sasc/share/uctf/setup.sh
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/sasc/share/gazebo_models
-```
+Use the appropriate setup from either your [source](../install_source/readme.md) or [binary](../install_binary/readme.md) installation. 
 
 You can check the values of the environment variables with:
 
