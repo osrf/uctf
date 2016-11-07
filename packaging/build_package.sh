@@ -46,9 +46,14 @@ git submodule update --init --recursive
 ./waf install
 
 
+sudo apt-get install -y libxslt1-dev
 echo "Installing mavproxy"
 pip install mavproxy --system --target=${INSTALL}/lib/python/site-packages/ --install-option="--install-scripts=${INSTALL}/bin"
 
+echo "installing qgroundcontrol"
+
+wget https://s3-us-west-2.amazonaws.com/qgroundcontrol/latest/QGroundControl.AppImage -O /opt/sasc/bin/qgroundcontrol
+chmod +x /opt/sasc/bin/qgroundcontrol
 
 echo "generating control file"
 

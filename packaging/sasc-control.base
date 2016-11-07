@@ -7,7 +7,7 @@ Priority: optional
 Standards-Version: 3.9.2
 
 Package: sasc-gazebo-sitl
-Version: 1.0
+Version: 1.0.1
 # Maintainer: Your Name <yourname@example.com>
 # Pre-Depends: <comma-separated list of packages>
 Depends: ros-kinetic-rosconsole, ros-kinetic-camera-info-manager, ros-kinetic-catkin, ros-kinetic-angles, libtar-dev, libfreeimage-dev, ros-kinetic-transmission-interface, ros-kinetic-urdf, ros-kinetic-hardware-interface, ros-kinetic-diagnostic-updater, ros-kinetic-cmake-modules, ros-kinetic-polled-camera, ros-kinetic-tf, libcurl4-openssl-dev, curl, libignition-transport, libprotobuf-dev, protobuf-compiler, libprotoc-dev, ros-kinetic-mavros, ros-kinetic-nav-msgs, cmake, ros-kinetic-roscpp, ros-kinetic-controller-manager, ros-kinetic-nodelet, ros-kinetic-cv-bridge, ros-kinetic-roslib, libqt4-dev, ros-kinetic-rostest, ros-kinetic-tf2-ros, ros-kinetic-message-generation, ros-kinetic-std-srvs, libboost-all-dev, ros-kinetic-dynamic-reconfigure, ros-kinetic-rqt, ros-kinetic-trajectory-msgs, libqwt-dev, python-future
