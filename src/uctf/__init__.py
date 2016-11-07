@@ -138,11 +138,9 @@ def generate_config(
     debug=False, autopilot='ardupilot'
 ):
     if autopilot == 'px4':
-        print("CONFIG FOR PX4")
         return generate_init_script(mav_sys_id, vehicle_type, baseport,
                                     ground_port, debug=False)
     elif autopilot == 'ardupilot':
-        print("CONFIG FOR ARDUPILOT")
         return generate_default_params(mav_sys_id, vehicle_type, baseport,
                                        ground_port, debug=False)
     else:
@@ -155,7 +153,6 @@ def generate_default_params(
     data = {
         'mav_sys_id': mav_sys_id,
     }
-    print("DATA IS %s" % data)
     fd, path = tempfile.mkstemp(prefix='%s_%d_' % (vehicle_type, mav_sys_id))
     with os.fdopen(fd, 'w') as h:
         if vehicle_type == 'iris':
