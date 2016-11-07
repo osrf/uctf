@@ -21,7 +21,7 @@ sudo apt update
 sudo apt install ros-kinetic-gazebo-ros ros-kinetic-mavros ros-kinetic-opencv3 ros-kinetic-rqt ros-kinetic-xacro
 ```
 
-## Install uctf package
+## Install SASC package
 
 Setup your computer to accept software from <http://packages.osrfoundation.org>:
 
@@ -39,7 +39,7 @@ Install the `uctf` package provided from <http://packages.osrfoundation.org>:
 
 ```console
 sudo apt update
-sudo apt install uctf
+sudo apt install sasc-gazebo-sitl
 ```
 
 ---

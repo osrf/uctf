@@ -1,0 +1,36 @@
+- tar:
+    local-name: gazebo
+    uri: https://bitbucket.org/osrf/gazebo/get/594248df0a49.tar.gz
+    version: osrf-gazebo-594248df0a49
+- tar:
+    local-name: gazebo_models
+    uri: https://bitbucket.org/osrf/gazebo_models/get/ca17c6407082.tar.gz
+    version: osrf-gazebo_models-ca17c6407082
+- git:
+    local-name: gazebo_ros_pkgs
+    uri: git@github.com:ros-simulation/gazebo_ros_pkgs.git
+    version: kinetic-devel
+- hg:
+    local-name: ign-math
+    uri: https://bitbucket.org/ignitionrobotics/ign-math
+    version: default
+- hg:
+    local-name: ign-msgs
+    uri: https://bitbucket.org/ignitionrobotics/ign-msgs
+    version: default
+- hg:
+    local-name: ign-tools
+    uri: https://bitbucket.org/ignitionrobotics/ign-tools
+    version: default
+- hg:
+    local-name: ign-tools
+    uri: https://bitbucket.org/ignitionrobotics/ign-tools
+    version: default
+- hg:
+    local-name: sdformat
+    uri: https://bitbucket.org/osrf/sdformat
+    version: default
+- git:
+    local-name: uctf
+    uri: git@github.com:osrf/uctf
+    version: add_ardupilot

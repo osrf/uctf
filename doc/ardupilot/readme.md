@@ -1,9 +1,7 @@
-# Build package from source
+# Ardupilot integration
 
-For this tutorial we will assume you are still using ROS and Gazebo from binary packages.
-Therefore first follow the instructions from the section *Install dependencies* in the [Install binary packages](../install_binary/readme.md) documentation.
-
-If you want to look into building any of them from source please follow their tutorials ([ROS](http://wiki.ros.org/kinetic/Installation/Source), [Gazebo](http://gazebosim.org/tutorials?tut=install_from_source)).
+This document explains how to get and build the right versions of Gazebo and Ardupilot for use with U-CTF.
+It's very much a work in progress and is primarily intended to assist the internal developer team to get up to speed.
 
 
 ## Get the code
@@ -132,9 +130,12 @@ You will need mavproxy installed from pip on your system.
 sudo pip install mavproxy
 ~~~
 
+# Run Simulation from binary installation
+
+
 ## Terminal setup
 
-To use this installation in each terminal instructed to open run the following commands.
+In each terminal instructed to open run the following commands.
 
 ~~~
 . /opt/sasc/setup.bash
@@ -143,6 +144,57 @@ To use this installation in each terminal instructed to open run the following c
 export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/sasc/share/gazebo_models
 ~~~
 
----
+## Start Gazebo
 
-Next: [Run an example](../run_example/readme.md).
+Open a terminal source the above and run:
+
+~~~
+roslaunch uctf uctf.launch
+~~~
+
+## Launch Drones
+
+Blue team in a new terminal 
+
+~~~
+spawn_blue 1 2 26 27
+~~~
+
+Gold team in a new terminal
+~~~
+spawn_gold 1 2 26 27
+~~~
+
+## Ground control
+If you'd like to see your drones in a Ground Control Station. 
+
+For the blue team connect to port: `14000`
+For the gold team connect to port: `14001`
+
+You can use `qgroundcontrol`
+
+
+#### Test fly the vehicle manually
+
+Inside the mavproxy you can now try flying it. 
+
+The following will raise the ekf thresholds to account for simulation errors.
+And the 2nd line will remove the timeout on being armed, otherwise you need to type very fast.
+
+```
+param set FS_EKF_THRESH 1
+param set DISARM_DELAY 0
+```
+
+Switch to a GPS mode (simpler to command)
+Now you can takeoff when simulated GPS is ready (about 10s)
+```
+mode guided
+arm throttle
+takeoff 5
+```
+
+~~~
+export PATH=$PATH:~/uctf-ardu/ardupilot/Tools/autotest
+sim_vehicle.py -f gazebo-zephyr -S 10 -v ArduPlane -m --mav10
+~~~
