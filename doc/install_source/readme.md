@@ -33,7 +33,7 @@ Create a file `/tmp/gazebo_uctf.rosinstall` with this content:
 - hg:
     local-name: ign-math
     uri: https://bitbucket.org/ignitionrobotics/ign-math
-    version: default
+    version: ign-math2
 - hg:
     local-name: ign-msgs
     uri: https://bitbucket.org/ignitionrobotics/ign-msgs
