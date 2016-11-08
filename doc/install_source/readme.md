@@ -101,7 +101,7 @@ sudo mkdir -p ${INSTALL_SPACE}
 sudo chown -R $USER:$USER ${INSTALL_SPACE}
 (cd ${SRC_SPACE}/uctf && git submodule update --init --recursive)
 catkin build
-rsync -av ${SRC_SPACE}/gazebo_models ${INSTALL_SPACE}/share
+ln -s ${SRC_SPACE}/gazebo_models ${INSTALL_SPACE}/share/gazebo_models
 ~~~
 
 ## Checkout Ardupilot
