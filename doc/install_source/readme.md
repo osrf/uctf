@@ -59,7 +59,7 @@ Create a file `/tmp/gazebo_uctf.rosinstall` with this content:
 
 If you're developing use this for gazebo instead of the tarball.
 ~~~
-tar:
+hg:
    local-name: gazebo
    uri: ssh://hg@bitbucket.org/osrf/gazebo
    version: ardupilot
