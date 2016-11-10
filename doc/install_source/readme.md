@@ -98,7 +98,7 @@ rosdep install --from-path ${SRC_SPACE} --ignore-src
 
 Add some other dependencies
 ~~~
-sudo apt-get install libqwt-dev python-future libignition-transport-dev
+sudo apt-get install libxslt1-dev libqwt-dev python-future libignition-transport-dev
 ~~~
 
 ## Build the workspace
