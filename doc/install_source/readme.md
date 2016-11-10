@@ -91,6 +91,8 @@ curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_sd
 ## Install prerequisites
 
 ~~~
+. /opt/ros/kinetic/setup.bash
+rosdep update
 rosdep install --from-path ${SRC_SPACE} --ignore-src
 ~~~
 
