@@ -5,6 +5,13 @@ Therefore first follow the instructions from the section *Install dependencies* 
 
 If you want to look into building any of them from source please follow their tutorials ([ROS](http://wiki.ros.org/kinetic/Installation/Source), [Gazebo](http://gazebosim.org/tutorials?tut=install_from_source)).
 
+## Avoid conflicts with system-installed gazebo and related packages
+
+We have seen cases in which the build procedure described here can inadvertently cross-talk with a "regular" installation of gazebo and its support packages in `/usr`. We'll work on preventing that situation, but in the meantime we recommend avoiding it by removing any such packages from your system:
+~~~
+sudo apt-get remove gazebo* libignition* libsdformat*
+~~~
+If you experience mysterious segmentation faults, especially on startup, it's likely that the cause is cross-talk with your system-installed packages.
 
 ## Get the code
 
@@ -87,9 +94,9 @@ curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_sd
 rosdep install --from-path ${SRC_SPACE} --ignore-src
 ~~~
 
-Additional new dependency needed is `libqwt-dev`.
+Add some other dependencies
 ~~~
-sudo apt-get install libqwt-dev python-future
+sudo apt-get install libqwt-dev python-future libignition-transport-dev
 ~~~
 
 ## Build the workspace
