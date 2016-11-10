@@ -369,7 +369,6 @@ def get_launch_snippet(
             'tgt_system:=%d ns:=/%s' % (
                 vehicle_base_port + 3, vehicle_base_port + 2,
                 mav_sys_id, vehicle_name))
-    print('autopilot is %s' % autopilot)
     if autopilot == 'px4':
         data = {
             'controller_config_path': init_script_path,
