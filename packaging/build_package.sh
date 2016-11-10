@@ -25,6 +25,8 @@ curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_sd
 echo "Installing dependencies with rosdep..."
 . /opt/ros/kinetic/setup.bash
 rosdep install --from-path ${WS}/src --ignore-src -y|| true
+echo "Installing other dependencies..."
+sudo apt-get install -y libxslt1-dev libqwt-dev python-future libignition-transport-dev
 
 echo "Building Gazebo and friends..."
 cd ${WS}
@@ -45,8 +47,6 @@ git submodule update --init --recursive
 ./waf
 ./waf install
 
-
-sudo apt-get install -y libxslt1-dev
 echo "Installing mavproxy"
 pip install mavproxy --system --target=${INSTALL_SPACE}/lib/python/site-packages/ --install-option="--install-scripts=${INSTALL_SPACE}/bin"
 
