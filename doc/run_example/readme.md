@@ -42,21 +42,44 @@ The two scripts `spawn_blue` and `spawn_gold` can be used to perform the followi
   But a subset of these ids (1 - 50) can be passed to reduce the set.
   For information about the unique vehicle ids please see the [intro](../intro/readme.md)
 
-* For each vehicle a custom init script for PX4 is being generated which contains specific port numbers.
+* For each vehicle a custom init script for PX4 is being generated which contains specific ids and port numbers.
 
 * For the set of spawned vehicles a single ROS launch file is being generated.
   This launch configuration starts a PX4 controller as well as a MAVLink-to-ROS bridge for each vehicle.
+  Each vehicle uses a separate ROS master to isolate the payloads from each vehicle.
 
-For this example we will only spawn two vehicles (one quadcopter (1), one fixed wing (26)) for a single team and automatically start the generated `roslaunch` file:
+For this example we will only spawn two vehicles (one quadcopter (1), one fixed wing (26)) for a single team and automatically start the generated `roslaunch` files:
 
 ```console
 spawn_blue 1 26
 ```
 
+### Use flight tech interface
+
+The flight tech interface is being used to prepare each vehicle for the flight.
+First start the Qt application:
+
+```console
+. <ws_payload>/devel/setup.bash
+. <venv3>/bin/activate
+PYTHONPATH=$PYTHONPATH:/usr/lib/python3/dist-packages fti.py -d lo -z
+```
+
+For each vehicle perform the following steps:
+
+* Select the vehicle
+* Click "Toggle Flight Ready"
+* Click "Send Config" and select a unique tuple of stack number and altitude for each vehicle
+* Click "AUTO"
+* Click "ARM Throttle"
+
+**TODO the vehicles does not take off yet, you can use QGroundControl to trigger a take off**
+
 ### 2D visualization
 
 Since the vehicles are so small compared to the environment size it is impossible to observe them all at the same time in Gazebo.
-A simplified 2D visualization (which is not to scale) can provide that overview as a `rqt plugin`:
+A simplified 2D visualization (which is not to scale) can provide that overview as a `rqt plugin`.
+The plugin listens to the mavlink messages of each vehicle:
 
 ```console
 rqt_uctf
@@ -69,7 +92,8 @@ The quadcopters are visualized as crosses while the fixed wings are depicted as 
 ### Use QGroundControl
 
 The ground control station provides even more information and has the ability to also interact with the vehicles.
-For this example the QGroundControl application must be running and be connected to the teams which are being controlled:
+For this example the QGroundControl application must be running and be connected to the teams which are being controlled.
+Since the rqt plugin as well as QGroundControl are listening to the same UDP port only one of the two applications can be running at any time.
 
 ```console
 qgroundcontrol
@@ -89,34 +113,35 @@ To connect it with the port of the *blue* team the following steps are necessary
 Now you should see both vehicles at a location in Zurich, Switzerland (which are the default GPS coordinates of the PX4).
 All vehicles have the same shape in this application despite one of them being a quadcopter.
 
-At this point you can control the vehicles from `qgroundcontrol` like they were real vehicles.
+### Activate swarm behavior
 
-#### Fly
-
-To get started quickly. 
-
-For the quadcopters: First arm them and then takeoff. You can also create a mission and upload it to the vehicle via the standard mission interface. 
-
-For the planes, the quickest way to takeoff is to `arm` the vehicle then set it to RTL mode.
-
-Note: Not all commands from `qgroundcontrol` get through and they might require repeated commands. You can watch the console of the drones' spawn command to see if the command was received.
-
-
-<!--
-### Start example controller
-
-The two scripts `control_team_blue` and `control_team_gold` implement a simple behavior using the ROS topics and services provided by each vehicle.
-Each vehicle publishing state information is automatically being armed and then flies a short mission which consists of a takeoff command and two waypoints in the middle of the game cube.
-
-For this example we will only start the controller for the *blue* team:
+One the vehicles are in the air (and `swarm_state=2`) they can be assigned to a swarm:
 
 ```console
-control_team_blue
+. <ws_payload>/setup.bash
+rosservice call /swarm_control/set_subswarm 1
 ```
 
-After starting the script the vehicles should start their missions and fly around for some time before landing at their current location.
+Then a specific behavior can be run, e.g. the freedy shooter:
+
+```console
+. <ws_payload>/setup.bash
+rosservice call /swarm_control/run_behavior "{params: {id: 4, params: []}}" call /swarm_control/set_subswarm 1
+```
 
 ![QGroundControl showing trajectory](qgroundcontrol.jpg)
+
+### Run the arbiter
+
+One the vehicles are in the air (and `swarm_state=2`) they can be assigned to a swarm:
+
+**TODO to use more than one team you need two separate network interfaces**
+
+```console
+. <ws_payload>/setup.bash
+. <venv3>/bin/activate
+arbiter_start.py -db eth0 -dr lo
+```
 
 ## Run vehicles on separate machines
 
@@ -148,4 +173,3 @@ spawn_blue 2 27 --mavlink-addr <this-ip-address> --launch
 ---
 
 Next: [Program your own team](../program_team/readme.md)
--->

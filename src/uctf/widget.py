@@ -3,6 +3,9 @@ from python_qt_binding.QtGui import QBrush, QColor, QPen, QPolygonF
 from python_qt_binding.QtWidgets import QGraphicsEllipseItem, \
     QGraphicsPolygonItem, QGraphicsRectItem, QGraphicsScene, QGraphicsView
 
+from pymavlink.dialects.v10.ardupilotmega import MAV_TYPE_FIXED_WING
+from pymavlink.dialects.v10.ardupilotmega import MAV_TYPE_QUADROTOR
+
 from uctf import CUBE_LENGTH
 from uctf import global_to_cube
 
@@ -55,14 +58,14 @@ class Widget(QGraphicsView):
 
         self._vehicles = {}
 
-    def update_vehicle(self, namespace, msg, color):
-        if namespace not in self._vehicles:
-            item = self._create_vehicle_item(namespace, color)
+    def update_vehicle(self, color, mav_id, vehicle_type, global_pos):
+        if mav_id not in self._vehicles:
+            item = self._create_vehicle_item(color, mav_id, vehicle_type)
             self._scene.addItem(item)
-            self._vehicles[namespace] = item
+            self._vehicles[mav_id] = item
         else:
-            item = self._vehicles[namespace]
-        cube_pos = global_to_cube(msg.latitude, msg.longitude)
+            item = self._vehicles[mav_id]
+        cube_pos = global_to_cube(global_pos['lat'], global_pos['lon'])
         item.setPos(*cube_pos)
 
         # set visible area
@@ -73,8 +76,8 @@ class Widget(QGraphicsView):
             CUBE_LENGTH + 2.0 * (SUPPORT_AREA_DEPTH + padding),
             Qt.KeepAspectRatio)
 
-    def _create_vehicle_item(self, namespace, color):
-        if namespace.startswith('iris'):
+    def _create_vehicle_item(self, color, mav_id, vehicle_type):
+        if vehicle_type == MAV_TYPE_QUADROTOR:
             # draw cross
             item = QGraphicsPolygonItem(QPolygonF([
                 QPointF(0, 0),
@@ -85,7 +88,7 @@ class Widget(QGraphicsView):
                 QPointF(3, -3),
                 QPointF(0, 0),
             ]))
-        elif namespace.startswith('delta_wing'):
+        elif vehicle_type == MAV_TYPE_FIXED_WING:
             # draw circle
             item = QGraphicsEllipseItem(-3, -3, 6, 6)
         else:
@@ -93,5 +96,5 @@ class Widget(QGraphicsView):
             item = QGraphicsRectItem(-3, -3, 6, 6)
         item.setBrush(self._brushes[color])
         item.setPen(self._pens[color])
-        item.setToolTip(namespace)
+        item.setToolTip('%s #%d (%s)' % (color, mav_id, vehicle_type))
         return item

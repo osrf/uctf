@@ -64,6 +64,15 @@ Create a file `/tmp/gazebo_uctf.rosinstall` with this content:
 
 ~~~
 
+### Payload
+
+The payload is being compiled in a catkin workspace names `ws_payload`.
+Clone the following repositories and then build the workspace with `catkin_make`:
+
+* `autonomy-payload`
+* `autopilot_bridge`
+
+### Gazebo
 If you're developing use this for gazebo instead of the tarball.
 ~~~
 hg:
@@ -140,6 +149,34 @@ You will need mavproxy installed from pip on your system.
 ~~~
 pip install mavproxy --system --target=${INSTALL_SPACE}/lib/python/site-packages/ --install-option="--install-scripts=${INSTALL_SPACE}/bin"
 ~~~
+
+### Arbiter
+
+Since the arbiter uses Python 3 we setup a virtual environment:
+
+#### Python 3 venv
+
+```console
+cd ${INSTALL_SPACE}
+mkdir venv3
+pyvenv venv3
+. venv3/bin/activate
+pip install wheel
+pip install image netifaces pyqt5 urllib3
+```
+
+Install the following packages into the venv too: 
+
+* acs_lib
+* acs_dashboards
+* arbiter
+
+#### Patch acs_lib
+
+In order to avoid a dependency on `atcommander` you need to patch the file
+`acs_lib/acs_network/acs_network_ground.py` and move the module level import of
+`atcommander` to a local scope where it is being used.
+
 
 ## Terminal setup
 

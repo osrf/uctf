@@ -61,7 +61,7 @@ def spawn_team(color):
     # ensure valid team color
     assert color in ['blue', 'gold']
 
-    launch_snippet = ''
+    cmds = []
 
     # spawn 50 vehicles
     for i in args.vehicle_id:
@@ -83,20 +83,37 @@ def spawn_team(color):
             mavlink_address=args.mavlink_address,
             debug=args.debug, autopilot=autopilot)
 
-        launch_snippet += get_launch_snippet(
+        launch_snippet = get_launch_snippet(
             mav_sys_id, vehicle_type, vehicle_base_port, init_script_path,
             ground_port=get_ground_control_port(color), autopilot=autopilot)
 
-    launch_path = write_launch_file(launch_snippet)
-    cmd = ['roslaunch', launch_path]
-    print(' '.join(cmd))
+        ros_master_port = 11311 + mav_sys_id
+        env = {'ROS_MASTER_URI': 'http://localhost:%d' % ros_master_port}
+        launch_path = write_launch_file(launch_snippet)
+        cmd = ['roslaunch', launch_path]
+        cmds.append((env, cmd))
+        env_str = ' '.join(['%s=%s' % (k, v) for k, v in env.items()])
+        print(env_str + ' ' + ' '.join(cmd))
 
     retcode = 0
     if args.launch:
+        processes = []
+        for (add_env, cmd) in cmds:
+            env = dict(os.environ)
+            env.update(add_env)
+            p = subprocess.Popen(cmd, env=env)
+            processes.append(p)
         try:
-            retcode = subprocess.call(cmd)
+            for p in processes:
+                p.wait()
         except KeyboardInterrupt:
             pass
+        finally:
+            for p in processes:
+                try:
+                    p.terminate()
+                except OSError:
+                    pass
     if args.delete:
         for i in args.vehicle_id:
             vehicle_type, mav_sys_id = vehicle_type_and_mav_sys_id(i, color)
