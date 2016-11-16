@@ -34,3 +34,11 @@
     local-name: uctf
     uri: git@github.com:osrf/uctf
     version: master
+- git:
+    local-name: autonomy-payload
+    uri: git@gitlab.nps.edu:sasc/autonomy-payload.git
+    version: master
+- git:
+    local-name: autopilot_bridge
+    uri: git@gitlab.nps.edu:sasc/autopilot_bridge.git
+    version: master

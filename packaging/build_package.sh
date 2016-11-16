@@ -55,6 +55,23 @@ echo "installing qgroundcontrol"
 wget https://s3-us-west-2.amazonaws.com/qgroundcontrol/latest/QGroundControl.AppImage -O /opt/sasc/bin/qgroundcontrol
 chmod +x /opt/sasc/bin/qgroundcontrol
 
+echo "Installing arbiter and dependencies"
+
+VENV3=${INSTALL_SPACE}/venv3
+mkdir -p ${VENV3}
+(. ${VENV3}/bin/activate && pip install wheel)
+(. ${VENV3}/bin/activate && pip install image netifaces pyqt5 urllib3)
+
+mkdir -p ${WS}/py3_src
+cd ${WS}/py3_src
+git clone git@gitlab.nps.edu:sasc/acs_lib.git
+(. ${VENV3}/bin/activate && cd acs_lib && python setup.py install)
+git clone git@gitlab.nps.edu:sasc/acs_dashboards.git
+(. ${VENV3}/bin/activate && cd acs_dashboards && python setup.py install)
+git clone git@gitlab.nps.edu:sasc/arbiter.git
+(. ${VENV3}/bin/activate && cd arbiter && python setup.py install)
+
+
 echo "generating control file"
 
 cp ${WS}/src/uctf/packaging/sasc-control.base ${WS}/sasc-control
