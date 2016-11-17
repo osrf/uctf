@@ -8,6 +8,9 @@ INSTALL_SPACE=/opt/sasc
 REPOS=${SCRIPTDIR}/gazebo_uctf.rosinstall
 OTHER_REPOS=${SCRIPTDIR}/other.rosinstall
 
+# TODO(tfoote) add proper certs for NPS servers
+export GIT_SSL_NO_VERIFY=true
+
 if test -d ${INSTALL_SPACE}; then
   echo "Error: Install directory ${INSTALL_SPACE} exists. Please delete it and try again."
   exit 1
@@ -17,7 +20,7 @@ mkdir -p ${WS}/src
 
 echo "Cloning from ${REPOS} into ${WS}/src..."
 if [ -e ${WS}/src/.rosinstall ]; then
-  wstool merge -t ${WS}/src ${REPOS}
+  wstool merge --merge-replace -t ${WS}/src ${REPOS}
 else
   wstool init ${WS}/src ${REPOS}
 fi
@@ -33,7 +36,7 @@ curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_sd
 mkdir -p ${WS}/other_src
 echo "Cloning from ${OTHER_REPOS} into ${WS}/other_src..."
 if [ -e ${WS}/other_src/.rosinstall ]; then
-  wstool merge -t ${WS}/other_src ${OTHER_REPOS}
+  wstool merge --merge-replace -t ${WS}/other_src ${OTHER_REPOS}
 else
   wstool init ${WS}/other_src ${OTHER_REPOS}
 fi
@@ -90,8 +93,9 @@ pyvenv ${VENV3}
 
 echo "generating control file"
 
-cp ${WS}/src/uctf/packaging/sasc-control.base ${WS}/sasc-control
+cp ${SCRIPTDIR}/sasc-control.base ${WS}/sasc-control
 echo -n "Files:" >> ${WS}/sasc-control
 find -L /opt/sasc -type f | xargs -I {} echo " {} /" >> ${WS}/sasc-control
+sed -i '/^.*script (dev).tmpl.*/d' ${WS}/sasc-control
 cd ${WS}
 equivs-build ${WS}/sasc-control
