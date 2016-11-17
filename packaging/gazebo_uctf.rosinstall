@@ -1,11 +1,11 @@
-- tar:
-    local-name: gazebo
-    uri: https://bitbucket.org/osrf/gazebo/get/594248df0a49.tar.gz
-    version: osrf-gazebo-594248df0a49
-- tar:
+- hg:
+   local-name: gazebo
+   uri: ssh://hg@bitbucket.org/osrf/gazebo
+   version: ardupilot
+- hg:
     local-name: gazebo_models
-    uri: https://bitbucket.org/osrf/gazebo_models/get/ca17c6407082.tar.gz
-    version: osrf-gazebo_models-ca17c6407082
+    uri: ssh://hg@bitbucket.org/osrf/gazebo_models
+    version: zephyr_demos
 - git:
     local-name: gazebo_ros_pkgs
     uri: git@github.com:ros-simulation/gazebo_ros_pkgs.git
