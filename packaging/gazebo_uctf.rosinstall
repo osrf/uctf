@@ -1,14 +1,14 @@
 - hg:
    local-name: gazebo
-   uri: ssh://hg@bitbucket.org/osrf/gazebo
+   uri: https://bitbucket.org/osrf/gazebo
    version: ardupilot
 - hg:
     local-name: gazebo_models
-    uri: ssh://hg@bitbucket.org/osrf/gazebo_models
+    uri: https://bitbucket.org/osrf/gazebo_models
     version: zephyr_demos
 - git:
     local-name: gazebo_ros_pkgs
-    uri: git@github.com:ros-simulation/gazebo_ros_pkgs.git
+    uri: https://github.com/ros-simulation/gazebo_ros_pkgs.git
     version: kinetic-devel
 - hg:
     local-name: ign-math
@@ -32,15 +32,15 @@
     version: default
 - git:
     local-name: uctf
-    uri: git@github.com:osrf/uctf
+    uri: https://github.com/osrf/uctf
     version: master
 # TODO(tfoote) switch to upstream once merged: https://gitlab.nps.edu/sasc/autonomy-payload/merge_requests/2
 - git:
     local-name: autonomy-payload
-    uri: git@gitlab.nps.edu:tfoote_osrfoundation.org/autonomy-payload.git
+    uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/autonomy-payload.git
     version: fix_dependency
 # TODO(tfoote) switch to upstream once merged: https://gitlab.nps.edu/sasc/autopilot_bridge/merge_requests/1
 - git:
     local-name: autopilot_bridge
-    uri: git@gitlab.nps.edu:tfoote_osrfoundation.org/autopilot_bridge.git
+    uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/autopilot_bridge.git
     version: master
