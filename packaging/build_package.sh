@@ -1,8 +1,12 @@
 #!/bin/bash
 
+set -o errexit
+
 WS=`pwd`/ws
+SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 INSTALL_SPACE=/opt/sasc
-REPOS=./gazebo_uctf.rosinstall
+REPOS=${SCRIPTDIR}/gazebo_uctf.rosinstall
+OTHER_REPOS=${SCRIPTDIR}/other.rosinstall
 
 if test -d ${INSTALL_SPACE}; then
   echo "Error: Install directory ${INSTALL_SPACE} exists. Please delete it and try again."
@@ -12,15 +16,27 @@ fi
 mkdir -p ${WS}/src
 
 echo "Cloning from ${REPOS} into ${WS}/src..."
-rosinstall ${WS}/src ${REPOS}
+if [ -e ${WS}/src/.rosinstall ]; then
+  wstool merge -t ${WS}/src ${REPOS}
+else
+  wstool init ${WS}/src ${REPOS}
+fi
 (cd ${WS}/src/uctf && git submodule update --init --recursive)
 
-echo "Downloading pacakge.xml files for Gazebo pacakges..."
+echo "Downloading pacakge.xml files for Gazebo packages..."
 curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_gazebo.xml > ${WS}/src/gazebo/package.xml
 curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_ign-math.xml > ${WS}/src/ign-math/package.xml
 curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_ign-msgs.xml > ${WS}/src/ign-msgs/package.xml
 curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_ign-tools.xml > ${WS}/src/ign-tools/package.xml
 curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_sdformat.xml > ${WS}/src/sdformat/package.xml
+
+mkdir -p ${WS}/other_src
+echo "Cloning from ${OTHER_REPOS} into ${WS}/other_src..."
+if [ -e ${WS}/other_src/.rosinstall ]; then
+  wstool merge -t ${WS}/other_src ${OTHER_REPOS}
+else
+  wstool init ${WS}/other_src ${OTHER_REPOS}
+fi
 
 echo "Installing dependencies with rosdep..."
 . /opt/ros/kinetic/setup.bash
@@ -36,12 +52,12 @@ sudo chown -R ${USER}:${USER} ${INSTALL_SPACE}
 catkin build
 cp -r ${WS}/src/gazebo_models ${INSTALL_SPACE}/share
 
-echo "Cloning Ardupilot..."
-git clone https://github.com/tfoote/ardupilot.git -b uctf-dev
+# echo "Cloning Ardupilot..."
+# git clone https://github.com/tfoote/ardupilot.git -b uctf-dev
 echo "Building Ardupilot..."
-cd ardupilot
-export PATH=${PATH}:${WS}/ardupilot/Tools/autotest
-# ./Tools/scripts/install-prereqs-ubuntu.sh
+cd ${WS}/other_src/ardupilot
+# export PATH=${PATH}:${WS}/ardupilot/Tools/autotest
+# ./Tools/scripts/install-prereqs-ubuntu.sh Now in bootstrap image
 git submodule update --init --recursive
 ./waf configure --prefix=${INSTALL_SPACE}
 ./waf
@@ -59,17 +75,17 @@ echo "Installing arbiter and dependencies"
 
 VENV3=${INSTALL_SPACE}/venv3
 mkdir -p ${VENV3}
+pyvenv ${VENV3}
 (. ${VENV3}/bin/activate && pip install wheel)
 (. ${VENV3}/bin/activate && pip install image netifaces pyqt5 urllib3)
 
-mkdir -p ${WS}/py3_src
-cd ${WS}/py3_src
-git clone git@gitlab.nps.edu:sasc/acs_lib.git
-(. ${VENV3}/bin/activate && cd acs_lib && python setup.py install)
-git clone git@gitlab.nps.edu:sasc/acs_dashboards.git
-(. ${VENV3}/bin/activate && cd acs_dashboards && python setup.py install)
-git clone git@gitlab.nps.edu:sasc/arbiter.git
-(. ${VENV3}/bin/activate && cd arbiter && python setup.py install)
+# TODO(tfoote) switch to upstream when merge complete https://gitlab.nps.edu/sasc/acs_lib/merge_requests/1
+# git clone git@gitlab.nps.edu:tfoote_osrfoundation.org/acs_lib.git
+(. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_lib && python setup.py install)
+# git clone git@gitlab.nps.edu:sasc/acs_dashboards.git
+(. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_dashboards && python setup.py install)
+# git clone git@gitlab.nps.edu:sasc/arbiter.git
+(. ${VENV3}/bin/activate && cd ${WS}/other_src/arbiter && python setup.py install)
 
 
 echo "generating control file"

@@ -1,0 +1,17 @@
+# TODO(tfoote) switch to upstream when merge complete https://gitlab.nps.edu/sasc/acs_lib/merge_requests/1
+- git:
+    local-name: acs_lib
+    uri: git@gitlab.nps.edu:tfoote_osrfoundation.org/acs_lib.git
+    version: master
+- git:
+    local-name: acs_dashboards
+    uri: git@gitlab.nps.edu:sasc/acs_dashboards.git
+    version: master
+- git:
+    local-name: arbiter
+    uri: git@gitlab.nps.edu:sasc/arbiter.git
+    version: master
+- git:
+    local-name: ardupilot
+    uri: https://github.com/tfoote/ardupilot.git
+    version: uctf-dev
