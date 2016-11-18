@@ -68,6 +68,7 @@ def mav_sys_id_type(value):
     return value
 
 
+# TODO(tfoote) clear this out. We're using spawn_team not this method.
 def spawn_one():
     parser = argparse.ArgumentParser(
         'Spawn vehicle.',
@@ -81,8 +82,10 @@ def spawn_one():
     parser.add_argument('-y', type=float)
     parser.add_argument('--debug', action='store_true')
     parser.add_argument('--px4', action='store_true', default=False)
+    parser.add_argument('--gazebo-ip', default='127.0.0.1')
     args = parser.parse_args()
     autopilot = 'px4' if args.px4 else 'ardupilot'
+    ros_master_uri = 'http://%s:11311' % args.gazebo_ip
 
     # choose some nice defaults based on the id
     if args.vehicle_type is None:
@@ -120,14 +123,22 @@ def spawn_one():
     spawn_model(
         args.mav_sys_id,
         args.vehicle_type, args.baseport, args.color,
-        (args.x, args.y, 0), debug=args.debug, autopilot=autopilot)
+        (args.x, args.y, 0), 
+        ros_master_uri=ros_master_uri,
+        debug=args.debug,
+        autopilot=autopilot,
+        gazebo_ip=args.gazebo_ip,
+        )
 
     launch_file = generate_launch_file(
         args.mav_sys_id,
         args.vehicle_type, args.baseport,
         config_path,
         args.debug,
-        autopilot=autopilot, ground_port=args.groundport,
+        autopilot=autopilot,
+        ground_port=args.groundport,
+        gazebo_ip=args.gazebo_ip,
+        local_ip=args.local_ip,
         )
 
     spawn_launch_file(launch_file)
@@ -250,7 +261,7 @@ def generate_init_script(
 
 def spawn_model(
     mav_sys_id, vehicle_type, baseport, color, pose, ros_master_uri=None,
-    mavlink_address=None, debug=False, autopilot='ardupilot'
+    mavlink_address=None, debug=False, autopilot='ardupilot', gazebo_ip='127.0.0.1', local_ip='127.0.0.1',
 ):
     x, y, yaw = pose
 
@@ -305,6 +316,8 @@ def spawn_model(
     if mavlink_address:
         kwargs['mappings']['mavlink_addr'] = mavlink_address
     if autopilot == 'ardupilot':
+        kwargs['mappings']['fdm_addr'] = local_ip
+        kwargs['mappings']['listen_addr'] = gazebo_ip
         # fdm in is gazebo out
         kwargs['mappings']['fdm_port_in'] = str(baseport + 5)
         # fdm out is gazebo in
@@ -351,11 +364,14 @@ def xacro(template_xml, **kwargs):
 
 def generate_launch_file(
     mav_sys_id, vehicle_type, baseport, config_path, debug,
-    autopilot, ground_port,
+    autopilot, ground_port, gazebo_ip, local_ip,
 ):
     launch_snippet = get_launch_snippet(
         mav_sys_id, vehicle_type, baseport, config_path, debug,
-        autopilot=autopilot, ground_port=ground_port)
+        autopilot=autopilot, ground_port=ground_port,
+        gazebo_ip=gazebo_ip,
+        local_ip=local_ip,
+        )
     if debug:
         print(launch_snippet)
     return write_launch_file(launch_snippet)
@@ -363,7 +379,8 @@ def generate_launch_file(
 
 def get_launch_snippet(
     mav_sys_id, vehicle_type, vehicle_base_port, init_script_path, debug=False,
-    autopilot='px4', ground_port='14000',
+    autopilot='px4', ground_port='14000', gazebo_ip='127.0.0.1',
+    local_ip='127.0.0.1'
 ):
     vehicle_name = "%s_%d" % (vehicle_type, mav_sys_id)
     pkg_share_path = os.path.normpath(os.path.join(
@@ -373,9 +390,9 @@ def get_launch_snippet(
         print('For manual invocation run:')
         print('  cd %s && mainapp %s' % (pkg_share_path, init_script_path))
         print(
-            '  roslaunch px4 mavros.launch fcu_url:=udp://:%d@localhost:%d '
+            '  roslaunch px4 mavros.launch fcu_url:=udp://:%d@%s:%d '
             'tgt_system:=%d ns:=/%s' % (
-                vehicle_base_port + 3, vehicle_base_port + 2,
+                vehicle_base_port + 3, local_ip, vehicle_base_port + 2,
                 mav_sys_id, vehicle_name))
     if autopilot == 'px4':
         data = {
@@ -388,16 +405,19 @@ def get_launch_snippet(
         }
         return empy('px4_and_mavros.launch.em', data)
     else:
+        sitl_base_url = 'tcp:%s:%d' % (local_ip, vehicle_base_port)
+        ground_connection = '%s:%s' % (local_ip, ground_port)
+        connection_to_ros_interface = '%s:%s' % (local_ip, vehicle_base_port + 3)
         data = {
             'default_params': init_script_path,
             'base_port': vehicle_base_port,
-            'mavproxy_arguments': '--master tcp:127.0.0.1:%d '
-                                  '--out 127.0.0.1:%s '
-                                  '--out 127.0.0.1:%s '
+            'mavproxy_arguments': '--master %s '
+                                  '--out %s '
+                                  '--out %s '
                                   '--aircraft %s'
-                                  % (vehicle_base_port,
-                                     ground_port,
-                                     vehicle_base_port + 3,
+                                  % (sitl_base_url,
+                                     ground_connection,
+                                     connection_to_ros_interface,
                                      vehicle_name),
             'rc_in_port': vehicle_base_port + 1,
             'gazebo_port_in': vehicle_base_port + 4,
@@ -412,7 +432,9 @@ def get_launch_snippet(
                                          ORIGIN_ALTITUDE,
                                          ORIGIN_HEADING),
             'acs_network_inteface': 'enp0s25',
-            'sitl_base_url': 'tcp:127.0.0.1:%d' % vehicle_base_port,
+            'sitl_base_url': sitl_base_url,
+            'gazebo_ip': gazebo_ip,
+            'local_ip': local_ip,
         }
         if vehicle_type == 'iris':
             data['executable'] = 'arducopter-quad'

@@ -56,9 +56,12 @@ def spawn_team(color):
         help='Despawn when killed')
     parser.add_argument('--debug', action='store_true')
     parser.add_argument('--px4', action='store_true', default=False)
+    parser.add_argument('--gazebo-ip', default='127.0.0.1')
+    parser.add_argument('--local-ip', default='127.0.0.1')
     args = parser.parse_args()
     autopilot = 'px4' if args.px4 else 'ardupilot'
-
+    if not args.gazebo_ros_master_uri:
+        args.gazebo_ros_master_uri = 'http://%s:11311' % args.gazebo_ip
     # ensure valid team color
     assert color in ['blue', 'gold']
 
@@ -82,11 +85,15 @@ def spawn_team(color):
             mav_sys_id, vehicle_type, vehicle_base_port, color, vehicle_pose,
             ros_master_uri=args.gazebo_ros_master_uri,
             mavlink_address=args.mavlink_address,
-            debug=args.debug, autopilot=autopilot)
+            debug=args.debug, autopilot=autopilot,
+            gazebo_ip=args.gazebo_ip,
+            )
 
         launch_snippet = get_launch_snippet(
             mav_sys_id, vehicle_type, vehicle_base_port, init_script_path,
-            ground_port=get_ground_control_port(color), autopilot=autopilot)
+            ground_port=get_ground_control_port(color), autopilot=autopilot,
+            gazebo_ip=args.gazebo_ip,
+            local_ip=args.local_ip)
 
         ros_master_port = 11311 + mav_sys_id
         env = {'ROS_MASTER_URI': 'http://localhost:%d' % ros_master_port}
