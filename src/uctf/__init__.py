@@ -411,6 +411,8 @@ def get_launch_snippet(
                                          ORIGIN_LONGITUDE,
                                          ORIGIN_ALTITUDE,
                                          ORIGIN_HEADING),
+            'acs_network_inteface': 'enp0s25',
+            'sitl_base_url': 'tcp:127.0.0.1:%d' % vehicle_base_port,
         }
         if vehicle_type == 'iris':
             data['executable'] = 'arducopter-quad'

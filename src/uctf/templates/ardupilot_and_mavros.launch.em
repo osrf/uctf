@@ -18,3 +18,15 @@
     <arg name="fcu_url" value="udp://:@(ros_interface_port4)@@localhost:@(ros_interface_port3)" />
     <arg name="tgt_system" value="@(mav_sys_id)" />
   </include>
+
+<!-- TODO(tfoote) parameterize this in and out based on an option -->
+<!-- TODO(tfoote) verify namespace is ok slightly different -->
+<include file="$(find ap_master)/launch/sitl.launch" ns="/@(vehicle_type)_@(mav_sys_id)">
+  <arg name="id" value="@(mav_sys_id)" />
+  <!-- <arg name="name" value="@(vehicle_type)_@(mav_sys_id)"/> -->
+  <arg name="sitl" value="@(sitl_base_url)" />
+  <arg name="port" value="5554" />
+  <arg name="dev" value="@(acs_network_inteface)" />
+  <arg name="range" value="-1" />
+</include>
+<!--/usr/bin/python /opt/ros/kinetic/bin/roslaunch ap_master sitl.launch id:=101 name:=sitl101 sitl:=tcp:192.168.2.250:6772 port:=5554 ns:=sitl101 dev:=sitl_bridge_1 range:=-1 -->
