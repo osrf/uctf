@@ -87,6 +87,7 @@ def spawn_team(color):
             mavlink_address=args.mavlink_address,
             debug=args.debug, autopilot=autopilot,
             gazebo_ip=args.gazebo_ip,
+            local_ip=args.local_ip,
             )
 
         launch_snippet = get_launch_snippet(

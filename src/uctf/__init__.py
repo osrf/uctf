@@ -128,6 +128,7 @@ def spawn_one():
         debug=args.debug,
         autopilot=autopilot,
         gazebo_ip=args.gazebo_ip,
+        local_ip=args.local_ip,
         )
 
     launch_file = generate_launch_file(
