@@ -2,6 +2,8 @@
   <!-- <xacro:arg name='visual_material' default='Gazebo/DarkGrey' />
   <xacro:arg name='mavlink_addr' default='INADDR_ANY' />
   <xacro:arg name='mavlink_udp_port' default='14560' /> -->
+  <xacro:arg name='fdm_addr' default='127.0.0.1' />
+  <xacro:arg name='listen_addr' default='127.0.0.1' />
   <xacro:arg name='fdm_port_in' default='9002' />
   <xacro:arg name='fdm_port_out' default='9003' />
   <model name="zephyr_delta_wing_ardupilot_demo">
@@ -116,7 +118,8 @@
     </joint>
 
     <plugin name="ardupilot_plugin" filename="libArduPilotPlugin.so">
-      <fdm_addr>127.0.0.1</fdm_addr>
+      <fdm_addr>$(arg fdm_addr)</fdm_addr>
+      <listen_addr>$(arg listen_addr)</listen_addr>
       <fdm_port_in>$(arg fdm_port_in)</fdm_port_in>
       <fdm_port_out>$(arg fdm_port_out)</fdm_port_out>
       <modelXYZToAirplaneXForwardZDown>0 0 0 3.141593 0 -1.57079</modelXYZToAirplaneXForwardZDown>

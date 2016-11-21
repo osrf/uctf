@@ -1,6 +1,8 @@
 <?xml version='1.0'?>
 <sdf version='1.6' xmlns:xacro='http://ros.org/wiki/xacro'> 
   <!-- <xacro:arg name='visual_material' default='Gazebo/DarkGrey' /> -->
+  <xacro:arg name='fdm_addr' default='127.0.0.1' />
+  <xacro:arg name='listen_addr' default='127.0.0.1' />
   <xacro:arg name='fdm_port_in' default='9005' />
   <xacro:arg name='fdm_port_out' default='9004' />
   <model name="iris_demo">
@@ -141,7 +143,8 @@
       <link_name>iris::rotor_3</link_name>
     </plugin>
     <plugin name="arducopter_plugin" filename="libArduCopterPlugin.so">
-      <fdm_addr>127.0.0.1</fdm_addr>
+      <fdm_addr>$(arg fdm_addr)</fdm_addr>
+      <listen_addr>$(arg listen_addr)</listen_addr>
       <fdm_port_in>$(arg fdm_port_in)</fdm_port_in>
       <fdm_port_out>$(arg fdm_port_out)</fdm_port_out>
       <imuName>imu_sensor</imuName>
