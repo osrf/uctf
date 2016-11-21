@@ -171,13 +171,6 @@ Install the following packages into the venv too:
 * acs_dashboards
 * arbiter
 
-#### Patch acs_lib
-
-In order to avoid a dependency on `atcommander` you need to patch the file
-`acs_lib/acs_network/acs_network_ground.py` and move the module level import of
-`atcommander` to a local scope where it is being used.
-
-
 ## Terminal setup
 
 To use this installation in each terminal instructed to open run the following commands.
