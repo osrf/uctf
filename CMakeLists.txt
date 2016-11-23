@@ -16,7 +16,6 @@ install(PROGRAMS
   "script/rqt_uctf"
   "script/spawn_blue"
   "script/spawn_gold"
-  "script/spawn_one"
   DESTINATION bin
 )
 install(DIRECTORY
