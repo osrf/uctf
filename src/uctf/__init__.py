@@ -288,13 +288,14 @@ def xacro(template_xml, **kwargs):
 
 def generate_launch_file(
     mav_sys_id, vehicle_type, baseport, config_path, debug,
-    autopilot, ground_port, gazebo_ip, local_ip, acs_network_inteface,
+    autopilot, ground_port, gazebo_ip, local_ip,
+    include_payload, launch_mavros, acs_network_inteface,
 ):
     launch_snippet = get_launch_snippet(
         mav_sys_id, vehicle_type, baseport, config_path, debug,
         autopilot=autopilot, ground_port=ground_port,
         gazebo_ip=gazebo_ip,
-        local_ip=local_ip, launch_mavros=launch_mavros, acs_network_inteface=acs_network_inteface
+        local_ip=local_ip, include_payload=include_payload, launch_mavros=launch_mavros, acs_network_inteface=acs_network_inteface
         )
     if debug:
         print(launch_snippet)

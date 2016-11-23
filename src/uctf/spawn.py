@@ -4,7 +4,7 @@ import subprocess
 
 from uctf import generate_config
 from uctf import get_ground_control_port
-from uctf import get_launch_snippet
+from uctf import generate_launch_file
 from uctf import get_vehicle_base_port
 from uctf import get_vehicle_pose
 from uctf import delete_model
@@ -97,8 +97,8 @@ def spawn_team(color):
             local_ip=args.local_ip,
             )
 
-        launch_snippet = get_launch_snippet(
-            mav_sys_id, vehicle_type, vehicle_base_port, init_script_path,
+        launch_path = generate_launch_file(
+            mav_sys_id, vehicle_type, vehicle_base_port, init_script_path, args.debug,
             ground_port=get_ground_control_port(color), autopilot=autopilot,
             gazebo_ip=args.gazebo_ip,
             local_ip=args.local_ip,
@@ -109,7 +109,6 @@ def spawn_team(color):
 
         ros_master_port = 11311 + mav_sys_id
         env = {'ROS_MASTER_URI': 'http://localhost:%d' % ros_master_port}
-        launch_path = write_launch_file(launch_snippet)
         cmd = ['roslaunch', launch_path]
         cmds.append((env, cmd))
         env_str = ' '.join(['%s=%s' % (k, v) for k, v in env.items()])
