@@ -17,6 +17,6 @@ dir=`mktemp -d`
 echo "temporary rootfs: $dir"
 cd $dir
 
-CMD="$executable -S --base-port $base_port --rc-in-port $rc_in_port --gazebo-address $gazebo_address --gazebo-port-in $gazebo_port_in --gazebo-port-out $gazebo_port_out --home $home_str --model $model --speedup 10 --defaults $default_params -F $fdm_address"
+CMD="$executable -S --base-port $base_port --rc-in-port $rc_in_port --gazebo-address $gazebo_address --gazebo-port-in $gazebo_port_in --gazebo-port-out $gazebo_port_out --home $home_str --model $model --defaults $default_params -F $fdm_address"
 echo "Running [[$CMD]]"
 $CMD
