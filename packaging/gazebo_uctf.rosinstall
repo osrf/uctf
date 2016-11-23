@@ -37,7 +37,7 @@
 - git:
     local-name: autonomy-payload
     uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/autonomy-payload.git
-    version: fix_dependency
+    version: sample_tactic
 - git:
     local-name: autopilot_bridge
     uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/autopilot_bridge.git
