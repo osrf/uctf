@@ -6,6 +6,7 @@
     cwd="node"
     ns="/@(vehicle_type)_@(mav_sys_id)"
     output="screen" />
+@[ if include_payload ]@
   <include file="$(find ap_master)/launch/master.launch">
     <arg name="id" value="@(mav_sys_id)" />
     <arg name="name" value="@(vehicle_type)_@(mav_sys_id)" />
@@ -15,3 +16,4 @@
     <arg name="do_bag" default="0" />
     <arg name="do_verify" default="0" />
   </include>
+@[end if]

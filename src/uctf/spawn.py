@@ -54,6 +54,9 @@ def spawn_team(color):
     parser.add_argument(
         '--no-delete', action='store_false', dest='delete',
         help='Despawn when killed')
+    parser.add_argument(
+        '--no-payload', action='store_false', dest='include_payload',
+        help='Do not launch the payload.')
     parser.add_argument('--debug', action='store_true')
     parser.add_argument('--px4', action='store_true', default=False)
     parser.add_argument('--gazebo-ip', default='127.0.0.1')
@@ -94,7 +97,9 @@ def spawn_team(color):
             mav_sys_id, vehicle_type, vehicle_base_port, init_script_path,
             ground_port=get_ground_control_port(color), autopilot=autopilot,
             gazebo_ip=args.gazebo_ip,
-            local_ip=args.local_ip)
+            local_ip=args.local_ip,
+            include_payload=args.include_payload,
+            )
 
         ros_master_port = 11311 + mav_sys_id
         env = {'ROS_MASTER_URI': 'http://localhost:%d' % ros_master_port}
