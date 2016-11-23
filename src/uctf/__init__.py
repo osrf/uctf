@@ -371,7 +371,7 @@ def generate_launch_file(
         mav_sys_id, vehicle_type, baseport, config_path, debug,
         autopilot=autopilot, ground_port=ground_port,
         gazebo_ip=gazebo_ip,
-        local_ip=local_ip,
+        local_ip=local_ip, launch_mavros=launch_mavros,
         )
     if debug:
         print(launch_snippet)
@@ -381,7 +381,7 @@ def generate_launch_file(
 def get_launch_snippet(
     mav_sys_id, vehicle_type, vehicle_base_port, init_script_path, debug=False,
     autopilot='px4', ground_port='14000', gazebo_ip='127.0.0.1',
-    local_ip='127.0.0.1', include_payload=True,
+    local_ip='127.0.0.1', include_payload=True, launch_mavros=False,
 ):
     vehicle_name = "%s_%d" % (vehicle_type, mav_sys_id)
     pkg_share_path = os.path.normpath(os.path.join(
@@ -403,7 +403,10 @@ def get_launch_snippet(
             'vehicle_type': vehicle_type,
             'mav_sys_id': mav_sys_id,
             'pkg_share_path': pkg_share_path,
+            'gazebo_ip': gazebo_ip,
+            'local_ip': local_ip,
             'include_payload': include_payload,
+            'launch_mavros': launch_mavros,
         }
         return empy('px4_and_mavros.launch.em', data)
     else:
@@ -438,6 +441,7 @@ def get_launch_snippet(
             'gazebo_ip': gazebo_ip,
             'local_ip': local_ip,
             'include_payload': include_payload,
+            'launch_mavros': launch_mavros,
         }
         if vehicle_type == 'iris':
             data['executable'] = 'arducopter-quad'

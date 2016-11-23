@@ -59,6 +59,7 @@ def spawn_team(color):
         help='Do not launch the payload.')
     parser.add_argument('--debug', action='store_true')
     parser.add_argument('--px4', action='store_true', default=False)
+    parser.add_argument('--mavros', action='store_true', default=False)
     parser.add_argument('--gazebo-ip', default='127.0.0.1')
     parser.add_argument('--local-ip', default='127.0.0.1')
     args = parser.parse_args()
@@ -99,6 +100,7 @@ def spawn_team(color):
             gazebo_ip=args.gazebo_ip,
             local_ip=args.local_ip,
             include_payload=args.include_payload,
+            launch_mavros=args.mavros,
             )
 
         ros_master_port = 11311 + mav_sys_id

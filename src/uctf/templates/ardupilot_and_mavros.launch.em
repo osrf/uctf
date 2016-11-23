@@ -14,14 +14,16 @@
     cwd="ROS_HOME"
     ns="/@(vehicle_type)_@(mav_sys_id)"
     output="screen" />
+@[ if launch_mavros ]@
   <include file="$(find mavros)/launch/apm.launch" ns="/@(vehicle_type)_@(mav_sys_id)">
     <arg name="fcu_url" value="udp://:@(ros_interface_port4)@@@(local_ip):@(ros_interface_port3)" />
     <arg name="tgt_system" value="@(mav_sys_id)" />
   </include>
+@[end if]
 
+@[ if include_payload ]@
 @# TODO(tfoote) parameterize this in and out based on an option
 @# TODO(tfoote) verify namespace is ok slightly different
-@[ if include_payload ]@
 <include file="$(find ap_master)/launch/sitl.launch" ns="/@(vehicle_type)_@(mav_sys_id)">
   <arg name="id" value="@(mav_sys_id)" />
   <!-- <arg name="name" value="@(vehicle_type)_@(mav_sys_id)"/> -->
