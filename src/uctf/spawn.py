@@ -49,6 +49,9 @@ def spawn_team(color):
         '--mavlink-address',
         help='The IP address for mavlink (default: INADDR_ANY)')
     parser.add_argument(
+        '--acs-network-interface', default='lo',
+        help='The interface name for acs to talk on.')
+    parser.add_argument(
         '--no-launch', action='store_false', dest='launch',
         help='Run generate launch file')
     parser.add_argument(
@@ -101,6 +104,7 @@ def spawn_team(color):
             local_ip=args.local_ip,
             include_payload=args.include_payload,
             launch_mavros=args.mavros,
+            acs_network_inteface=args.acs_network_interface,
             )
 
         ros_master_port = 11311 + mav_sys_id

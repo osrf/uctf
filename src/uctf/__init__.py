@@ -288,13 +288,13 @@ def xacro(template_xml, **kwargs):
 
 def generate_launch_file(
     mav_sys_id, vehicle_type, baseport, config_path, debug,
-    autopilot, ground_port, gazebo_ip, local_ip,
+    autopilot, ground_port, gazebo_ip, local_ip, acs_network_inteface,
 ):
     launch_snippet = get_launch_snippet(
         mav_sys_id, vehicle_type, baseport, config_path, debug,
         autopilot=autopilot, ground_port=ground_port,
         gazebo_ip=gazebo_ip,
-        local_ip=local_ip, launch_mavros=launch_mavros,
+        local_ip=local_ip, launch_mavros=launch_mavros, acs_network_inteface=acs_network_inteface
         )
     if debug:
         print(launch_snippet)
@@ -304,7 +304,7 @@ def generate_launch_file(
 def get_launch_snippet(
     mav_sys_id, vehicle_type, vehicle_base_port, init_script_path, debug=False,
     autopilot='px4', ground_port='14000', gazebo_ip='127.0.0.1',
-    local_ip='127.0.0.1', include_payload=True, launch_mavros=False,
+    local_ip='127.0.0.1', include_payload=True, launch_mavros=False, acs_network_inteface='lo',
 ):
     vehicle_name = "%s_%d" % (vehicle_type, mav_sys_id)
     pkg_share_path = os.path.normpath(os.path.join(
@@ -359,7 +359,7 @@ def get_launch_snippet(
                                          ORIGIN_LONGITUDE,
                                          ORIGIN_ALTITUDE,
                                          ORIGIN_HEADING),
-            'acs_network_inteface': 'enp0s25',
+            'acs_network_inteface': acs_network_inteface,
             'sitl_base_url': sitl_base_url,
             'gazebo_ip': gazebo_ip,
             'local_ip': local_ip,
