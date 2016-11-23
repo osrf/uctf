@@ -33,13 +33,11 @@
 - git:
     local-name: uctf
     uri: https://github.com/osrf/uctf
-    version: master
-# TODO(tfoote) switch to upstream once merged: https://gitlab.nps.edu/sasc/autonomy-payload/merge_requests/2
+    version: payload_v2
 - git:
     local-name: autonomy-payload
     uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/autonomy-payload.git
     version: fix_dependency
-# TODO(tfoote) switch to upstream once merged: https://gitlab.nps.edu/sasc/autopilot_bridge/merge_requests/1
 - git:
     local-name: autopilot_bridge
     uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/autopilot_bridge.git
