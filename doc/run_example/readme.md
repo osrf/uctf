@@ -51,7 +51,7 @@ The two scripts `spawn_blue` and `spawn_gold` can be used to perform the followi
 For this example we will only spawn two vehicles (one quadcopter (1), one fixed wing (26)) for a single team and automatically start the generated `roslaunch` files:
 
 ```console
-spawn_blue 1 26
+spawn_blue 1 26 --acs enp0s25
 ```
 
 ### Use flight tech interface
@@ -62,7 +62,7 @@ First start the Qt application:
 ```console
 . <ws_payload>/devel/setup.bash
 . <venv3>/bin/activate
-PYTHONPATH=$PYTHONPATH:/usr/lib/python3/dist-packages fti.py -d lo -z
+PYTHONPATH=/opt/sasc-dev/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/dist-packages:/usr/lib/python3/dist-packages fti.py -d enp0s25 -z
 ```
 
 For each vehicle perform the following steps:
@@ -75,7 +75,7 @@ For each vehicle perform the following steps:
 
 **TODO the vehicles does not take off yet, you can use QGroundControl to trigger a take off**
 
-### 2D visualization
+<!--### 2D visualization
 
 Since the vehicles are so small compared to the environment size it is impossible to observe them all at the same time in Gazebo.
 A simplified 2D visualization (which is not to scale) can provide that overview as a `rqt plugin`.
@@ -88,6 +88,7 @@ rqt_uctf
 The quadcopters are visualized as crosses while the fixed wings are depicted as a circle.
 
 ![RQt plugin for UCTF](rqt_uctf.png)
+-->
 
 ### Use QGroundControl
 
@@ -140,7 +141,7 @@ One the vehicles are in the air (and `swarm_state=2`) they can be assigned to a 
 ```console
 . <ws_payload>/setup.bash
 . <venv3>/bin/activate
-arbiter_start.py -db eth0 -dr lo
+PYTHONPATH=/opt/sasc-dev/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/dist-packages:/usr/lib/python3/dist-packages arbiter_start.py -db enp0s25 -dr wlp3s0
 ```
 
 ## Run vehicles on separate machines
