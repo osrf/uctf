@@ -1,6 +1,6 @@
 # Start your SASC round
 
-1. Signup with a Google account at https://cloudsim.io. Be sure to select the "Sign up with Google" option, as opposed to the email address and password method.
+1. Signup with a Google account at https://cloudsim.io.
 1. Register for SASC. Wait for OSRF to approve your user as a SASC admin.
 1. Log in to https://cloudsim.io/
 1. Click on the SASC link (on the left menu bar, under the Dashboard).
