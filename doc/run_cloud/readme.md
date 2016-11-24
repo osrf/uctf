@@ -1,6 +1,6 @@
 # Start your SASC round
 
-1. Signup with a Google account at https://dev.cloudsim.io
+1. Signup with a Google account at https://cloudsim.io
 1. Register for SASC. Wait for OSRF to approve your user as a SASC admin.
 1. Log in to https://cloudsim.io/
 1. Click on the SASC link (on the left menu bar, under the Dashboard).
@@ -9,13 +9,13 @@ SASC machines are grouped into Rounds. Click on the round button (with a + insid
 You must supply a name for the Round, along with a usernames for each team.
 
 ## Launch the simulation machine
-1. Click on the LAUNCH button in the Arbiter box. This will launch a simulatopn cloud machine. This process takes about 2 minutes, and you should see the Status and machine ip update. You should also see a button appear to download the ssh key for the simulation machine.
+1. Click on the LAUNCH button in the Arbiter box. This will launch a simulation cloud machine. This process takes about 2 minutes, and you should see the Status and machine ip update. You should also see a button appear to download the ssh key for the simulation machine. You can ssh into it as user `ubuntu`.
 
 ## Launch the payload machines
 1. You can launch a payload machine for each team by pressing the blue or gold LAUNCH A PAYLOAD button.
-1. After a few second, payload information (local ip address) and ssh download links should appear.
-1. VPN: you can connect to a payload machine using a VPN. There are up to 5 openvpn keys that you can download for each team, named ocu-0 to ocu-4. It is important not to connect to the system with unique keys (2 simultaneous connections with the same key will not work).
-
+1. After a few second, payload information (local IP address) and ssh download links should appear.
+1. VPN: you can connect to a payload machine using a VPN. There are up to 5 openvpn keys that you can download for each team, named ocu-0 to ocu-4. Each OCU key bundle contains the necessary client configuration file and a private key. It is important not to use the same key on multiple OCUs (2 simultaneous connections with the same key will not work). To start the VPN, run `openvpn --config openvpn.conf`.
+1. After connecting to the VPN and downloading the SSH key for the Payload machine, you can ssh to its local IP address as user `ubuntu`.
 
 ## Finish the round
 1. Once you are finished with the round, press the FINISH ROUND button to terminate the machines (simulation and payloads). Machines are billed for each hour they are running.
