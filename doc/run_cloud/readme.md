@@ -1,3 +1,20 @@
+# Start your SASC round
+
+1. Signup with a Google account at https://dev.cloudsim.io
+1. Register for SASC. Wait for OSRF to approve your user as a SASC admin.
+1. Log in to https://cloudsim.io/
+1. Click on the SASC link (on the left menu bar, under the Dashboard).
+
+SASC machines are grouped into Rounds. Click on the round button (with a + inside) to create a new round. 
+You must supply a name for the Round, along with a usernames for each team.
+
+1. Click on the LAUNCH button in the Arbiter box. This will launch a simulatopn cloud machine. This process takes about 2 minutes, and you should see the Status and machine ip update. You should also see a button appear to download the ssh key for the simulation machine.
+
+1. You can launch a payload machine for each team by pressing the blue or gold LAUNCH A PAYLOAD button.
+1. After a few second, payload information (local ip address) and ssh download links should appear.
+1. Once you are finished with the round, press the FINISH ROUND button to kill the machines (simulation and payloads)
+
+
 # Run your team in the cloud
 
 
