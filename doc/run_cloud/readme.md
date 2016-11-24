@@ -33,7 +33,7 @@ sudo apt-get install sasc-gazebo-sitl
 ## On the Arbiter machine
 
 ### Launch Gazebo
-```
+```console
 export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/setup.bash
 . ${INSTALL_SPACE}/share/gazebo-8/setup.sh
@@ -46,7 +46,7 @@ roslaunch uctf uctf.launch gui:=false
 ### Launch Arbiter
 
 SSH with X-Forwarding to the arbiter machine.
-```
+```console
 export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/setup.bash
 . ${INSTALL_SPACE}/share/gazebo-8/setup.sh
@@ -60,11 +60,11 @@ PYTHONPATH=/opt/sasc/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/
 
 Parameterize acs_network_inteface local-ip gazebo-ip:
 
-```
+```console
 spawn_blue 1 26 --acs br-blue --gazebo-ip 192.168.2.1 --local-ip 192.168.2.10
 ```
 
-```
+```console
 spawn_gold 1 26 --acs br-gold --gazebo-ip 192.168.3.1 --local-ip 192.168.3.10
 ```
 
