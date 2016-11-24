@@ -45,29 +45,28 @@ roslaunch uctf uctf.launch gui:=false
 
 ### Launch Arbiter
 
-SSH with X-Forwarding to the arbiter machine.
+SSH with X-Forwarding to the arbiter machine (e.g., `ssh -XC -i cloudsim.pem ubuntu@1.2.3.4`).
 ```console
 export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/setup.bash
 . ${INSTALL_SPACE}/share/gazebo-8/setup.sh
 . ${INSTALL_SPACE}/share/uctf/setup.sh
 export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${INSTALL_SPACE}/share/gazebo_models
-. /opt/sasc-dev/venv3/bin/activate
-PYTHONPATH=/opt/sasc/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/dist-packages:/usr/lib/python3/dist-packages arbiter_start.py -db br-blue -dr br-gold
+. ${INSTALL_SPACE}/venv3/bin/activate
+PYTHONPATH=${INSTALL_SPACE}/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/dist-packages:/usr/lib/python3/dist-packages arbiter_start.py -db br-blue -dr br-gold
 ```
 
 ## On each Payload machine
 
-Parameterize acs_network_inteface local-ip gazebo-ip:
-
+To spawn a blue plane from the blue Payload machine:
 ```console
 spawn_blue 1 26 --acs br-blue --gazebo-ip 192.168.2.1 --local-ip 192.168.2.10
 ```
 
+To spawn a gold plane from the gold Payload machine:
 ```console
 spawn_gold 1 26 --acs br-gold --gazebo-ip 192.168.3.1 --local-ip 192.168.3.10
 ```
-
 ## On OCU run fti.py or qgroundcontrol
 
 Run fti.py or qgroundcontrol using the VPN tunnel.
