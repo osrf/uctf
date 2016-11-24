@@ -23,15 +23,14 @@ You must supply a name for the Round, along with a usernames for each team.
 # Run your team in the cloud
 
 
-On first login to all machines
+## On first login to all machines
 
 ```console
 sudo apt-get update
 sudo apt-get install sasc-gazebo-sitl
 ```
 
-## On the Server
-
+## On the Arbiter machine
 
 ### Launch Gazebo
 ```
@@ -43,7 +42,6 @@ export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${INSTALL_SPACE}/share/gazebo_models
 roslaunch uctf uctf.launch gui:=false
 
 ```
-
 
 ### Launch Arbiter
 
@@ -58,10 +56,9 @@ export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${INSTALL_SPACE}/share/gazebo_models
 PYTHONPATH=/opt/sasc/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/dist-packages:/usr/lib/python3/dist-packages arbiter_start.py -db br-blue -dr br-gold
 ```
 
+## On each Payload machine
 
-## On payload spawn vehicles
-
-parameterize acs_network_inteface local-ip gazebo-ip
+Parameterize acs_network_inteface local-ip gazebo-ip:
 
 ```
 spawn_blue 1 26 --acs br-blue --gazebo-ip 192.168.2.1 --local-ip 192.168.2.10
