@@ -185,7 +185,10 @@ def generate_init_script(
 
 def spawn_model(
     mav_sys_id, vehicle_type, baseport, color, pose, ros_master_uri=None,
-    mavlink_address=None, debug=False, autopilot='ardupilot', gazebo_ip='127.0.0.1', local_ip='127.0.0.1',
+    mavlink_address=None, debug=False,
+    autopilot='ardupilot',
+    gazebo_ip='127.0.0.1',
+    local_ip='127.0.0.1',
 ):
     x, y, yaw = pose
 
@@ -293,9 +296,13 @@ def generate_launch_file(
 ):
     launch_snippet = get_launch_snippet(
         mav_sys_id, vehicle_type, baseport, config_path, debug,
-        autopilot=autopilot, ground_port=ground_port,
+        autopilot=autopilot,
+        ground_port=ground_port,
         gazebo_ip=gazebo_ip,
-        local_ip=local_ip, include_payload=include_payload, launch_mavros=launch_mavros, acs_network_inteface=acs_network_inteface
+        local_ip=local_ip,
+        include_payload=include_payload,
+        launch_mavros=launch_mavros,
+        acs_network_inteface=acs_network_inteface
         )
     if debug:
         print(launch_snippet)
@@ -304,8 +311,13 @@ def generate_launch_file(
 
 def get_launch_snippet(
     mav_sys_id, vehicle_type, vehicle_base_port, init_script_path, debug=False,
-    autopilot='px4', ground_port='14000', gazebo_ip='127.0.0.1',
-    local_ip='127.0.0.1', include_payload=True, launch_mavros=False, acs_network_inteface='lo',
+    autopilot='px4',
+    ground_port='14000',
+    gazebo_ip='127.0.0.1',
+    local_ip='127.0.0.1',
+    include_payload=True,
+    launch_mavros=False,
+    acs_network_inteface='lo',
 ):
     vehicle_name = "%s_%d" % (vehicle_type, mav_sys_id)
     pkg_share_path = os.path.normpath(os.path.join(
@@ -336,7 +348,8 @@ def get_launch_snippet(
     else:
         sitl_base_url = 'tcp:%s:%d' % (local_ip, vehicle_base_port)
         ground_connection = '%s:%s' % (local_ip, ground_port)
-        connection_to_ros_interface = '%s:%s' % (local_ip, vehicle_base_port + 3)
+        connection_to_ros_interface = '%s:%s' % (local_ip,
+                                                 vehicle_base_port + 3)
         data = {
             'default_params': init_script_path,
             'base_port': vehicle_base_port,
