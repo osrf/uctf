@@ -9,7 +9,6 @@ from uctf import get_vehicle_base_port
 from uctf import get_vehicle_pose
 from uctf import delete_model
 from uctf import spawn_model
-from uctf import write_launch_file
 
 
 def vehicle_id_type(value):
@@ -98,8 +97,10 @@ def spawn_team(color):
             )
 
         launch_path = generate_launch_file(
-            mav_sys_id, vehicle_type, vehicle_base_port, init_script_path, args.debug,
-            ground_port=get_ground_control_port(color), autopilot=autopilot,
+            mav_sys_id, vehicle_type, vehicle_base_port,
+            init_script_path, args.debug,
+            ground_port=get_ground_control_port(color),
+            autopilot=autopilot,
             gazebo_ip=args.gazebo_ip,
             local_ip=args.local_ip,
             include_payload=args.include_payload,

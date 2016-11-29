@@ -25,7 +25,6 @@ def test_pydocstyle():
         os.path.join(base_path, 'script', 'rqt_uctf'),
         os.path.join(base_path, 'script', 'spawn_blue'),
         os.path.join(base_path, 'script', 'spawn_gold'),
-        os.path.join(base_path, 'script', 'spawn_one'),
         os.path.join(base_path, 'src'),
         os.path.join(base_path, 'test'),
         '--add-ignore=D100,D101,D102,D103,D104',
