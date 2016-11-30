@@ -114,6 +114,17 @@ To connect it with the port of the *blue* team the following steps are necessary
 Now you should see both vehicles at a location in Zurich, Switzerland (which are the default GPS coordinates of the PX4).
 All vehicles have the same shape in this application despite one of them being a quadcopter.
 
+
+### swarmcommander
+
+
+```console
+export INSTALL_SPACE=/opt/sasc-dev
+. ${INSTALL_SPACE}/venv3/bin/activate
+. ${INSTALL_SPACE}/setup.bash
+PYTHONPATH=/usr/lib/python3/dist-packages:$PYTHONPATH swarm_commander.py
+```
+
 ### Activate swarm behavior
 
 One the vehicles are in the air (and `swarm_state=2`) they can be assigned to a swarm:

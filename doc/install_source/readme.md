@@ -162,7 +162,7 @@ mkdir venv3
 pyvenv venv3
 . venv3/bin/activate
 pip install wheel
-pip install image netifaces pyqt5 urllib3
+pip install image mavproxy netifaces numpy pyqt5 urllib3 urllib3
 ```
 
 Install the following packages into the venv too: 

@@ -14,3 +14,7 @@
     local-name: ardupilot
     uri: https://github.com/tfoote/ardupilot.git
     version: uctf-dev
+- git:
+    local-name: swarmcommander
+    uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/swarmcommander.git
+    version: master

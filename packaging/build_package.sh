@@ -47,7 +47,7 @@ echo "Installing dependencies with rosdep..."
 . /opt/ros/kinetic/setup.bash
 rosdep install --from-path ${WS}/src --ignore-src -y|| true
 echo "Installing other dependencies..."
-sudo apt-get install -y libxslt1-dev libqwt-dev python-future libignition-transport-dev
+sudo apt-get install -y libxslt1-dev libqwt-dev python-future libignition-transport-dev python3-espeak
 
 echo "Building Gazebo and friends..."
 cd ${WS}
@@ -84,13 +84,11 @@ pyvenv ${VENV3}
 (. ${VENV3}/bin/activate && pip install wheel)
 (. ${VENV3}/bin/activate && pip install image mavproxy netifaces numpy pyqt5 urllib3)
 
-# TODO(tfoote) switch to upstream when merge complete https://gitlab.nps.edu/sasc/acs_lib/merge_requests/1
-# git clone git@gitlab.nps.edu:tfoote_osrfoundation.org/acs_lib.git
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_lib && python setup.py install)
-# git clone git@gitlab.nps.edu:sasc/acs_dashboards.git
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_dashboards && python setup.py install)
-# git clone git@gitlab.nps.edu:sasc/arbiter.git
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/arbiter && python setup.py install)
+(. ${VENV3}/bin/activate && cd ${WS}/other_src/swarmcommander && python setup.py install)
+
 
 
 echo "generating control file"

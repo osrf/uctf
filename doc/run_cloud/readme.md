@@ -77,5 +77,15 @@ spawn_gold 1 26 --acs tap0 --gazebo-ip 192.168.3.1 --local-ip 192.168.3.10
 ```
 ## On OCU run fti.py or qgroundcontrol
 
+### fti.py
+
+<!-- SSH with X-Forwarding to the arbiter machine (e.g., `ssh -XC -i cloudsim.pem ubuntu@1.2.3.4`). -->
+```console
+export INSTALL_SPACE=/opt/sasc
+. ${INSTALL_SPACE}/venv3/bin/activate
+. ${INSTALL_SPACE}/setup.bash
+arbiter_start.py -db br-blue -dr br-gold
+```
+
 Run fti.py or qgroundcontrol using the VPN tunnel.
 Each drone has a unique ROS_MASTER_URI port. `11311 + MAV_SYS_ID`
