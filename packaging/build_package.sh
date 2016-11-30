@@ -21,6 +21,7 @@ mkdir -p ${WS}/src
 echo "Cloning from ${REPOS} into ${WS}/src..."
 if [ -e ${WS}/src/.rosinstall ]; then
   wstool merge -t ${WS}/src ${REPOS} --merge-replace
+  wstool update -t ${WS}/src
 else
   wstool init ${WS}/src ${REPOS}
 fi
@@ -37,6 +38,7 @@ mkdir -p ${WS}/other_src
 echo "Cloning from ${OTHER_REPOS} into ${WS}/other_src..."
 if [ -e ${WS}/other_src/.rosinstall ]; then
   wstool merge --merge-replace -t ${WS}/other_src ${OTHER_REPOS}
+  wstool update -t ${WS}/other_src
 else
   wstool init ${WS}/other_src ${OTHER_REPOS}
 fi
