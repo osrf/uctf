@@ -42,7 +42,6 @@ export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${INSTALL_SPACE}/share/gazebo_models
 export ROS_HOSTNAME=192.168.2.1
 export ROS_MASTER_URI=http://192.168.2.1:11311
 roslaunch uctf uctf.launch gui:=false
-
 ```
 
 ### Launch Arbiter
@@ -50,12 +49,9 @@ roslaunch uctf uctf.launch gui:=false
 SSH with X-Forwarding to the arbiter machine (e.g., `ssh -XC -i cloudsim.pem ubuntu@1.2.3.4`).
 ```console
 export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/setup.bash
-. ${INSTALL_SPACE}/share/gazebo-8/setup.sh
-. ${INSTALL_SPACE}/share/uctf/setup.sh
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${INSTALL_SPACE}/share/gazebo_models
 . ${INSTALL_SPACE}/venv3/bin/activate
-PYTHONPATH=${INSTALL_SPACE}/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/dist-packages:/usr/lib/python3/dist-packages arbiter_start.py -db br-blue -dr br-gold
+. ${INSTALL_SPACE}/setup.bash
+arbiter_start.py -db br-blue -dr br-gold
 ```
 
 ## On each Payload machine
@@ -77,7 +73,7 @@ export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/share/gazebo-8/setup.sh
 . ${INSTALL_SPACE}/share/uctf/setup.sh
 export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${INSTALL_SPACE}/share/gazebo_models
-spawn_gold 1 26 --acs br-gold --gazebo-ip 192.168.3.1 --local-ip 192.168.3.10
+spawn_gold 1 26 --acs tap0 --gazebo-ip 192.168.3.1 --local-ip 192.168.3.10
 ```
 ## On OCU run fti.py or qgroundcontrol
 

@@ -52,7 +52,7 @@ cd ${WS}
 catkin config --init --extend /opt/ros/kinetic -i ${INSTALL_SPACE} --install --isolate-devel
 sudo mkdir -p ${INSTALL_SPACE}
 sudo chown -R ${USER}:${USER} ${INSTALL_SPACE}
-catkin build
+catkin build --verbose
 cp -r ${WS}/src/gazebo_models ${INSTALL_SPACE}/share
 
 # echo "Cloning Ardupilot..."
@@ -80,7 +80,7 @@ VENV3=${INSTALL_SPACE}/venv3
 mkdir -p ${VENV3}
 pyvenv ${VENV3}
 (. ${VENV3}/bin/activate && pip install wheel)
-(. ${VENV3}/bin/activate && pip install image netifaces pyqt5 urllib3)
+(. ${VENV3}/bin/activate && pip install image mavproxy netifaces numpy pyqt5 urllib3)
 
 # TODO(tfoote) switch to upstream when merge complete https://gitlab.nps.edu/sasc/acs_lib/merge_requests/1
 # git clone git@gitlab.nps.edu:tfoote_osrfoundation.org/acs_lib.git
