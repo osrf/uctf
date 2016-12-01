@@ -20,5 +20,5 @@
     version: master
 - git:
     local-name: ugdi
-    uri: https://github.com/tfoote/ugdi.git
+    uri: git@gitlab.nps.edu:tfoote_osrfoundation.org/udgi.git
     version: master
