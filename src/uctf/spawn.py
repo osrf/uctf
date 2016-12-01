@@ -1,5 +1,6 @@
 import argparse
 import os
+import shutil
 import subprocess
 
 from uctf import generate_config
