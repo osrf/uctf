@@ -1,0 +1,472 @@
+#STD FILE MARKER
+
+#Commented params don't need to be part of preflight checks.
+
+#Aerial Combat Swarm params
+#Forces throttle to 0% when set to 1
+ACS_KILL_THR 0.000000
+#Sends plane to RTL if payload heartbeat not present.
+ACS_WATCH_HB 1.000000
+
+#We don't use ACRO mode, we don't care about ACRO params.
+#ACRO_LOCKING           0.0000
+#ACRO_PITCH_RATE      180.0000
+#ACRO_ROLL_RATE       180.0000
+
+#AFS parms: We don't use the Advanced Flight Termination system, we
+#disagree with 3DR on how to handle GPS loss, for example.
+#Also, the simpler failsafe system meets our needs fine.
+#Also, this system is relatively new with limited testing
+#and documentation.
+#AFS_AMSL_ERR_GPS      -1.0000
+#Omitting the remainder of the AFS_ params to shorten document.
+
+#AHRS params that are non-plane specific
+#See plane.ardupilot.com for details of each.
+#AHRS_COMP_BETA         0.1000
+#AHRS_EKF_USE           1.000000
+AHRS_EKF_TYPE          1.000000
+AHRS_GPS_GAIN          1.000000
+AHRS_GPS_MINSATS       6.000000
+AHRS_GPS_USE           1.000000
+AHRS_ORIENTATION       0.000000
+#AHRS_RP_P              0.3000
+#AHRS_WIND_MAX          0.0000
+#AHRS_YAW_P             0.3000
+
+#Plane-specific AHRS params.
+#AHRS_TRIM* = trim correction due to autopilot's orientation inside payload bay
+#AHRS_TRIM_X            0.0023
+#AHRS_TRIM_Y            0.0458
+#AHRS_TRIM_Z            0.0000
+
+#Leave defaults
+#ALT_CTRL_ALG           0.0000 
+#ALT_HOLD_FBWCM         0.0000
+
+#Altitude to hold when going to RTL -- deprecated since we use rally points,
+#HOWEVER, we still set this, just in case.  Units ars cm AGL.
+ALT_HOLD_RTL            10000.000000
+
+#Mixing between GPS and baro for altitude estimate.
+#1 = 100% Baro, 0 = 100% GPS
+ALT_MIX                1.000000
+#Added to target altitude in automatic flight.
+#Typically used to help with BARO drift on longer cross country flights.
+ALT_OFFSET             0.000000
+
+#Checks done prior to arming motor (bitmask)
+#1 = All, 0 = None.  See plane.ardupilot.com for other bits.
+ARMING_CHECK           1.000000
+#Disallow arming via Manual Tx rudder stick
+ARMING_RUDDER          0.000000
+#Require arming checks before arming motor.  This means, when we push the
+#PX4 arming button (the flashing red one) one of three things can happen:
+#1. Setting = 0. Arm immediately with no checks
+#2. Setting = 1. Require arming checks before sending PWM to throttle channel.
+#                Send RC_MIN value throttle output channel until armed.
+#3. Setting = 2. Require arming checks before sending PWM to throttle channel.
+#                Send 0 to throttle output channel until armed.
+#Whether you want to set 1 or 2 here depends on your ESC.
+ARMING_REQUIRE         2.000000
+
+#ARSPD_AUTOCAL should be enabled for MCF then disabled.
+ARSPD_AUTOCAL          0.000000
+ARSPD_ENABLE           1.000000
+ARSPD_FBW_MAX         25.000000
+ARSPD_FBW_MIN         15.000000
+#ARSPD_PIN is Pixhawk-specific
+ARSPD_PIN             65.000000      
+#ARSPD_RATIO is plane-specific
+#ARSPD_RATIO            2.9355
+
+ARSPD_SKIP_CAL         1.000000
+ARSPD_TUBE_ORDER       0.000000
+ARSPD_USE              1.000000
+
+#We don't currently use AUTOTUNE in MCFs.
+#AUTOTUNE_LEVEL         5.0000
+#AUTO_FBW_STEER         0.0000
+
+#BATT2_* We don't have a second circuit to monitor so we don't use any.
+
+#BATT calibrations are NOT plane-specific
+BATT_AMP_OFFSET        0.000000
+BATT_AMP_PERVOLT      16.667000
+BATT_CAPACITY      10000.000000
+BATT_CURR_PIN          3.000000
+BATT_VOLT_MULT         4.200000
+BATT_VOLT_PIN          2.000000
+
+#0 = no battery monitoring
+#3 = Voltage only
+#4 = Currnt and voltage
+BATT_MONITOR           4.000000
+
+#BRD_* Board-specific params (we don't use any)
+
+#CAM_* - we don't use a camera
+
+#Enable compass autodeclination.
+COMPASS_AUTODEC        1.000000
+#Declination is plane specific:
+#COMPASS_DEC            0.2294
+#ID of the compass on the uBlox
+COMPASS_DEV_ID     73225.000000
+#We don't use the on board compass -- too close to motor.
+#So no need to remember its device ID
+#COMPASS_DEV_ID2   131594.0000
+#We don't use a 3rd compass
+#COMPASS_DEV_ID3        0.0000
+
+#Only use one compass, and it is external.
+#NOTE that 2nd compass is NOT external, though we don't use it.
+#COMPASS_EXTERN2        0.0000
+#COMPASS_EXTERN3        0.0000
+COMPASS_EXTERNAL       1.000000
+#Turn learning on for MCF, then turn it off
+COMPASS_LEARN          0.000000
+
+#Compass motor interference compensation params are plane-specific:
+#COMPASS_MOT2_X         0.0000
+#Docs say don't change COMPASS_MOTCT manually
+#COMPASS_MOTCT          0.0000
+#Omitting remainder of COMPASS_MOT params for brevity
+
+#Compass offesets due to metal in frame parameters are plane specific:
+#COMPASS_OFS2_X       374.8766
+#Omitting remainder of COMPASS_OF params for brevity
+
+#Compass orient notes the direction the compass is mounted in the air frame.
+COMPASS_ORIENT         0.000000
+#We don't use the other 2 compasses
+#COMPASS_ORIENT2        0.0000
+#COMPASS_ORIENT3        0.0000
+
+#0 is the primary compass and we don't use the other 2
+COMPASS_PRIMARY        0.000000
+COMPASS_USE            1.000000
+COMPASS_USE2           0.000000
+COMPASS_USE3           0.000000
+
+#EKF params.  We use almost all defaults.
+#EKF_GPS_CHECK was too agressive, disabling for now:
+EKF_GPS_CHECK          0.000000
+
+#Elevon mixing settings. NOT plane specific
+ELEVON_CH1_REV         0.000000
+ELEVON_CH2_REV         0.000000
+ELEVON_MIXING          0.000000
+ELEVON_OUTPUT          3.000000
+ELEVON_REVERSE         0.000000
+
+#We use default FBW* params; omitting
+
+#Fence params.
+FENCE_ACTION     1.000000
+FENCE_AUTOENABLE 2.000000
+#_CHANNEL - We don't use the Manual Tx to enable / disable fence:
+FENCE_CHANNEL    0.000000
+FENCE_MAXALT     500.000000
+FENCE_MINALT     70.000000
+FENCE_RETALT     100.000000
+FENCE_RET_RALLY  1.000000
+
+#FLAP* We don't have flaps or flaperons, omitting
+
+#FLOW* We don't use flow control on the radio, omitting.
+
+#Flight mode settings.
+FLTMODE1         10.000000
+FLTMODE2         11.000000
+FLTMODE3         6.000000
+FLTMODE4         6.000000
+FLTMODE5         0.000000
+FLTMODE6         0.000000
+FLTMODE_CH       8.000000
+
+#Failsafe settings
+FS_BATT_MAH      2000.000000
+FS_BATT_VOLTAGE  10.700000
+#FS_GCS_ENABL settings:
+#0 = NO Comm link failsafe
+#1 = Plane RTLs if no heartbeat from GCS for FS_SHORT_TIMEOUT secs.
+#2 = Plane RTLS is no heartbeat OR RSSI falls below a hard coded threshold.
+FS_GCS_ENABL     1.000000
+#FS_LONG_ACTN - 1 means RTL
+FS_LONG_ACTN     1.000000
+FS_LONG_TIMEOUT  20.000000
+#FS_SHORT_ACTN - 1 means RTL
+FS_SHORT_ACTN    1.000000
+FS_SHORT_TIMEOUT 5.000000
+
+#We use defaults for all of these
+#GLIDE_SLOPE_MIN       15.0000
+#GND_ALT_OFFSET         0.0000
+#GPS_AUTO_SWITCH        1.0000
+#GPS_MIN_DGPS         100.0000
+#GPS_MIN_ELEV        -100.0000
+#GPS_NAVFILTER          8.0000
+#GPS_SBAS_MODE          2.0000
+
+#GPS Type = 1 means Auto detect.  0 means off.  We have only 1 GPS Rx.
+GPS_TYPE               1.000000
+GPS_TYPE2              0.000000
+
+#No rudder, hence no ground steering.
+#GROUND_STEER_ALT       0.0000
+#GROUND_STEER_DPS      90.0000
+
+#All INS params are plane specific or we use defaults -- omitting them
+
+#No flying upside down
+#INVERTEDFLT_CH         0.0000
+
+#No rudder, KFF is irrelevent:
+#KFF_THR2PTCH           0.0000
+
+LAND_DISARMDELAY   5.000000
+#No flaps
+#LAND_FLAP_PERCNT       0.0000
+LAND_FLARE_ALT      15.000000
+#Disable flaring based on distance from landing point.
+LAND_FLARE_SEC   0.000000
+LAND_PITCH_CD    -50.000000
+
+#Typically used for landing, and default has been fine:
+#LEVEL_ROLL_LIMIT       5.0000
+
+#Pitch and roll limits (centidegrees)
+LIM_PITCH_MAX    3500.000000
+LIM_PITCH_MIN    -1500.000000
+LIM_ROLL_CD      4500.000000
+
+LOG_BITMASK      65535.000000
+
+#Enable the magnetometer
+MAG_ENABLE       1.000000
+
+#We've been using default for min gndspeed
+#MIN_GNDSPD_CM          0.0000
+
+#Using default for auto restart of mission (0 = don't restart at end of mission)
+MIS_RESTART            0.000000
+#MIS_TOTAL = number of waypoint in the mission aboard the plane
+#MIS_TOTAL             13.0000
+
+#Mixing amplification for Manual control with Elevons
+MIXING_GAIN            0.750000
+
+#L1 controller tuning params (not plane specific)
+NAVL1_DAMPING    0.750000
+NAVL1_PERIOD     17.000000
+#Use the L1 controller
+NAV_CONTROLLER   1.000000
+
+#MNT_ params omittied. No camera or other mounted device.
+
+#We've never needed OVERRIDE_CHAN -- see plane.ardupilot.com for details
+#OVERRIDE_CHAN          0.0000
+
+#PID Gains.  Not plane specific
+PTCH2SRV_D       0.040000
+PTCH2SRV_I       0.400000
+PTCH2SRV_IMAX    3000.000000
+PTCH2SRV_P       1.700000
+PTCH2SRV_RLL     1.100000
+PTCH2SRV_RMAX_DN 0.000000
+PTCH2SRV_RMAX_UP 0.000000
+PTCH2SRV_TCONST  0.300000
+
+#Total number of rally points stored aboard autopilot
+#RALLY_TOTAL            1.0000
+#Maximum distance a rally point can be from home point to be used (km).
+RALLY_LIMIT_KM   3.000000
+
+#Avoid having to calibrate R/C -- planes are assumed to have PWM ranges 
+#that are relatively close:
+RC1_MAX         1895.000000
+RC1_MIN         1096.000000
+RC1_REV         1.000000
+RC1_TRIM        1500.000000
+RC2_DZ          30.000000
+RC2_MAX         1803.000000
+RC2_MIN         1164.000000
+RC2_REV         1.000000
+RC2_TRIM        1500.000000
+RC3_DZ          30.000000
+RC3_MAX         1832.000000
+RC3_MIN         1220.000000
+RC3_REV         1.000000
+RC3_TRIM        1500.000000
+RC4_DZ          30.000000
+RC4_MAX         1505.000000
+RC4_MIN         1100.000000
+RC4_REV         1.000000
+RC4_TRIM        1502.000000
+RC8_FUNCTION    0.000000
+RC8_MAX         1901.000000
+RC8_MIN         1099.000000
+RC8_REV         1.000000
+RC8_TRIM        1500.000000
+
+#Other RC params are plane specific and omitted, EXCEPT these mappings:
+RCMAP_PITCH      2.000000
+RCMAP_ROLL       1.000000
+RCMAP_THROTTLE   3.000000
+RCMAP_YAW        4.000000
+
+
+#RELAY params omitted -- no camera or other device needed realy control
+
+#More PID gains:
+RLL2SRV_D        0.045000
+RLL2SRV_I        0.250000
+RLL2SRV_IMAX     3000.000000
+RLL2SRV_P        1.100000
+RLL2SRV_RMAX     0.000000
+RLL2SRV_TCONST   0.500000
+
+#RNGFND params omitted -- no range finder.
+
+#No external RSSI sensing
+#RSSI_PIN              -1.0000
+#RSSI_RANGE             5.0000
+
+#Not using the Manual Tx to reset missions or geofence:
+#RST_MISSION_CH         0.0000
+#RST_SWITCH_CH          0.0000
+
+#Don't automatically land after arriving at RTL point.
+RTL_AUTOLAND     0.000000
+
+#We don't use these
+#SCALING_SPEED         15.0000
+#SCHED_DEBUG            0.0000
+
+SERIAL0_BAUD     115.000000
+SERIAL1_BAUD     57.000000
+SERIAL2_BAUD     1500.000000
+SERIAL2_PROTOCOL 1.000000
+
+#Omitting other serial ports as we only use 2.
+
+#SIM_ params only apply to SITL
+
+#DON'T skip gyroscope calibration at boot!
+#SKIP_GYRO_CAL    0.000000
+INS_GYR_CAL      1.000000
+
+#SR params omitted -- we use defaults
+
+#We don't use AUTOTUNE or FBWA so this is irrelevant:
+#STAB_PITCH_DOWN        2.0000
+
+#STEER params omitted. No rudder, no gear = no ground sterring
+
+#DON'T use stall prevention.  We keep min speed well above stall,
+#AND we have found stall prevention to be too aggressive.
+STALL_PREVENTION 0.000000
+
+#No stick input during auto modes:
+STICK_MIXING           0.000000
+
+#SYSID params omitted -- set by autopilot or are plane-specific.
+
+#TECS tuning parameters
+TECS_CLMB_MAX    12.000000
+TECS_HGT_OMEGA   3.000000
+TECS_INTEG_GAIN  0.100000
+TECS_LAND_ARSPD  16.000000
+TECS_LAND_DAMP   0.000000
+TECS_LAND_PMAX   1.000000
+TECS_LAND_SINK   5.000000
+TECS_LAND_SPDWGT 1.000000
+TECS_LAND_TCONST 2.000000
+TECS_LAND_THR    30.000000
+TECS_PITCH_MAX   0.000000
+TECS_PITCH_MIN   0.000000
+TECS_PTCH_DAMP   0.000000
+TECS_RLL2THR     10.000000
+TECS_SINK_MAX    8.000000
+TECS_SINK_MIN    1.500000
+TECS_SPDWEIGHT   1.000000
+TECS_SPD_OMEGA   2.000000
+TECS_THR_DAMP    0.500000
+TECS_TIME_CONST  3.000000
+TECS_VERT_ACC    7.000000
+
+#"Amount of time in secs to delay radio telem to
+#prevent an Xbee from bricking at power up"  We don't use this
+#TELEM_DELAY            0.0000
+
+#We don't use terrain following:
+TERRAIN_ENABLE   0.000000
+TERRAIN_FOLLOW   0.000000
+#TERRAIN_LOOKAHD     2000.0000
+#TERRAIN_SPACING      100.0000
+
+#Disallow stick inputs in auto modes:
+THROTTLE_NUDGE         0.000000
+THR_PASS_STAB          0.000000
+
+#Disable failsafe when RC Rx loses connection with RC Tx.
+THR_FAILSAFE     0.000000
+
+#Throttle limits
+THR_MAX          100.000000
+THR_MIN          0.000000
+
+#Maximum percentage change of throttle per second.  Note that this value
+#is NOT limited to 100 -- can go from 0-127
+THR_SLEWRATE         100.000000
+
+#We don't have a gas engine so there is no use for > 0 "no throttle" setting
+#THR_SUPP_MAN           0.0000
+
+#TKOFF params - the three we care about most are DELAY, MINACC, MINSPD.
+#We use these params for getting the plane to throttle up AFTER leaving 
+#the rails of a catapult style launcher.
+#THR_DELAY units: 0.1 secs
+TKOFF_THR_DELAY        5.000000
+#TKOF_THR_MINACC units: m/s/s -- uses Accelerometers
+TKOFF_THR_MINACC      20.000000
+#TKOFF_THR_MINSPD units: m/s -- uses GPS
+TKOFF_THR_MINSPD       5.000000  
+#No flaps
+#TKOFF_FLAP_PCNT        0.0000
+TKOFF_ROTATE_SPD       0.000000
+#Zephyr is not a tail dragger:
+TKOFF_TDRAG_ELEV       0.000000
+TKOFF_TDRAG_SPD1       0.000000
+#0 for TKOFF_THR_MAX means "use THR_MAX"
+TKOFF_THR_MAX          0.000000
+#0 for TKOFF_THR_MAX means "use THR_SLEWRATE"
+TKOFF_THR_SLEW         0.000000
+
+#When TRIM_AUTO != 0, the next switch to manual mode will capture 
+#roll and pitch channel PWMs based on what's coming in on the RC Rx.
+TRIM_AUTO        0.000000
+
+#Airspeed the aircraft seeks during nominal flight.
+TRIM_ARSPD_CM       1800.000000
+#Don't capture trim at boot:
+TRIM_RC_AT_START       0.000000
+#"Nominal" throttle
+TRIM_THROTTLE         45.000000
+
+#Zephyr is not a vtail:
+#VTAIL_OUTPUT           0.0000
+
+#WP params
+##negative is counter-clockwise
+WP_LOITER_RAD    -50.000000
+WP_MAX_RADIUS    0.000000
+WP_RADIUS        50.000000
+
+#No rudder -- YAW trims irrelevant
+#YAW2SRV_DAMP           0.0000
+#YAW2SRV_IMAX        1500.0000
+#YAW2SRV_INT            0.0000
+#YAW2SRV_RLL            1.0000
+#YAW2SRV_SLIP           0.0000

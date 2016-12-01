@@ -73,6 +73,14 @@ def spawn_team(color):
 
     cmds = []
 
+
+    #  Insert ~/blessed/* template files needed for autonomy-payload
+    template_dir = os.path.join(
+            os.path.dirname(__file__), 'templates', 'blessed')
+    target_dir = os.path.join(os.path.expanduser('~'), 'blessed')
+    if not os.path.exists(target_dir):
+        shutil.copytree(template_dir, target_dir)
+
     # spawn 50 vehicles
     for i in args.vehicle_id:
 
