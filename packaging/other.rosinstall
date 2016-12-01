@@ -4,7 +4,7 @@
     version: master
 - git:
     local-name: acs_dashboards
-    uri: https://gitlab.nps.edu/sasc/acs_dashboards.git
+    uri: https://gitlab.nps.edu/gerkey_osrfoundation.org/acs_dashboards.git
     version: master
 - git:
     local-name: arbiter
