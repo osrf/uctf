@@ -89,7 +89,14 @@ pyvenv ${VENV3}
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/arbiter && python setup.py install)
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/swarmcommander && python setup.py install)
 
+echo "Installing Game Director and dependencies"
 
+GDI_VENV=${INSTALL_SPACE}/ugdi_venv
+mkdir -p ${GDI_VENV}
+virtualenv ${GDI_VENV}
+(. ${GDI_VENV}/bin/activate && cd ${WS}/other_src/ugdi && pip install -r requirements.txt )
+(. ${GDI_VENV}/bin/activate && cd ${WS}/src/autonomy-payload/ap_lib && python setup.py install)
+cp -r ${WS}/other_src/ugdi ${GDI_VENV}
 
 echo "generating control file"
 
@@ -97,5 +104,10 @@ cp ${SCRIPTDIR}/sasc-control.base ${WS}/sasc-control
 echo -n "Files:" >> ${WS}/sasc-control
 find -L /opt/sasc -type f | xargs -I {} echo " {} /" >> ${WS}/sasc-control
 sed -i '/^.*script (dev).tmpl.*/d' ${WS}/sasc-control
+sed -i '/^.*launcher manifest.xml* /d' ${WS}/sasc-control
+sed -i '/^.*darpa_logo* /d' ${WS}/sasc-control
+sed -i '/^.*Screen Shot* /d' ${WS}/sasc-control
+
+
 cd ${WS}
 equivs-build ${WS}/sasc-control

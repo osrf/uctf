@@ -18,3 +18,7 @@
     local-name: swarmcommander
     uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/swarmcommander.git
     version: master
+- git:
+    local-name: ugdi
+    uri: https://github.com/tfoote/ugdi.git
+    version: master
