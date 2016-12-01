@@ -27,7 +27,7 @@
 <include file="$(find ap_master)/launch/sitl.launch" ns="/@(vehicle_type)_@(mav_sys_id)">
   <arg name="id" value="@(mav_sys_id)" />
   <!-- <arg name="name" value="@(vehicle_type)_@(mav_sys_id)"/> -->
-  <arg name="sitl" value="@(sitl_base_url)" />
+  <arg name="sitl" value="@(sitl_base_url_alt)" />
   <arg name="port" value="5554" />
   <arg name="dev" value="@(acs_network_inteface)" />
   <arg name="range" value="-1" />
