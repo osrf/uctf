@@ -30,11 +30,16 @@ MAX_LATITUDE = 47.402251
 MIN_LONGITUDE = 8.5389317
 MAX_LONGITUDE = 8.5455939
 
-ORIGIN_ALTITUDE = 50.0
-ORIGIN_HEADING = 353.0
-ORIGIN_LATITUDE = 47.397742
-ORIGIN_LONGITUDE = 8.545594
+# # Zurich
+# ORIGIN_ALTITUDE = 50.0
+# ORIGIN_HEADING = 353.0
+# ORIGIN_LATITUDE = 47.397742
+# ORIGIN_LONGITUDE = 8.545594
 
+ORIGIN_ALTITUDE = 282.0
+ORIGIN_HEADING = 353.0
+ORIGIN_LATITUDE = 35.72068
+ORIGIN_LONGITUDE = -120.771775
 
 VEHICLE_BASE_PORT = 14000
 GROUND_CONTROL_PORT_BLUE = 14000
@@ -331,6 +336,7 @@ def get_launch_snippet(
             'tgt_system:=%d ns:=/%s' % (
                 vehicle_base_port + 3, local_ip, vehicle_base_port + 2,
                 mav_sys_id, vehicle_name))
+    # TODO(tfoote) parameterize px4 origin
     if autopilot == 'px4':
         data = {
             'controller_config_path': init_script_path,
