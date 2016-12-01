@@ -33,7 +33,7 @@
 - git:
     local-name: uctf
     uri: https://github.com/osrf/uctf
-    version: payload_v2
+    version: master
 - git:
     local-name: autonomy-payload
     uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/autonomy-payload.git
