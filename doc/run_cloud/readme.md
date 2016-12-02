@@ -19,7 +19,14 @@ SASC machines are grouped into Rounds. Click on the round button (with a + insid
 You must supply a name for the Round, along with one competitor username for each team.
 
 ## Launch the simulation/arbiter machine
-1. Click on the LAUNCH button in the Arbiter box. This will launch a simulation cloud machine. This process takes about 2 minutes, and you should see the Status and machine ip update. You should also see a button appear to download the ssh key for the simulation machine. Given that key, you can ssh into the machine as user `ubuntu` (e.g., `ssh -i cloudsim.pem ubuntu@1.2.3.4`)
+1. Click on the LAUNCH button in the Arbiter box. This will launch a simulation
+cloud machine. This process takes about 2 minutes, and you should see the
+Status and machine ip update. You should also see a "KEYS" button appear; click
+it to download the ssh key for the simulation machine. Given that key, you can
+ssh into the machine as user `ubuntu` (e.g., `ssh -i cloudsim.pem
+ubuntu@1.2.3.4`).  Note that you must make the key file not-world-readable
+after you download it (e.g., `chmod 600 cloudsim.pem`); if you don't do this,
+you'll get an error about permissions from `ssh`.
 
 ### Get the latest SASC package
 ssh to the simulation/arbiter machine and make sure that you have the latest SASC package installed:
@@ -84,11 +91,72 @@ You can reuse the machines from a round for multiple games. Just stop and start 
 1. Log in to https://cloudsim.io/
 1. Click on the SASC link (on the left menu bar, under the Dashboard).
 
-## Connect your VPN client
-1. You can connect to your payload machine using a VPN. There are up to 5 openvpn keys that you can download, named ocu-0 to ocu-4. Each OCU key bundle contains the necessary client configuration file and a private key. It is important not to use the same key on multiple OCUs (2 simultaneous connections with the same key will not work). To start the VPN, unpack the bundle that you downloaded and then run `openvpn --config openvpn.conf`.
-1. After connecting to the VPN and downloading the SSH key for the Payload machine, you can ssh to its local IP address as user `ubuntu` (e.g., `ssh -i cloudsim.pem ubuntu@192.168.2.10`).
+You should see the round(s) that you're invited to play in as a competitor.
+Click on the round you want to play.
 
-## Get the latest SASC package
+## Your local computer(s)
+
+You'll be using one or more computers physically located with you (e.g., in
+your lab) to get access to the competition. We call these computers OCUs, for
+Operator Control Units.  We're assuming that these computers are all running
+64-bit Ubuntu Xenial (e.g., the Predator laptops that you were provided with).
+
+In case it's not already installed, you should install `openvpn` on each OCU:
+```console
+sudo apt-get install openvpn
+```
+
+You should also install the lastest `sasc-gazebo-sitl` package, which contains,
+among other things, the graphical tools that you'll use later to startup and
+control your vehicles:
+```console
+sudo apt-get update
+sudo apt-get install sasc-gazebo-sitl
+```
+
+Note that, if there is a newer package available, it will take quite some time to download and install, due to its size. Please be patient.
+
+## Connect your VPN client
+There's a VPN server dedicated to for use by your team. To get shell access to
+your Payload machines, and also to locally run graphical tools such as `fti.py`
+and `swarm_commander.py`, you need to first connect the computer that you're
+using (e.g., in your lab) to the VPN server. There are a number (currently 5)
+of pre-generated VPN keys that you can download to make this connection, like so:
+
+1. In the box for your team, click on the "OCU keys" drop-down and
+select one of the keys. You'll be prompted to save a `.zip` file that contains the key.
+1. Unzip the `.zip` file that you downloaded.
+1. In a terminal, navigate to where you unzipped the file and start the
+`openvpn` client using the configuration file that was in the `.zip` file:
+```console
+sudo openvpn --config openvpn.conf
+```
+
+You can connect multiple OCUs to your VPN server and they will all be able
+to communicate with each other, as well as your Payload machine. **NOTE:**
+Don't use the same VPN key simultaneously on two different computers; that
+won't work. You need to download a different VPN key for each computer that
+you're going to connect.
+
+To disconnect from the VPN, just give Ctrl-C in the terminal where you started
+`openvpn`.
+
+## SSH to your Payload machine
+
+To get shell access to your Payload machine, which is where you'll be cloning
+and running your tactics, you need the SSH key for that machine, and you need
+to be connected to the VPN server. You can download the SSH key by clicking on
+the "KEYS" button in the box for the Payload machine. Note that you must make
+the key file not-world-readable after you download it (e.g., `chmod 600
+cloudsim.pem`); if you don't do this, you'll get an error about permissions
+from `ssh`.
+
+With the SSH key downloaded and after connecting your computer to the VPN
+server, you can login to your Payload machine as the user `ubuntu` at the
+"Local IP" address that is shown in the box for that machine (e.g., `ssh -i
+cloudsim.pem ubuntu@192.168.2.10`).
+
+### Get the latest SASC package
 With your VPN connected, ssh to your payload machine and make sure that you have the latest SASC package installed:
 ```console
 sudo apt-get update
@@ -96,16 +164,22 @@ sudo apt-get install sasc-gazebo-sitl
 ```
 Note that, if there is a newer package available, it will take quite some time to download and install, due to its size. Please be patient.
 
-## Check out your tactics code
+### Check out your tactics code
 With your VPN connected, ssh to your payload machine and fetch your tactics code, e.g.:
 ```console
 git clone https://gitlab.nps.edu/myfork/scrimmage-templates
 ```
 
-## Spawn vehicle(s)
-We're assuming that your tactic repo is checked out to `$HOME/scrimmage-templates`, with your tactics modules sitting inside there, in `plugins/autonomy/python`. In the examples below, we're assuming that the tactic that you want to run is in a class called `MyClass` that is implemented in a file called `mymodule.py` (which, for completeness, is located at `$HOME/scrimmage-templates/plugins/autonomy/python/mymodule.py`).
+### Spawn vehicle(s)
+With your VPN connected, ssh to your payload machine and start running vehicles
+with your tactics.  We're assuming that your tactic repo is checked out to
+`$HOME/scrimmage-templates`, with your tactics modules sitting inside there, in
+`plugins/autonomy/python`. In the examples below, we're assuming that the
+tactic that you want to run is in a class called `MyClass` that is implemented
+in a file called `mymodule.py` (which, for completeness, is located at
+`$HOME/scrimmage-templates/plugins/autonomy/python/mymodule.py`).
 
-### Blue team
+#### Blue team
 To spawn a blue plane from the blue Payload machine:
 ```console
 export INSTALL_SPACE=/opt/sasc
@@ -123,7 +197,7 @@ spawn_blue 26 27 28 29 30 31 32 33 34 35 --acs tap0 --gazebo-ip 192.168.2.1 --lo
 ```
 The same tactic will be used by all planes.
 
-### Gold team
+#### Gold team
 To spawn a gold plane from the gold Payload machine:
 ```console
 export INSTALL_SPACE=/opt/sasc
@@ -141,9 +215,47 @@ spawn_gold 26 27 28 29 30 31 32 33 34 35 --acs tap0 --gazebo-ip 192.168.2.1 --lo
 ```
 The same tactic will be used by all planes.
 
-## Run fti.py
+## Use local tools to control vehicles
 
-TODO: document how to run fti.py locally, connecting via VPN, and what the startup sequence is.
+After spawning vehicles, you need to run through a startup sequence using some
+graphical tools that you will run on your local OCUs, which must be connected
+to your VPN server.
+
+## Flight Tech Interface (fti.py)
+
+From your OCU that is connected to the VPN, run `fti.py`:
+```console
+#TODO: test this sequence
+export INSTALL_SPACE=/opt/sasc
+. ${INSTALL_SPACE}/venv3/bin/activate
+. ${INSTALL_SPACE}/setup.bash
+fti.py -d tap0 -z
+```
+
+A GUI should pop up and become populated by entries for each of your vehicles.
+Go through the following sequence in that GUI:
+
+1. Click "CAL PRESSURE ALL" and then "OK" to the popups that follow.
+1. Click "FLIGHT READY ALL". The vehicle entrie should now be yellow.
+1. Click "ARM ALL". Note that this command won't take effect until the vehicles
+have had some time to initialize their simulated GPS sensors, which can take a
+couple of minutes after spawning. The vehicle entries should now be green.
+1. For each vehicle:
+
+    1. Select the vehicle in the list of entries.
+    1. Fill in a stack and altitude, then click "Send Config" and then confirm in the following popup.
+    1. Click "AUTO". The vehicle should launch, climb, and go to its designated waypoint.
+
+There are a number of conditions after launch that can cause the vehicle
+entries to become red, indicating a problem, including:
+
+* Throttle failure. The autopilot sometimes determines that the simulated
+throttle has failed and commands RTL. You can usually override this command
+by clicking "AUTO" again for that vehicle.
+* Lack of airspeed or airspeed too low. Either the autopilot isn't reporting
+the airspeed properly, or the reported airspeed is too low. Either way, it
+causes a warning/error in the GUI. There doesn't seem to be any effect on the
+vehicle's behavior.
 
 ## Run swarm_commander.py
 
