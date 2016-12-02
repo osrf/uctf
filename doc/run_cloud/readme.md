@@ -51,7 +51,7 @@ roslaunch uctf uctf.launch gui:=false
 
 ### Launch Arbiter
 
-SSH with X-Forwarding enabled to the simulation/arbiter machine (e.g., `ssh -XC -i cloudsim.pem ubuntu@1.2.3.4`) and start the Arbiter like so:
+SSH with X-Forwarding enabled to the simulation/arbiter machine (e.g., `ssh -XC -i cloudsim.pem ubuntu@192.168.2.1`) and start the Arbiter like so:
 ```console
 export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/venv3/bin/activate
