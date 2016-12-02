@@ -358,7 +358,11 @@ def get_launch_snippet(
         return empy('px4_and_mavros.launch.em', data)
     else:
         sitl_base_url = 'tcp:%s:%d' % (local_ip, vehicle_base_port)
-        ground_connection = '%s:%s' % (local_ip, ground_port)
+        # Assumes a class C network
+        bcast_tuple = local_ip.split('.')
+        bcast_tuple[-1] = '255'
+        bcast_address = '.'.join(bcast_tuple)
+        ground_connection = 'udpbcast:%s:%s' % (bcast_address, ground_port)
         connection_to_ros_interface = '%s:%s' % (local_ip,
                                                  vehicle_base_port + 3)
         data = {
