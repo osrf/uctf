@@ -66,7 +66,7 @@ In another terminal on the simulation/arbiter machine:
 Update the config file and update permissions
 
 ```
-export INSTALL_SPACE=/opt
+export INSTALL_SPACE=/opt/sasc
 sudo chown ubuntu:ubuntu -R ${INSTALL_SPACE}/ugdi_venv/udgi
 nano  ${INSTALL_SPACE}/ugdi_venv/ugdi/config.py
 ```
