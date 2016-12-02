@@ -70,8 +70,8 @@ export INSTALL_SPACE=/opt
 sudo chown ubuntu:ubuntu -R ${INSTALL_SPACE}/ugdi_venv/udgi
 nano  ${INSTALL_SPACE}/ugdi_venv/udgi/config.py
 ```
-Update Network1's device to be 'br-blue'
-And Network2's device to be 'br-gold'
+Update NETWORK_1's device to be 'br-blue'
+And NETWORK_2's device to be 'br-gold'
 
 Save and exit. 
 
