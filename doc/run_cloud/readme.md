@@ -260,13 +260,22 @@ vehicle's behavior.
 
 ## Swarm Commander (swarm_commander.py)
 
-From your OCU that is connected to the VPN, run `fti.py`:
+From your OCU that is connected to the VPN,:
+Create the file `~/.swarm_commander.ini`
+
+```
+[NETWORK]
+device = tap0
+port = 5554
+acs_id = 250
+```
+Then run `swarm_commander.py`
+
 ```console
 export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/venv3/bin/activate
 . ${INSTALL_SPACE}/setup.bash
-export PYTHONPATH=/opt/sasc/lib/python/site-packages:/usr/lib/python3/dist-packages:${PYTHONPATH}
-swarm_commander.py
+PYTHONPATH=/usr/lib/python3/dist-packages:$PYTHONPATH swarm_commander.py
 ```
 
 A GUI should pop up and become populated by your vehicles. If you just went
