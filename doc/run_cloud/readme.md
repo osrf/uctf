@@ -59,6 +59,31 @@ export INSTALL_SPACE=/opt/sasc
 arbiter_start.py -db br-blue -dr br-gold
 ```
 
+### Launch the Game Director
+
+In another terminal on the simulation/arbiter machine:
+
+Update the config file and update permissions
+
+```
+export INSTALL_SPACE=/opt
+sudo chown ubuntu:ubuntu -R ${INSTALL_SPACE}/ugdi_venv/udgi
+nano  ${INSTALL_SPACE}/ugdi_venv/udgi/config.py
+```
+Update Network1's device to be 'br-blue'
+And Network2's device to be 'br-gold'
+
+Save and exit. 
+
+Now run the game director:
+```
+export INSTALL_SPACE=/opt
+. ${INSTALL_SPACE}/ugdi_venv/bin/activate/sasc
+cd ${INSTALL_SPACE}/ugdi_venv/udgi && python run.py
+```
+The game director interface will be accessible at http://192.168.2.1:5001 for blue and http://192.168.2.1:5001 for gold
+
+
 ## Launch the payload machines
 1. You can launch a payload machine for each team by pressing the blue or gold LAUNCH A PAYLOAD button.
 1. After a few seconds, payload information (local IP address) and ssh download links should appear.
