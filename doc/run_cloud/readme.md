@@ -225,10 +225,11 @@ to your VPN server.
 
 From your OCU that is connected to the VPN, run `fti.py`:
 ```console
-#TODO: test this sequence
 export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/venv3/bin/activate
 . ${INSTALL_SPACE}/setup.bash
+. /opt/ros/kinetic/setup.bash
+export PYTHONPATH=/opt/sasc/lib/python2.7/dist-packages:/usr/lib/python3/dist-packages:${PYTHONPATH}
 fti.py -d tap0 -z
 ```
 
@@ -243,7 +244,7 @@ couple of minutes after spawning. The vehicle entries should now be green.
 1. For each vehicle:
 
     1. Select the vehicle in the list of entries.
-    1. Fill in a stack and altitude, then click "Send Config" and then confirm in the following popup.
+    1. Fill in a "Stack number" and "Altitude above runway (m)", then click "Send Config" and then confirm in the following popup.
     1. Click "AUTO". The vehicle should launch, climb, and go to its designated waypoint.
 
 There are a number of conditions after launch that can cause the vehicle
@@ -257,6 +258,28 @@ the airspeed properly, or the reported airspeed is too low. Either way, it
 causes a warning/error in the GUI. There doesn't seem to be any effect on the
 vehicle's behavior.
 
-## Run swarm_commander.py
+## Swarm Commander (swarm_commander.py)
 
-TODO: document how to run swarm_commander.py locally, connecting via VPN, and what the startup sequence is.
+From your OCU that is connected to the VPN, run `fti.py`:
+```console
+export INSTALL_SPACE=/opt/sasc
+. ${INSTALL_SPACE}/venv3/bin/activate
+. ${INSTALL_SPACE}/setup.bash
+export PYTHONPATH=/opt/sasc/lib/python/site-packages:/usr/lib/python3/dist-packages:${PYTHONPATH}
+swarm_commander.py
+```
+
+A GUI should pop up and become populated by your vehicles. If you just went
+through the startup sequence with `fti.py`, then your vehicles should all be in
+the "Swarm Ingress" state, which means that they're approaching the swarm
+rally/way point. Eventually, when they reach the designated location, they'll
+start circling and their states will switch to "Swarm Ready". At this point,
+you can engage your tactics, like so:
+
+1. Select one or more vehicles, then pick a subswarm ID and click "Assign
+Selected UAVs to Subswarm".
+1. Pick that subswarm ID from the "Select Subswarm for Behavior Command" drop-down.
+1. Pick "Tactic Interface" from the "Select Behavior to Initiate" drop-down.
+1. Click "Specify Selected Behavior Parameters".
+
+Your tactic should now start executing on the indicated vehicles.
