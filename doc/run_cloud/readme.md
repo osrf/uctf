@@ -68,7 +68,7 @@ Update the config file and update permissions
 ```
 export INSTALL_SPACE=/opt
 sudo chown ubuntu:ubuntu -R ${INSTALL_SPACE}/ugdi_venv/udgi
-nano  ${INSTALL_SPACE}/ugdi_venv/udgi/config.py
+nano  ${INSTALL_SPACE}/ugdi_venv/ugdi/config.py
 ```
 Update NETWORK_1's device to be 'br-blue'
 And NETWORK_2's device to be 'br-gold'
@@ -77,9 +77,9 @@ Save and exit.
 
 Now run the game director:
 ```
-export INSTALL_SPACE=/opt
+export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/ugdi_venv/bin/activate/sasc
-cd ${INSTALL_SPACE}/ugdi_venv/udgi && python run.py
+cd ${INSTALL_SPACE}/ugdi_venv/ugdi && python run.py
 ```
 The game director interface will be accessible at http://192.168.2.1:5001 for blue and http://192.168.2.1:5001 for gold
 
