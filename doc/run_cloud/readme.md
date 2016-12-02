@@ -78,7 +78,7 @@ Save and exit.
 Now run the game director:
 ```
 export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/ugdi_venv/bin/activate/sasc
+. ${INSTALL_SPACE}/ugdi_venv/bin/activate
 cd ${INSTALL_SPACE}/ugdi_venv/ugdi && python run.py
 ```
 The game director interface will be accessible at http://192.168.2.1:5001 for blue and http://192.168.2.1:5001 for gold
