@@ -226,7 +226,7 @@ After spawning vehicles, you need to run through a startup sequence using some
 graphical tools that you will run on your local OCUs, which must be connected
 to your VPN server.
 
-## Flight Tech Interface (fti.py)
+### Flight Tech Interface (fti.py)
 
 From your OCU that is connected to the VPN, run `fti.py`:
 ```console
@@ -266,7 +266,7 @@ the airspeed properly, or the reported airspeed is too low. Either way, it
 causes a warning/error in the GUI. There doesn't seem to be any effect on the
 vehicle's behavior.
 
-## Swarm Commander (swarm_commander.py)
+### Swarm Commander (swarm_commander.py)
 
 From your OCU that is connected to the VPN,:
 Create the file `~/.swarm_commander.ini`
@@ -300,3 +300,26 @@ Selected UAVs to Subswarm".
 1. Click "Specify Selected Behavior Parameters".
 
 Your tactic should now start executing on the indicated vehicles.
+
+
+### QGroundControl
+
+If you would like to see what's happening on a moving map you can use QGroundControl
+
+With the VPN connected run: 
+
+```console
+export INSTALL_SPACE=/opt/sasc
+. ${INSTALL_SPACE}/setup.bash
+qgroundcontrol
+```
+
+To connect to the vehicles use the following procedure:
+
+1. Click on the Purple "Q" button in the top left.
+2. Select the "Comm Links" entry in the left menu.
+3. Click "Add"
+4. Select Type: UDP then enter Blue as the name and give it port 14000 and click OK
+5. Repeat for Gold using port 14001
+6. Select the "Blue" connection and click "Connect" (or gold if you're gold team)
+7. Click on the Paper Airplane Icon at the top to view the vehicles.
