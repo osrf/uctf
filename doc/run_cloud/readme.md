@@ -213,7 +213,12 @@ The `spawn_gold` script can be used to spawn multiple planes; just pass more int
 ```console
 spawn_gold 26 27 28 29 30 31 32 33 34 35 --acs tap0 --gazebo-ip 192.168.2.1 --local-ip 192.168.2.10 --tactic-module mymodule --tactic-name MyClass
 ```
-The same tactic will be used by all planes.
+The same tactic will be used by all planes. You will see a string like below indicating that your tactic was found successfully. 
+
+```
+..INFO.. tactic_interface: Found tutorial_greedy_shooter_1 at: /home/ubuntu/scrimmage-templates/plugins/autonomy/python/tutorial_greedy_shooter.py
+..INFO.. tactic_interface: Tactic Name: TutorialGreedyShooter
+```
 
 ## Use local tools to control vehicles
 
@@ -238,6 +243,12 @@ Go through the following sequence in that GUI:
 1. Click "ARM ALL". Note that this command won't take effect until the vehicles
 have had some time to initialize their simulated GPS sensors, which can take a
 couple of minutes after spawning. The vehicle entries should now be green.
+
+  You should see content like this from the payload for each machine, after which it will be armable.
+    ```
+[INFO] [1480712292.473821]: MAVLink STATUSTEXT: EKF2 IMU0 is using GPS
+[INFO] [1480712292.474442]: MAVLink STATUSTEXT: EKF2 IMU1 is using GPS
+```
 1. For each vehicle:
 
     1. Select the vehicle in the list of entries.
