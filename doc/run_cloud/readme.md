@@ -1,3 +1,8 @@
+# Who are you?
+* [Game Master](#game-master)
+* [Competitor](#competitor)
+
+
 # Game Master
 
 ## One-time setup
