@@ -65,6 +65,8 @@ def spawn_team(color):
     parser.add_argument('--mavros', action='store_true', default=False)
     parser.add_argument('--gazebo-ip', default='127.0.0.1')
     parser.add_argument('--local-ip', default='127.0.0.1')
+    parser.add_argument('--tactic-module', default='increasing_altitude')
+    parser.add_argument('--tactic-name', default='IncreasingAltitude')
     args = parser.parse_args()
     autopilot = 'px4' if args.px4 else 'ardupilot'
     if not args.gazebo_ros_master_uri:
@@ -115,6 +117,8 @@ def spawn_team(color):
             include_payload=args.include_payload,
             launch_mavros=args.mavros,
             acs_network_inteface=args.acs_network_interface,
+            tactic_module=args.tactic_module,
+            tactic_name=args.tactic_name
             )
 
         ros_master_port = 11311 + mav_sys_id
