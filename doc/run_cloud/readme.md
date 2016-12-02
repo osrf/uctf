@@ -55,6 +55,7 @@ arbiter_start.py -db br-blue -dr br-gold
 ```
 
 ## On each Payload machine
+We're assuming that your tactic repo is checked out to `$HOME/scrimmage-templates`, with your tactics modules sitting inside there, in `plugins/autonomy/python`. In the examples below, we're assuming that the tactic that you want to run is in a class called `MyClass` that is implemented in a file called `mymodule.py` (which, for completeness, is located at `$HOME/scrimmage-templates/plugins/autonomy/python/mymodule.py`).
 
 To spawn a blue plane from the blue Payload machine:
 ```console
@@ -63,7 +64,8 @@ export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/share/gazebo-8/setup.sh
 . ${INSTALL_SPACE}/share/uctf/setup.sh
 export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${INSTALL_SPACE}/share/gazebo_models
-spawn_blue 1 26 --acs tap0 --gazebo-ip 192.168.2.1 --local-ip 192.168.2.10
+export PYTHONPATH=/home/ubuntu/scrimmage-templates/plugins/autonomy/python:$PYTHONPATH
+spawn_blue 26 --acs tap0 --gazebo-ip 192.168.2.1 --local-ip 192.168.2.10 --tactic-module mymodule --tactic-name MyClass
 ```
 
 To spawn a gold plane from the gold Payload machine:
@@ -73,8 +75,10 @@ export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/share/gazebo-8/setup.sh
 . ${INSTALL_SPACE}/share/uctf/setup.sh
 export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${INSTALL_SPACE}/share/gazebo_models
-spawn_gold 1 26 --acs tap0 --gazebo-ip 192.168.3.1 --local-ip 192.168.3.10
+export PYTHONPATH=/home/ubuntu/scrimmage-templates/plugins/autonomy/python:$PYTHONPATH
+spawn_gold 26 --acs tap0 --gazebo-ip 192.168.3.1 --local-ip 192.168.3.10 --tactic-module mymodule --tactic-name MyClass
 ```
+
 ## On OCU run fti.py or qgroundcontrol
 
 ### fti.py
