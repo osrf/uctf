@@ -282,6 +282,7 @@ couple of minutes after spawning. The vehicle entries should now be green.
     1. Select the vehicle in the list of entries.
     1. Fill in a "Stack number" and "Altitude above runway (m)", then click "Send Config" and then confirm in the following popup.
     1. Click "AUTO". The vehicle should launch, climb, and go to its designated waypoint.
+    1. Wait abou 10 seconds or until you see Waypoint 1 in the payload console. This operation uses templates that are not safe to run in parallel..
 
 There are a number of conditions after launch that can cause the vehicle
 entries to become red, indicating a problem, including:
