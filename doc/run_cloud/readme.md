@@ -311,7 +311,7 @@ Then run `swarm_commander.py`
 export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/venv3/bin/activate
 . ${INSTALL_SPACE}/setup.bash
-PYTHONPATH=/usr/lib/python3/dist-packages:$PYTHONPATH swarm_commander.py
+PYTHONPATH=$PYTHONPATH:${INSTALL_SPACE}/venv3/lib/python3.5/site-packages:/usr/lib/python3/dist-packages swarm_commander.py
 ```
 
 A GUI should pop up and become populated by your vehicles. If you just went
