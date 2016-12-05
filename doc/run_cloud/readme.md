@@ -83,6 +83,7 @@ cd ${INSTALL_SPACE}/ugdi_venv/ugdi && python run.py
 ```
 The game director interface will be accessible at http://192.168.2.1:5001 for blue and http://192.168.2.1:5001 for gold
 
+Please see the [full game director documentation](game_director.md) for more details.
 
 ## Launch the payload machines
 1. You can launch a payload machine for each team by pressing the blue or gold LAUNCH A PAYLOAD button.
