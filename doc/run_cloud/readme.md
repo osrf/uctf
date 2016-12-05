@@ -254,9 +254,6 @@ to your VPN server.
 
 ### Flight Tech Interface (fti.py)
 
-Temporary workaround until 1.0.11 of sasc-gazebo-sitl is released with this as an added dependency:
-`sudo apt-get install python3-pyside`
-
 From your OCU that is connected to the VPN, run `fti.py`:
 ```console
 export INSTALL_SPACE=/opt/sasc
