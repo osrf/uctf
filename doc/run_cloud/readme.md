@@ -225,6 +225,8 @@ tactic that you want to run is in a class called `MyClass` that is implemented
 in a file called `mymodule.py` (which, for completeness, is located at
 `$HOME/scrimmage-templates/plugins/autonomy/python/mymodule.py`).
 
+Note that you **must** have already launched Gazebo (e.g., `roslaunch uctf utctf.launch`) on the arbiter/simulation machine, as explained [#launch-gazebo](above). If Gazebo isn't running, you'll get an exception from trying to run `spawn_blue` or `spawn_gold`.
+
 #### Blue team
 To spawn a blue plane from the blue Payload machine:
 ```console
