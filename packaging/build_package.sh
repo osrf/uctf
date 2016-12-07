@@ -73,8 +73,8 @@ pip install mavproxy --system --target=${INSTALL_SPACE}/lib/python/site-packages
 
 echo "installing qgroundcontrol"
 
-wget https://s3-us-west-2.amazonaws.com/qgroundcontrol/latest/QGroundControl.AppImage -O /opt/sasc/bin/qgroundcontrol
-chmod +x /opt/sasc/bin/qgroundcontrol
+wget https://s3-us-west-2.amazonaws.com/qgroundcontrol/latest/QGroundControl.AppImage -O ${INSTALL_SPACE}/bin/qgroundcontrol
+chmod +x ${INSTALL_SPACE}/bin/qgroundcontrol
 
 echo "Installing arbiter and dependencies"
 
@@ -102,7 +102,7 @@ echo "generating control file"
 
 cp ${SCRIPTDIR}/sasc-control.base ${WS}/sasc-control
 echo -n "Files:" >> ${WS}/sasc-control
-find -L /opt/sasc -type f | xargs -I {} echo " {} /" >> ${WS}/sasc-control
+find -L ${INSTALL_SPACE} -type f | xargs -I {} echo " {} /" >> ${WS}/sasc-control
 sed -i '/^.*script (dev).tmpl.*/d' ${WS}/sasc-control
 sed -i '/^.*launcher manifest.xml* /d' ${WS}/sasc-control
 sed -i '/^.*darpa_logo* /d' ${WS}/sasc-control
