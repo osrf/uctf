@@ -1,6 +1,6 @@
 - git:
     local-name: acs_lib
-    uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/acs_lib.git
+    uri: https://gitlab.nps.edu/sasc/acs_lib.git
     version: master
 - git:
     local-name: acs_dashboards

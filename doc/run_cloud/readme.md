@@ -51,7 +51,7 @@ roslaunch uctf uctf.launch gui:=false
 
 ### Launch Arbiter
 
-SSH with X-Forwarding enabled to the simulation/arbiter machine (e.g., `ssh -XC -i cloudsim.pem ubuntu@192.168.2.1`) and start the Arbiter like so:
+SSH with X-Forwarding enabled to the simulation/arbiter machine (e.g., `ssh -XC -i cloudsim.pem ubuntu@1.2.3.4`) and start the Arbiter like so:
 ```console
 export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/venv3/bin/activate
@@ -83,6 +83,27 @@ cd ${INSTALL_SPACE}/ugdi_venv/ugdi && python run.py
 ```
 The game director interface will be accessible at http://192.168.2.1:5001 for blue and http://192.168.2.1:5001 for gold
 
+Please see the [full game director documentation](game_director.md) for more details.
+
+### Launch the ACS network logger
+
+At the time of writing, the `acs_net_logger.py` tool is not included in the `sasc-gazebo-sitl` package, so you will need to manually copy it to the arbiter/simulation machine, like so:
+```console
+ssh -i cloudsim.pem ubuntu@1.2.3.4 # replace with actual IP address
+wget --no-check-certificate https://gitlab.nps.edu/sasc/acs-env/raw/master/scripts/acs_net_logger.py
+chmod a+x acs_net_logger.py
+```
+
+You can start the logger like so:
+```console
+export INSTALL_SPACE=/opt/sasc
+. ${INSTALL_SPACE}/venv3/bin/activate
+. ${INSTALL_SPACE}/setup.bash
+# To log messages from the blue team:
+./acs_net_logger.py record br-blue /path/to/file.log
+# Or, to log messages from the gold team:
+# ./acs_net_logger.py record br-gold /path/to/file.log
+```
 
 ## Launch the payload machines
 1. You can launch a payload machine for each team by pressing the blue or gold LAUNCH A PAYLOAD button.
@@ -204,6 +225,8 @@ tactic that you want to run is in a class called `MyClass` that is implemented
 in a file called `mymodule.py` (which, for completeness, is located at
 `$HOME/scrimmage-templates/plugins/autonomy/python/mymodule.py`).
 
+Note that you **must** have already launched Gazebo (e.g., `roslaunch uctf utctf.launch`) on the arbiter/simulation machine, as explained [above](#launch-gazebo). If Gazebo isn't running, you'll get an exception from trying to run `spawn_blue` or `spawn_gold`.
+
 #### Blue team
 To spawn a blue plane from the blue Payload machine:
 ```console
@@ -252,9 +275,6 @@ graphical tools that you will run on your local OCUs, which must be connected
 to your VPN server.
 
 ### Flight Tech Interface (fti.py)
-
-Temporary workaround until 1.0.11 of sasc-gazebo-sitl is released with this as an added dependency:
-`sudo apt-get install python3-pyside`
 
 From your OCU that is connected to the VPN, run `fti.py`:
 ```console

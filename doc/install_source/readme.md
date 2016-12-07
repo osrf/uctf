@@ -23,45 +23,10 @@ mkdir -p ${SRC_SPACE}
 ~~~
 
 
-Create a file `/tmp/gazebo_uctf.rosinstall` with this content:
-~~~
-- tar:
-    local-name: gazebo
-    uri: https://bitbucket.org/osrf/gazebo/get/594248df0a49.tar.gz
-    version: osrf-gazebo-594248df0a49
-- tar:
-    local-name: gazebo_models
-    uri: https://bitbucket.org/osrf/gazebo_models/get/ca17c6407082.tar.gz
-    version: osrf-gazebo_models-ca17c6407082
-- git:
-    local-name: gazebo_ros_pkgs
-    uri: git@github.com:ros-simulation/gazebo_ros_pkgs.git
-    version: kinetic-devel
-- hg:
-    local-name: ign-math
-    uri: https://bitbucket.org/ignitionrobotics/ign-math
-    version: ign-math2
-- hg:
-    local-name: ign-msgs
-    uri: https://bitbucket.org/ignitionrobotics/ign-msgs
-    version: default
-- hg:
-    local-name: ign-tools
-    uri: https://bitbucket.org/ignitionrobotics/ign-tools
-    version: default
-- hg:
-    local-name: ign-tools
-    uri: https://bitbucket.org/ignitionrobotics/ign-tools
-    version: default
-- hg:
-    local-name: sdformat
-    uri: https://bitbucket.org/osrf/sdformat
-    version: default
-- git:
-    local-name: uctf
-    uri: git@github.com:osrf/uctf
-    version: master
+Create a file `/tmp/gazebo_uctf.rosinstall` with this command: 
 
+~~~
+wget https://github.com/osrf/uctf/raw/master/packaging/gazebo_uctf.rosinstall -O ${SRC_SPACE}/../gazebo_uctf.rosinstall
 ~~~
 
 ### Payload
@@ -85,7 +50,7 @@ hg:
 
 Check out gazebo and get on the right branch:
 ~~~
-rosinstall ${SRC_SPACE} /tmp/gazebo_uctf.rosinstall
+rosinstall ${SRC_SPACE} ${SRC_SPACE}/../gazebo_uctf.rosinstall
 ~~~
 
 Fetch package.xml files:
@@ -135,7 +100,8 @@ cd ardupilot
 
 ~~~
 export INSTALL_SPACE=/opt/sasc-dev
-cd ardupilot
+export SRC_SPACE=~/uctf-ardu/src
+cd ${SRC_SPACE}/../ardupilot
 ./Tools/scripts/install-prereqs-ubuntu.sh
 git submodule update --init --recursive
 ./waf configure --prefix=${INSTALL_SPACE}
