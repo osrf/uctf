@@ -298,7 +298,6 @@ def generate_launch_file(
     mav_sys_id, vehicle_type, baseport, config_path, debug,
     autopilot, ground_port, gazebo_ip, local_ip,
     include_payload, launch_mavros, acs_network_inteface,
-    tactic_module, tactic_name
 ):
     launch_snippet = get_launch_snippet(
         mav_sys_id, vehicle_type, baseport, config_path, debug,
@@ -309,9 +308,7 @@ def generate_launch_file(
         include_payload=include_payload,
         launch_mavros=launch_mavros,
         acs_network_inteface=acs_network_inteface,
-        tactic_module=tactic_module,
-        tactic_name=tactic_name
-        )
+    )
     if debug:
         print(launch_snippet)
     return write_launch_file(launch_snippet)
@@ -326,8 +323,6 @@ def get_launch_snippet(
     include_payload=True,
     launch_mavros=False,
     acs_network_inteface='lo',
-    tactic_module='increasing_altitude',
-    tactic_name='IncreasingAltitude'
 ):
     vehicle_name = "%s_%d" % (vehicle_type, mav_sys_id)
     pkg_share_path = os.path.normpath(os.path.join(
@@ -395,8 +390,6 @@ def get_launch_snippet(
             'local_ip': local_ip,
             'include_payload': include_payload,
             'launch_mavros': launch_mavros,
-            'tactic_module': tactic_module,
-            'tactic_name': tactic_name,
         }
         if vehicle_type == 'iris':
             data['executable'] = 'arducopter-quad'

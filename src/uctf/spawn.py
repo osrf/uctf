@@ -105,7 +105,7 @@ def spawn_team(color):
             debug=args.debug, autopilot=autopilot,
             gazebo_ip=args.gazebo_ip,
             local_ip=args.local_ip,
-            )
+        )
 
         launch_path = generate_launch_file(
             mav_sys_id, vehicle_type, vehicle_base_port,
@@ -117,9 +117,7 @@ def spawn_team(color):
             include_payload=args.include_payload,
             launch_mavros=args.mavros,
             acs_network_inteface=args.acs_network_interface,
-            tactic_module=args.tactic_module,
-            tactic_name=args.tactic_name
-            )
+        )
 
         ros_master_port = 11311 + mav_sys_id
         env = {'ROS_MASTER_URI': 'http://localhost:%d' % ros_master_port}
