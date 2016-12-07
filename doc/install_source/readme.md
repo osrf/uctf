@@ -135,7 +135,8 @@ cd ardupilot
 
 ~~~
 export INSTALL_SPACE=/opt/sasc-dev
-cd ardupilot
+export SRC_SPACE=~/uctf-ardu/src
+cd ${SRC_SPACE}/../ardupilot
 ./Tools/scripts/install-prereqs-ubuntu.sh
 git submodule update --init --recursive
 ./waf configure --prefix=${INSTALL_SPACE}
