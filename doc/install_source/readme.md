@@ -23,34 +23,21 @@ mkdir -p ${SRC_SPACE}
 ~~~
 
 
-Create a file `/tmp/gazebo_uctf.rosinstall` with this command: 
+Create a file `gazebo_uctf.rosinstall` with this command: 
 
 ~~~
 wget https://github.com/osrf/uctf/raw/master/packaging/gazebo_uctf.rosinstall -O ${SRC_SPACE}/../gazebo_uctf.rosinstall
 ~~~
 
-### Payload
-
-The payload is being compiled in a catkin workspace names `ws_payload`.
-Clone the following repositories and then build the workspace with `catkin_make`:
-
-* `autonomy-payload`
-* `autopilot_bridge`
-
-### Gazebo
-If you're developing use this for gazebo instead of the tarball.
 ~~~
-hg:
-   local-name: gazebo
-   uri: ssh://hg@bitbucket.org/osrf/gazebo
-   version: ardupilot
+wget https://github.com/osrf/uctf/raw/master/packaging/other.rosinstall -O ${SRC_SPACE}/../other.rosinstall
 ~~~
 
-
+### Download Source
 
 Check out gazebo and get on the right branch:
 ~~~
-rosinstall ${SRC_SPACE} ${SRC_SPACE}/../gazebo_uctf.rosinstall
+wstool init ${SRC_SPACE} ${SRC_SPACE}/../gazebo_uctf.rosinstall
 ~~~
 
 Fetch package.xml files:
@@ -61,6 +48,11 @@ curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_ig
 curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_ign-tools.xml > ${SRC_SPACE}/ign-tools/package.xml
 curl https://bitbucket.org/scpeters/unix-stuff/raw/master/package_xml/package_sdformat.xml > ${SRC_SPACE}/sdformat/package.xml
 ~~~
+
+~~~
+wstool init ${SRC_SPACE}/../other_src ${SRC_SPACE}/../other.rosinstall
+~~~
+
 
 ## Install prerequisites
 
@@ -116,6 +108,13 @@ You will need mavproxy installed from pip on your system.
 pip install mavproxy --system --target=${INSTALL_SPACE}/lib/python/site-packages/ --install-option="--install-scripts=${INSTALL_SPACE}/bin"
 ~~~
 
+### installing qgroundcontrol
+
+```
+wget https://s3-us-west-2.amazonaws.com/qgroundcontrol/latest/QGroundControl.AppImage -O ${INSTALL_SPACE}/bin/qgroundcontrol
+chmod +x ${INSTALL_SPACE}/bin/qgroundcontrol
+```
+
 ### Arbiter
 
 Since the arbiter uses Python 3 we setup a virtual environment:
@@ -123,12 +122,16 @@ Since the arbiter uses Python 3 we setup a virtual environment:
 #### Python 3 venv
 
 ```console
-cd ${INSTALL_SPACE}
-mkdir venv3
-pyvenv venv3
-. venv3/bin/activate
-pip install wheel
-pip install image mavproxy netifaces numpy pyqt5 urllib3 urllib3
+export VENV3=${INSTALL_SPACE}/venv3
+mkdir -p ${VENV3}
+pyvenv ${VENV3}
+(. ${VENV3}/bin/activate && pip install wheel)
+(. ${VENV3}/bin/activate && pip install image mavproxy netifaces numpy pyqt5 urllib3)
+
+(. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_lib && python setup.py install)
+(. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_dashboards && python setup.py install)
+(. ${VENV3}/bin/activate && cd ${WS}/other_src/arbiter && python setup.py install)
+(. ${VENV3}/bin/activate && cd ${WS}/other_src/swarmcommander && python setup.py install)
 ```
 
 Install the following packages into the venv too: 
