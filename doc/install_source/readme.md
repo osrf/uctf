@@ -128,17 +128,11 @@ pyvenv ${VENV3}
 (. ${VENV3}/bin/activate && pip install wheel)
 (. ${VENV3}/bin/activate && pip install image mavproxy netifaces numpy pyqt5 urllib3)
 
-(. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_lib && python setup.py install)
-(. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_dashboards && python setup.py install)
-(. ${VENV3}/bin/activate && cd ${WS}/other_src/arbiter && python setup.py install)
-(. ${VENV3}/bin/activate && cd ${WS}/other_src/swarmcommander && python setup.py install)
+(. ${VENV3}/bin/activate && cd ${SRC_SPACE}/../other_src/acs_lib && python setup.py install)
+(. ${VENV3}/bin/activate && cd ${SRC_SPACE}/../other_src/acs_dashboards && python setup.py install)
+(. ${VENV3}/bin/activate && cd ${SRC_SPACE}/../other_src/arbiter && python setup.py install)
+(. ${VENV3}/bin/activate && cd ${SRC_SPACE}/../other_src/swarmcommander && python setup.py install)
 ```
-
-Install the following packages into the venv too: 
-
-* acs_lib
-* acs_dashboards
-* arbiter
 
 ## Terminal setup
 
