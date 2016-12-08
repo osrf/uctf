@@ -364,10 +364,12 @@ def get_launch_snippet(
             'default_params': init_script_path,
             'base_port': vehicle_base_port,
             'mavproxy_arguments': '--master %s '
+                                  '--sitl %s'
                                   '--out %s '
                                   '--out %s '
                                   '--aircraft %s'
                                   % (sitl_base_url,
+                                     '%s:%s' % (local_ip, vehicle_base_port + 1),
                                      ground_connection,
                                      connection_to_ros_interface,
                                      vehicle_name),
