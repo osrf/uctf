@@ -36,8 +36,8 @@
     version: master
 - git:
     local-name: autonomy-payload
-    uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/autonomy-payload.git
-    version: sample_tactic
+    uri: https://gitlab.nps.edu/sasc/autonomy-payload.git
+    version: master
 - git:
     local-name: autopilot_bridge
     uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/autopilot_bridge.git
