@@ -366,7 +366,7 @@ def get_launch_snippet(
             'default_params': init_script_path,
             'base_port': vehicle_base_port,
             'mavproxy_arguments': '--master %s '
-                                  '--sitl %s'
+                                  '--sitl %s '
                                   '--out %s '
                                   '--out %s '
                                   '--aircraft %s'
