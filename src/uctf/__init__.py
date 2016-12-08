@@ -385,7 +385,8 @@ def get_launch_snippet(
                                          ORIGIN_HEADING),
             'acs_network_inteface': acs_network_inteface,
             'sitl_base_url': sitl_base_url,
-            'sitl_base_url_alt': 'tcp:%s:%d' % (local_ip, vehicle_base_port + 2),
+            'sitl_base_url_alt': 'tcp:%s:%d' %
+                                 (local_ip, vehicle_base_port + 2),
             'gazebo_ip': gazebo_ip,
             'local_ip': local_ip,
             'include_payload': include_payload,
