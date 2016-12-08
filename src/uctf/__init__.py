@@ -353,6 +353,8 @@ def get_launch_snippet(
         return empy('px4_and_mavros.launch.em', data)
     else:
         sitl_base_url = 'tcp:%s:%d' % (local_ip, vehicle_base_port)
+        sitl_rc_override_port = '%s:%s' % \
+            (local_ip, vehicle_base_port + 1)
         # Assumes a class C network
         bcast_tuple = local_ip.split('.')
         bcast_tuple[-1] = '255'
@@ -369,7 +371,7 @@ def get_launch_snippet(
                                   '--out %s '
                                   '--aircraft %s'
                                   % (sitl_base_url,
-                                     '%s:%s' % (local_ip, vehicle_base_port + 1),
+                                     sitl_rc_override_port,
                                      ground_connection,
                                      connection_to_ros_interface,
                                      vehicle_name),
