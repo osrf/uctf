@@ -1,21 +1,21 @@
   <node
-    name="ardupilot_@(vehicle_type)_@(mav_sys_id)"
+    name="ardupilot_@(vehicle_name)"
     pkg="uctf"
     type="arduplane.sh"
     args="@(executable) @(mav_sys_id) @(base_port) @(rc_in_port) @(gazebo_port_in) @(gazebo_port_out) @(default_params) @(model) @(home_str) @(gazebo_ip) @(local_ip)"
     cwd="ROS_HOME"
-    ns="/@(vehicle_type)_@(mav_sys_id)"
+    ns="/@(vehicle_name)"
     output="screen" />
   <node
-    name="ardupilot_@(vehicle_type)_@(mav_sys_id)_mavproxy"
+    name="ardupilot_@(vehicle_name)_mavproxy"
     pkg="uctf"
     type="mavproxy.sh"
     args="@(mavproxy_arguments)"
     cwd="ROS_HOME"
-    ns="/@(vehicle_type)_@(mav_sys_id)"
+    ns="/@(vehicle_name)"
     output="screen" />
 @[ if launch_mavros ]@
-  <include file="$(find mavros)/launch/apm.launch" ns="/@(vehicle_type)_@(mav_sys_id)">
+  <include file="$(find mavros)/launch/apm.launch" ns="/@(vehicle_name)">
     <arg name="fcu_url" value="udp://:@(ros_interface_port4)@@@(local_ip):@(ros_interface_port3)" />
     <arg name="tgt_system" value="@(mav_sys_id)" />
   </include>
@@ -24,9 +24,9 @@
 @[ if include_payload ]@
 @# TODO(tfoote) parameterize this in and out based on an option
 @# TODO(tfoote) verify namespace is ok slightly different
-<include file="$(find ap_master)/launch/sitl.launch" ns="/@(vehicle_type)_@(mav_sys_id)">
+<include file="$(find ap_master)/launch/sitl.launch" ns="/@(vehicle_name)">
   <arg name="id" value="@(mav_sys_id)" />
-  <!-- <arg name="name" value="@(vehicle_type)_@(mav_sys_id)"/> -->
+  <arg name="name" value="@(vehicle_name)"/>
   <arg name="sitl" value="@(sitl_base_url_alt)" />
   <arg name="port" value="5554" />
   <arg name="dev" value="@(acs_network_inteface)" />
