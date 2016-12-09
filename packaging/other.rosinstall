@@ -20,5 +20,13 @@
     version: master
 - git:
     local-name: ugdi
-    uri: git@gitlab.nps.edu:tfoote_osrfoundation.org/udgi.git
+    uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/udgi.git
     version: master
+- git:
+    local-name: mavlink
+    uri: https://gitlab.nps.edu/sasc/mavlink.git
+    version: dev
+- git:
+    local-name: mavproxy
+    uri: https://gitlab.nps.edu/sasc/mavproxy.git
+    version: dev
