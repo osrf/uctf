@@ -68,6 +68,10 @@ git submodule update --init --recursive
 ./waf
 ./waf install
 
+echo "installing lxml needed for mavlink"
+pip install lxml --system --target=${INSTALL_SPACE}/lib/python/site-packages/ --install-option="--install-scr
+ipts=${INSTALL_SPACE}/bin"
+
 echo "Get mavlink"
 cd ${WS}/other_src/mavlink
 git submodule update --init --recursive
