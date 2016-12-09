@@ -60,6 +60,7 @@ The flight tech interface is being used to prepare each vehicle for the flight.
 First start the Qt application:
 
 ```console
+
 . <ws_payload>/devel/setup.bash
 . <venv3>/bin/activate
 PYTHONPATH=/opt/sasc-dev/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/dist-packages:/usr/lib/python3/dist-packages fti.py -d enp0s25 -z
@@ -122,23 +123,7 @@ All vehicles have the same shape in this application despite one of them being a
 export INSTALL_SPACE=/opt/sasc-dev
 . ${INSTALL_SPACE}/venv3/bin/activate
 . ${INSTALL_SPACE}/setup.bash
-PYTHONPATH=/usr/lib/python3/dist-packages:$PYTHONPATH swarm_commander.py
-```
-
-### Activate swarm behavior
-
-One the vehicles are in the air (and `swarm_state=2`) they can be assigned to a swarm:
-
-```console
-. <ws_payload>/setup.bash
-rosservice call /swarm_control/set_subswarm 1
-```
-
-Then a specific behavior can be run, e.g. the freedy shooter:
-
-```console
-. <ws_payload>/setup.bash
-rosservice call /swarm_control/run_behavior "{params: {id: 4, params: []}}" call /swarm_control/set_subswarm 1
+PYTHONPATH=$PYTHONPATH:${INSTALL_SPACE}/venv3/lib/python3.5/site-packages:/usr/lib/python3/dist-packages swarm_commander.py
 ```
 
 ![QGroundControl showing trajectory](qgroundcontrol.jpg)
@@ -150,9 +135,9 @@ One the vehicles are in the air (and `swarm_state=2`) they can be assigned to a 
 **TODO to use more than one team you need two separate network interfaces**
 
 ```console
-. <ws_payload>/setup.bash
-. <venv3>/bin/activate
-PYTHONPATH=/opt/sasc-dev/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/dist-packages:/usr/lib/python3/dist-packages arbiter_start.py -db enp0s25 -dr wlp3s0
+export INSTALL_SPACE=/opt/sasc-dev
+. ${INSTALL_SPACE}/venv3/bin/activate
+PYTHONPATH=${INSTALL_SPACE}/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/dist-packages:/usr/lib/python3/dist-packages arbiter_start.py -db enp0s25 -dr wlp3s0
 ```
 
 ## Run vehicles on separate machines
