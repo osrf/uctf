@@ -26,5 +26,6 @@ RLL2SRV_P        2.500000
 # Do not force RTL due to lack of companion computer (not upstream)
 ACS_WATCH_HB         0
 ACS_KILL_THR         0
+ACS_ESC_RSET         0
 
 @[if mav_sys_id]SYSID_THISMAV    @(mav_sys_id)@[end if]
