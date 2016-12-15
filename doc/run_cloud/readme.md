@@ -236,7 +236,8 @@ export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/share/uctf/setup.sh
 export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${INSTALL_SPACE}/share/gazebo_models
 export PYTHONPATH=/home/ubuntu/scrimmage-templates/plugins/autonomy/python:$PYTHONPATH
-spawn_blue 26 --acs tap0 --gazebo-ip 192.168.2.1 --local-ip 192.168.2.10 --tactic-module mymodule --tactic-name MyClass
+export SCRIMMAGE_TACTIC_INTERFACE_FILE=/home/ubuntu/scrimmage-templates/plugins/autonomy/python/behaviors.xml
+spawn_blue 26 --acs tap0 --gazebo-ip 192.168.2.1 --local-ip 192.168.2.10
 ```
 
 The `spawn_blue` script can be used to spawn multiple planes; just pass more integers in the range 26-50 (the ids 1-25 are for copters, which aren't yet supported). E.g., to launch 10 planes:
