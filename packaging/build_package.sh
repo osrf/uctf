@@ -55,7 +55,11 @@ catkin config --init --extend /opt/ros/kinetic -i ${INSTALL_SPACE} --install --i
 sudo mkdir -p ${INSTALL_SPACE}
 sudo chown -R ${USER}:${USER} ${INSTALL_SPACE}
 catkin build --verbose
-cp -r ${WS}/src/gazebo_models ${INSTALL_SPACE}/share
+mkdir -p ${INSTALL_SPACE}/share/gazebo_models
+for MODEL in iris_with_standoffs iris_with_standoffs_demo gimbal_small_2d zephyr_delta_wing zephyr_delta_wing_ardupilot_demo sun ground_plane
+do
+  rsync -av ${WS}/src/gazebo_models/${MODEL} ${INSTALL_SPACE}/share/gazebo_models
+done
 
 # echo "Cloning Ardupilot..."
 # git clone https://github.com/tfoote/ardupilot.git -b uctf-dev
