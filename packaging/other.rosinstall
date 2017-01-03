@@ -20,7 +20,7 @@
     version: master
 - git:
     local-name: ugdi
-    uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/udgi.git
+    uri: https://gitlab.nps.edu/sasc/game-director.git
     version: master
 - git:
     local-name: mavlink
