@@ -49,6 +49,12 @@ rosdep install --from-path ${WS}/src --ignore-src -y|| true
 echo "Installing other dependencies..."
 sudo apt-get install -y libxslt1-dev libqwt-dev python-future libignition-transport-dev python3-espeak
 
+# Things for venv3
+sudo apt-get install -y python3-django python3-netifaces python3-numpy python3-pyqt5 python3-urllib3
+
+# things for venv
+sudo apt-get install -y python-numpy
+
 echo "Building Gazebo and friends..."
 cd ${WS}
 catkin config --init --extend /opt/ros/kinetic -i ${INSTALL_SPACE} --install --isolate-devel
@@ -94,9 +100,9 @@ echo "Installing arbiter and dependencies"
 
 VENV3=${INSTALL_SPACE}/venv3
 mkdir -p ${VENV3}
-pyvenv ${VENV3}
+pyvenv --system-site-packages ${VENV3} 
 (. ${VENV3}/bin/activate && pip install wheel)
-(. ${VENV3}/bin/activate && pip install image mavproxy netifaces numpy pyqt5 urllib3)
+(. ${VENV3}/bin/activate && pip install image mavproxy netifaces)
 
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_lib && python setup.py install)
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_dashboards && python setup.py install)
@@ -107,7 +113,7 @@ echo "Installing Game Director and dependencies"
 
 GDI_VENV=${INSTALL_SPACE}/ugdi_venv
 mkdir -p ${GDI_VENV}
-virtualenv ${GDI_VENV}
+virtualenv --system-site-packages ${GDI_VENV}
 (. ${GDI_VENV}/bin/activate && cd ${WS}/other_src/ugdi && pip install -r requirements.txt )
 (. ${GDI_VENV}/bin/activate && cd ${WS}/src/autonomy-payload/ap_lib && python setup.py install)
 cp -r ${WS}/other_src/ugdi ${GDI_VENV}
@@ -123,5 +129,4 @@ sed -i '/^.*darpa_logo* /d' ${WS}/sasc-control
 sed -i '/^.*Screen Shot* /d' ${WS}/sasc-control
 
 
-cd ${WS}
-equivs-build ${WS}/sasc-control
+(cd ${WS} && equivs-build ${WS}/sasc-control)
