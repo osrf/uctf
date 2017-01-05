@@ -4,5 +4,10 @@ import sys
 
 from uctf.spawn import spawn_team
 
+import rospy
+# Remove roslaunch specific arguments
+# TODO make this script compatible
+sys.argv = rospy.myargv(argv=sys.argv)
+
 if __name__ == '__main__':
     sys.exit(spawn_team('gold'))

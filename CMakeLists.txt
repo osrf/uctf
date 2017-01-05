@@ -63,6 +63,8 @@ install(PROGRAMS
   "script/px4.sh"
   "script/arduplane.sh"
   "script/mavproxy.sh"
+  "script/spawn_blue"
+  "script/spawn_gold"
   DESTINATION share/${PROJECT_NAME}
 )
 install(FILES
