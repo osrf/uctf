@@ -17,6 +17,7 @@ install(PROGRAMS
   "script/spawn_blue"
   "script/spawn_gold"
   "script/sasc_deploy"
+  "script/arbiter_env.sh"
   "script/fti_env.sh"
   "script/gdi_env.sh"
   "script/payload_env.sh"
