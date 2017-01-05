@@ -187,6 +187,42 @@ you're going to connect.
 To disconnect from the VPN, just give Ctrl-C in the terminal where you started
 `openvpn`.
 
+
+## Setup your ssh agent
+
+From the CloudSim UI you will have a key download. The keys for your machines should be the same. Download and unpack them. Then add the key to your ssh-agent using the following command. Where the key is saved as key.pem.
+
+```
+ssh-add ~/Download/key.pem
+```
+
+Verify that you can reach each of the payload machines (192.168.2.10++ for blue or 192.168.3.10 ++ for gold)  . And accept the ssh key verification. You may need to clear old keys if you've launched
+
+## Deploy your tactics and start payload
+
+Assuming that your tactics repository is checked out into `~/scrimmage-template`.
+
+This assumes you want to launch vehicles 26-31 and you're on team `blue`, the other option is `gold`.
+
+To deploy your tactics and prepare the cloud machines use the following command.
+
+Your game instances will have a number of payload hosts, the script needs to know how many the game is provisioned with to allocate the simulation appropriately.
+
+```
+. /opt/sasc/setup.bash
+sasc_deploy --hosts 3 --scrimm ~/scrimmage-template blue 26 27 28 29 30 31
+```
+
+The output of the above command will tell you the command to run the payloads remotely. It will look like this:
+
+```
+ROS_HOSTNAME=192.168.2.150 roslaunch /tmp/sasc_remote.launch
+```
+
+To stop the payloads you can press `Ctrl-C`
+
+
+<!-- The below is replaced by deployment scripts
 ## SSH to your Payload machine
 
 To get shell access to your Payload machine, which is where you'll be cloning
@@ -268,6 +304,7 @@ The same tactic will be used by all planes. You will see a string like below ind
 ..INFO.. tactic_interface: Found tutorial_greedy_shooter_1 at: /home/ubuntu/scrimmage-templates/plugins/autonomy/python/tutorial_greedy_shooter.py
 ..INFO.. tactic_interface: Tactic Name: TutorialGreedyShooter
 ```
+-->
 
 ## Use local tools to control vehicles
 
