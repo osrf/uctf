@@ -16,6 +16,12 @@ install(PROGRAMS
   "script/rqt_uctf"
   "script/spawn_blue"
   "script/spawn_gold"
+  "script/sasc_deploy"
+  "script/fti_env.sh"
+  "script/gdi_env.sh"
+  "script/payload_env.sh"
+  "script/sasc_gazebo_env.sh"
+  "script/swarm_commander_env.sh"
   DESTINATION bin
 )
 install(DIRECTORY

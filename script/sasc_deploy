@@ -1,0 +1,118 @@
+#!/usr/bin/env python
+
+import argparse
+import subprocess
+
+from uctf.spawn import vehicle_id_type
+
+SCRIMMAGE_REPO_PATH = '/home/ubuntu/scrimmage-template'
+
+LAUNCH_TEMPLATE = """
+<launch>
+%(machine_entries)s
+%(node_entries)s
+</launch>
+"""
+
+MACHINE_TEMPLATE = """  <machine name="%(machine_name)s" address="%(ip)s" env-loader="/opt/sasc/payload_env.sh" user="ubuntu"/>"""
+NODE_TEMPLATE = """  <node pkg="uctf" type="spawn_%(team)s" name="%(node_name)s" args="%(machines)s --acs tap0 --gazebo-ip 192.168.2.1 --local-ip %(ip)s" machine="%(machine_name)s" >
+  <env name="SCRIMMAGE_TACTIC_INTERFACE_FILE" value="/home/ubuntu/scrimmage-templates/plugins/autonomy/python/behaviors.xml"/>
+</node>"""
+
+
+def generate_launch_file(team, ips, vehicles):
+    machines = {}
+    for count in range(0, len(ips)):
+        machines[count] = []
+        
+    counter = 0
+    for v in vehicles:
+        machines[counter % len(ips)].append(v)
+        counter += 1
+    substitutions = {}
+    machine_strs = []
+    nodes = []
+    
+    
+    for k, v in machines.items():
+        subs = {}
+        subs['ip'] = ips[k]
+        
+        subs['machines'] = ' '.join([str(i) for i in  v])
+        subs['team'] = team
+        subs['count'] = k
+        subs['machine_name'] = '_'.join([team, str(k)])
+        subs['node_name'] = '_'.join([team, 'payload', str(k)])
+        machine_strs.append(MACHINE_TEMPLATE % subs)
+        nodes.append(NODE_TEMPLATE % subs)
+
+    launch_subs = {}
+    launch_subs['machine_entries'] = '\n'.join(machine_strs)
+    launch_subs['node_entries'] = '\n'.join(nodes)
+
+    launchfile = LAUNCH_TEMPLATE % launch_subs
+
+    # print("launchfile is :", launchfile)
+    return launchfile
+
+def rsync_to_host(source, dest, dry_run=False):
+    cmd = ['rsync', '-ave', 'ssh', source, dest]
+    if dry_run:
+        cmd.insert(1, '-n')
+    subprocess.check_call(cmd)
+
+ENVIRONMENT_STRING = """PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+ROS_IP=%(ros_ip)s"""
+
+
+def extend_environment(ros_ip, remote_filename='/etc/environment', dry_run=False):
+    cmd = ['ssh', 'ubuntu@%s' % ros_ip, """sudo bash -c 'tee %s > /dev/null << EOF
+%s
+EOF'""" % (remote_filename, ENVIRONMENT_STRING % {'ros_ip': ros_ip})]
+    if dry_run:
+        cmd.insert(0, 'echo')
+    # print('command ...... %s' % ' '.join(cmd))
+    subprocess.check_call(cmd)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser('Deploy tactics and prepare remote machines')
+    parser.add_argument("--hosts", type=int, default=1,
+        help="Number of payload host machines")
+    # parser.add_argument('--identity', '-i', default=None,
+    #     help='SSH Identity to use for authentification')
+    parser.add_argument('--dry-run', action='store_true')
+    parser.add_argument('--scrimmage-repo', action='store', default=SCRIMMAGE_REPO_PATH)
+    parser.add_argument('team', choices=['blue', 'gold'])
+    parser.add_argument(
+        'vehicle_id', nargs='*', metavar='VEHICLE_ID', type=vehicle_id_type,
+        default=range(1, 51),
+        help='The vehicle ids to spawn (default: 1-50)')
+    args = parser.parse_args()
+    
+    if len(set(args.vehicle_id)) != len(args.vehicle_id):
+        parser.error("vehicle_id's must be unique, %s" % args.vehicle_id)
+    
+    if args.team == 'blue':
+        team_network = 2
+    else:
+        team_network = 3
+    ips = ['192.168.%s.1%s' % (team_network, increment) for increment in range(0, args.hosts)]
+
+    machines = {}
+    for ip in ips:
+        print("Working on host %s" % ip)
+        rsync_to_host(args.scrimmage_repo, 'ubuntu@%s:%s' % ( ip, SCRIMMAGE_REPO_PATH), dry_run=args.dry_run)
+        extend_environment(ip)
+        
+    lf_filename = '/tmp/sasc_remote.launch'
+    with open(lf_filename, 'w') as lf:
+        launchfile_str = generate_launch_file(args.team, ips, args.vehicle_id)
+        lf.write(launchfile_str)
+        print("created %s" % lf_filename)
+    ip = subprocess.check_output('ip -f inet -o addr show tap0|cut -d\  -f 7 | cut -d/ -f 1', shell=True).strip()
+    print("")
+    print("")
+    print("To run the payloads please invoke the following:")
+    print("")
+    print("ROS_HOSTNAME=%s roslaunch %s" % (ip, lf_filename))

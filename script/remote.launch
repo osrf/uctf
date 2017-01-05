@@ -1,0 +1,15 @@
+
+<launch>
+  <machine name="blue_0" address="192.168.2.10" env-loader="/opt/sasc/payload_env.sh" user="ubuntu"/>
+  <machine name="blue_1" address="192.168.2.11" env-loader="/opt/sasc/payload_env.sh" user="ubuntu"/>
+  <machine name="blue_2" address="192.168.2.12" env-loader="/opt/sasc/payload_env.sh" user="ubuntu"/>
+  <node pkg="uctf" type="spawn_blue" name="blue_payload_0" args="1 4 7 10 13 16 19 22 25 28 31 34 37 40 43 46 49 --acs tap0 --gazebo-ip 192.168.2.1 --local-ip 192.168.2.10" machine="blue_0" >
+  <env name="SCRIMMAGE_TACTIC_INTERFACE_FILE" value="/home/ubuntu/scrimmage-templates/plugins/autonomy/python/behaviors.xml"/>
+</node>
+  <node pkg="uctf" type="spawn_blue" name="blue_payload_1" args="2 5 8 11 14 17 20 23 26 29 32 35 38 41 44 47 50 --acs tap0 --gazebo-ip 192.168.2.1 --local-ip 192.168.2.11" machine="blue_1" >
+  <env name="SCRIMMAGE_TACTIC_INTERFACE_FILE" value="/home/ubuntu/scrimmage-templates/plugins/autonomy/python/behaviors.xml"/>
+</node>
+  <node pkg="uctf" type="spawn_blue" name="blue_payload_2" args="3 6 9 12 15 18 21 24 27 30 33 36 39 42 45 48 --acs tap0 --gazebo-ip 192.168.2.1 --local-ip 192.168.2.12" machine="blue_2" >
+  <env name="SCRIMMAGE_TACTIC_INTERFACE_FILE" value="/home/ubuntu/scrimmage-templates/plugins/autonomy/python/behaviors.xml"/>
+</node>
+</launch>
