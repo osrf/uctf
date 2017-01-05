@@ -65,8 +65,6 @@ def spawn_team(color):
     parser.add_argument('--mavros', action='store_true', default=False)
     parser.add_argument('--gazebo-ip', default='127.0.0.1')
     parser.add_argument('--local-ip', default='127.0.0.1')
-    parser.add_argument('--tactic-module', default='increasing_altitude')
-    parser.add_argument('--tactic-name', default='IncreasingAltitude')
     args = parser.parse_args()
     autopilot = 'px4' if args.px4 else 'ardupilot'
     if not args.gazebo_ros_master_uri:
