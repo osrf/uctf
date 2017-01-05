@@ -1,7 +1,7 @@
 - git:
     local-name: acs_lib
     uri: https://gitlab.nps.edu/sasc/acs_lib.git
-    version: master
+    version: jan-scrimmage
 - git:
     local-name: acs_dashboards
     uri: https://gitlab.nps.edu/gerkey_osrfoundation.org/acs_dashboards.git
@@ -9,15 +9,15 @@
 - git:
     local-name: arbiter
     uri: https://gitlab.nps.edu/sasc/arbiter.git
-    version: master
+    version: jan-scrimmage
 - git:
     local-name: ardupilot
     uri: https://github.com/tfoote/ardupilot.git
-    version: uctf-dev
+    version: jan-scrimmage
 - git:
     local-name: swarmcommander
-    uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/swarmcommander.git
-    version: master
+    uri: https://gitlab.nps.edu/sasc/swarmcommander.git
+    version: jan-scrimmage
 - git:
     local-name: ugdi
     uri: https://gitlab.nps.edu/sasc/game-director.git
