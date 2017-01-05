@@ -50,10 +50,10 @@ echo "Installing other dependencies..."
 sudo apt-get install -y libxslt1-dev libqwt-dev python-future libignition-transport-dev python3-espeak
 
 # Things for venv3
-sudo apt-get install -y python3-django python3-netifaces python3-numpy python3-pyqt5 python3-urllib3
+sudo apt-get install -y python3-django python3-netifaces python3-numpy pyton3-pil python3-pyqt5 python3-urllib3
 
 # things for venv
-sudo apt-get install -y python-numpy
+sudo apt-get install -y python-numpy python-jinja2
 
 echo "Building Gazebo and friends..."
 cd ${WS}
