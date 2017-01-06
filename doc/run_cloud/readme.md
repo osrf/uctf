@@ -208,6 +208,7 @@ Your game instances will have a number of payload hosts, the script needs to kno
 
 ```
 . /opt/sasc/setup.bash
+. /opt/sasc/share/uctf/setup.sh
 sasc_deploy --hosts 3 --scrimm ~/scrimmage-template blue 26 27 28 29 30 31
 ```
 
