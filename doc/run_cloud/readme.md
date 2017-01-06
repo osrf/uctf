@@ -195,7 +195,6 @@ From the CloudSim UI you will have a key download. The keys for your machines sh
 ssh-add ~/Download/key.pem
 ```
 
-Verify that you can reach each of the payload machines (192.168.2.10++ for blue or 192.168.3.10 ++ for gold)  . And accept the ssh key verification. You may need to clear old keys if you've launched
 
 ## Deploy your tactics and start payload
 
