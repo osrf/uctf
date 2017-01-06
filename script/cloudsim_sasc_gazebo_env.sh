@@ -1,8 +1,10 @@
 #!/usr/bin/env sh
-export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/venv3/bin/activate
-. ${INSTALL_SPACE}/setup.sh
-log="arbiter_log"
+
+. /opt/sasc/bin/sasc_gazebo_env.sh
+export ROS_HOSTNAME=192.168.2.1
+export ROS_MASTER_URI=http://192.168.2.1:11311
+
+log="gazebo_log"
 eval "$@" \&
 PID=$!
 echo "running" "$@" "in PID $PID"> $log
