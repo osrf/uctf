@@ -17,6 +17,7 @@
 
 SASC machines are grouped into Rounds. Click on the round button (with a + inside) to create a new round. 
 You must supply a name for the Round, along with one competitor username for each team.
+You must also select the number of computers to make available to each team. Drones will be evenly distributed across the machines. It's recommended to have less than 10 drones per machine to keep the load to a reasonable level. 
 
 ## Launch the simulation/arbiter machine
 1. Click on the LAUNCH button in the Arbiter box. This will launch a simulation
