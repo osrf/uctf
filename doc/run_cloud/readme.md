@@ -370,6 +370,7 @@ Then run `swarm_commander.py`
 export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/venv3/bin/activate
 . ${INSTALL_SPACE}/setup.bash
+export SCRIMMAGE_TACTIC_INTERFACE_FILE=~/scrimmage-template/plugins/autonomy/python/behaviors.xml
 PYTHONPATH=$PYTHONPATH:${INSTALL_SPACE}/venv3/lib/python3.5/site-packages:/usr/lib/python3/dist-packages swarm_commander.py
 ```
 
