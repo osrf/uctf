@@ -67,8 +67,7 @@ Update the config file and update permissions
 
 ```
 export INSTALL_SPACE=/opt/sasc
-sudo chown ubuntu:ubuntu -R ${INSTALL_SPACE}/ugdi_venv/ugdi
-nano  ${INSTALL_SPACE}/ugdi_venv/ugdi/config.py
+sudo nano  ${INSTALL_SPACE}/ugdi_venv/ugdi/config.py
 ```
 Update NETWORK_1's device to be 'br-blue'
 And NETWORK_2's device to be 'br-gold'
