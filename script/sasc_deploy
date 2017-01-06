@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
+import netifaces
 import os
 import subprocess
 
@@ -76,6 +77,12 @@ EOF'""" % (remote_filename, ENVIRONMENT_STRING % {'ros_ip': ros_ip})]
     subprocess.check_call(cmd)
 
 
+def get_vpn_address(device='tap0'):
+    if not device in netifaces.interfaces():
+        return None
+    addrs = netifaces.ifaddresses(device)
+    return addrs[netifaces.AF_INET][0]['addr']
+
 def check_connection(ip):
     with open(os.devnull, 'w') as devnull:
         ping_cmd = ('ping -c 1 %s' % ip).split()
@@ -123,6 +130,11 @@ if __name__ == '__main__':
         team_network = 3
     ips = ['192.168.%s.1%s' % (team_network, increment) for increment in range(0, args.hosts)]
 
+    vpn_interface = 'tap0'
+    vpn_addr = get_vpn_address(vpn_interface)
+    if not vpn_addr:
+        parser.error("We did not find a vpn running, looking for [%s], aborting." % vpn_interface)
+
     machines = {}
     for ip in ips:
         print("Working on host %s" % ip)
@@ -135,9 +147,8 @@ if __name__ == '__main__':
         launchfile_str = generate_launch_file(args.team, ips, args.vehicle_id)
         lf.write(launchfile_str)
         print("created %s" % lf_filename)
-    ip = subprocess.check_output('ip -f inet -o addr show tap0|cut -d\  -f 7 | cut -d/ -f 1', shell=True).strip()
     print("")
     print("")
     print("To run the payloads please invoke the following:")
     print("")
-    print("ROS_HOSTNAME=%s roslaunch %s" % (ip, lf_filename))
+    print("ROS_HOSTNAME=%s roslaunch %s" % (vpn_addr, lf_filename))
