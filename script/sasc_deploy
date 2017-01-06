@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
+import os
 import subprocess
 
 from uctf.spawn import vehicle_id_type
@@ -75,6 +76,29 @@ EOF'""" % (remote_filename, ENVIRONMENT_STRING % {'ros_ip': ros_ip})]
     subprocess.check_call(cmd)
 
 
+def check_connection(ip):
+    with open(os.devnull, 'w') as devnull:
+        ping_cmd = ('ping -c 1 %s' % ip).split()
+        test_hostkey_cmd = ('ssh-keygen -F %s' % ip).split() # Doesn't test rsa specifically but avoids prompt if no key exists
+        test_ssh_cmd = ('ssh -oHostKeyAlgorithms=ssh-rsa -t ubuntu@%s echo success' % ip).split()
+        try:
+            subprocess.check_call(ping_cmd, stdout=devnull, stderr=devnull)
+        except subprocess.CalledProcessError as ex:
+            print("Could not ping %s" % ip)
+            raise EnvironmentError("Could not reach %s, is your vpn started?")
+        try:
+            subprocess.check_call(test_hostkey_cmd, stdout=devnull, stderr=devnull)
+            # Check rsa specifically
+            subprocess.check_call(test_ssh_cmd, stdout=devnull, stderr=devnull)
+        except subprocess.CalledProcessError as ex:
+            print("ssh known hosts not found for %s" % ip)
+            subprocess.check_call('ssh-keygen -R %s' % ip, shell=True)
+            subprocess.check_call('ssh-keyscan %s >> ~/.ssh/known_hosts' % ip, shell=True)
+            try:
+                subprocess.check_call(test_ssh_cmd, stdout=devnull, stderr=devnull)
+            except subprocess.CalledProcessError as ex:
+                raise EnvironmentError("cannot establish an ssh connection to host %s aborting." % ip)
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('Deploy tactics and prepare remote machines')
     parser.add_argument("--hosts", type=int, default=1,
@@ -102,6 +126,7 @@ if __name__ == '__main__':
     machines = {}
     for ip in ips:
         print("Working on host %s" % ip)
+        check_connection(ip)
         rsync_to_host(args.scrimmage_repo, 'ubuntu@%s:%s' % ( ip, SCRIMMAGE_REPO_PATH), dry_run=args.dry_run)
         extend_environment(ip)
         
