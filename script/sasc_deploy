@@ -14,7 +14,7 @@ LAUNCH_TEMPLATE = """
 </launch>
 """
 
-MACHINE_TEMPLATE = """  <machine name="%(machine_name)s" address="%(ip)s" env-loader="/opt/sasc/payload_env.sh" user="ubuntu"/>"""
+MACHINE_TEMPLATE = """  <machine name="%(machine_name)s" address="%(ip)s" env-loader="/opt/sasc/bin/payload_env.sh" user="ubuntu"/>"""
 NODE_TEMPLATE = """  <node pkg="uctf" type="spawn_%(team)s" name="%(node_name)s" args="%(machines)s --acs tap0 --gazebo-ip 192.168.2.1 --local-ip %(ip)s" machine="%(machine_name)s" >
   <env name="SCRIMMAGE_TACTIC_INTERFACE_FILE" value="/home/ubuntu/scrimmage-templates/plugins/autonomy/python/behaviors.xml"/>
 </node>"""
