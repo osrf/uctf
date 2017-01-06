@@ -389,7 +389,7 @@ Selected UAVs to Subswarm".
 
 Your tactic should now start executing on the indicated vehicles.
 
-
+<!--
 ### QGroundControl
 
 If you would like to see what's happening on a moving map you can use QGroundControl
@@ -411,3 +411,5 @@ To connect to the vehicles use the following procedure:
 5. Repeat for Gold using port 14001
 6. Select the "Blue" connection and click "Connect" (or gold if you're gold team)
 7. Click on the Paper Airplane Icon at the top to view the vehicles.
+
+-->
