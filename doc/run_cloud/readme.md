@@ -67,8 +67,7 @@ Update the config file and update permissions
 
 ```
 export INSTALL_SPACE=/opt/sasc
-sudo chown ubuntu:ubuntu -R ${INSTALL_SPACE}/ugdi_venv/ugdi
-nano  ${INSTALL_SPACE}/ugdi_venv/ugdi/config.py
+sudo nano  ${INSTALL_SPACE}/ugdi_venv/ugdi/config.py
 ```
 Update NETWORK_1's device to be 'br-blue'
 And NETWORK_2's device to be 'br-gold'
@@ -196,7 +195,6 @@ From the CloudSim UI you will have a key download. The keys for your machines sh
 ssh-add ~/Download/key.pem
 ```
 
-Verify that you can reach each of the payload machines (192.168.2.10++ for blue or 192.168.3.10 ++ for gold)  . And accept the ssh key verification. You may need to clear old keys if you've launched
 
 ## Deploy your tactics and start payload
 
@@ -370,6 +368,7 @@ Then run `swarm_commander.py`
 export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/venv3/bin/activate
 . ${INSTALL_SPACE}/setup.bash
+export SCRIMMAGE_TACTIC_INTERFACE_FILE=~/scrimmage-template/plugins/autonomy/python/behaviors.xml
 PYTHONPATH=$PYTHONPATH:${INSTALL_SPACE}/venv3/lib/python3.5/site-packages:/usr/lib/python3/dist-packages swarm_commander.py
 ```
 
