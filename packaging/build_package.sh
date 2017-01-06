@@ -47,7 +47,7 @@ echo "Installing dependencies with rosdep..."
 . /opt/ros/kinetic/setup.bash
 rosdep install --from-path ${WS}/src --ignore-src -y|| true
 echo "Installing other dependencies..."
-sudo apt-get install -y libxslt1-dev libqwt-dev python-future libignition-transport-dev python3-espeak
+sudo apt-get install -y libxslt1-dev libqwt-dev python-future libignition-transport-dev python-netifaces python-paramiko python3-espeak
 
 # Things for venv3
 sudo apt-get install -y python3-django python3-netifaces python3-numpy python3-pil python3-pyqt5 python3-urllib3

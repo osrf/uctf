@@ -3,9 +3,12 @@
 import argparse
 import netifaces
 import os
+import paramiko
 import subprocess
 
 from uctf.spawn import vehicle_id_type
+
+KNOWN_HOSTS_FILE = os.path.expanduser("~/.ssh/known_hosts")
 
 SCRIMMAGE_REPO_PATH = '/home/ubuntu/scrimmage-template'
 
@@ -83,28 +86,44 @@ def get_vpn_address(device='tap0'):
     addrs = netifaces.ifaddresses(device)
     return addrs[netifaces.AF_INET][0]['addr']
 
-def check_connection(ip):
+
+def check_connection(host):
     with open(os.devnull, 'w') as devnull:
-        ping_cmd = ('ping -c 1 %s' % ip).split()
-        test_hostkey_cmd = ('ssh-keygen -F %s' % ip).split() # Doesn't test rsa specifically but avoids prompt if no key exists
-        test_ssh_cmd = ('ssh -oHostKeyAlgorithms=ssh-rsa -t ubuntu@%s echo success' % ip).split()
+        ping_cmd = ('ping -c 1 %s' % host).split()
         try:
             subprocess.check_call(ping_cmd, stdout=devnull, stderr=devnull)
-        except subprocess.CalledProcessError as ex:
-            print("Could not ping %s" % ip)
-            raise EnvironmentError("Could not reach %s, is your vpn started?")
+        except subprocess.CalledProcessError:
+            print("Could not ping %s" % host)
+            raise EnvironmentError("Could not reach %s, is it running?")
+
+    t = paramiko.transport.Transport('%s:%s' % (host, 22))
+    t.start_client()
+    key = t.get_remote_server_key()
+    known_hosts = paramiko.hostkeys.HostKeys(KNOWN_HOSTS_FILE)
+    # Key matches
+    if not known_hosts.check(host, key):
+        host_keys = known_hosts.lookup(host)
+        if host_keys and 'ssh-rsa' not in host_keys.keys():
+            print("adding ssh-rsa key for host %s" % host)
+        else:
+            print("overwriting ssh-rsa key for host %s" % host)
+        known_hosts.add(host, 'ssh-rsa', key)
+        known_hosts.save(KNOWN_HOSTS_FILE)
+
+    agent = paramiko.agent.Agent()
+
+    success = False
+    for k in agent.get_keys():
         try:
-            subprocess.check_call(test_hostkey_cmd, stdout=devnull, stderr=devnull)
-            # Check rsa specifically
-            subprocess.check_call(test_ssh_cmd, stdout=devnull, stderr=devnull)
-        except subprocess.CalledProcessError as ex:
-            print("ssh known hosts not found for %s" % ip)
-            subprocess.check_call('ssh-keygen -R %s' % ip, shell=True)
-            subprocess.check_call('ssh-keyscan %s >> ~/.ssh/known_hosts' % ip, shell=True)
-            try:
-                subprocess.check_call(test_ssh_cmd, stdout=devnull, stderr=devnull)
-            except subprocess.CalledProcessError as ex:
-                raise EnvironmentError("cannot establish an ssh connection to host %s aborting." % ip)
+            t.auth_publickey(username='ubuntu', key=k)
+        except paramiko.SSHException:
+            pass
+        if t.is_authenticated():
+            success = True
+            break
+    t.close()
+    if not success:
+        raise EnvironmentError("cannot authenticate an ssh connection to host %s aborting." % host)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('Deploy tactics and prepare remote machines')
