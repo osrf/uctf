@@ -316,9 +316,7 @@ to your VPN server.
 
 From your OCU that is connected to the VPN, run `fti.py`:
 ```console
-export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/venv3/bin/activate
-PYTHONPATH=${INSTALL_SPACE}/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/dist-packages:/usr/lib/python3/dist-packages fti.py -d tap0 -z
+/opt/sasc/bin/fti_env.sh fti.py -d tap0 -z
 ```
 
 A GUI should pop up and become populated by entries for each of your vehicles.
