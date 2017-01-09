@@ -9,23 +9,38 @@ import subprocess
 from uctf.spawn import vehicle_id_type
 
 KNOWN_HOSTS_FILE = os.path.expanduser("~/.ssh/known_hosts")
-
 SCRIMMAGE_REPO_PATH = '/home/ubuntu/scrimmage-template'
-
 LAUNCH_TEMPLATE = """
 <launch>
 %(machine_entries)s
 %(node_entries)s
 </launch>
 """
-
-MACHINE_TEMPLATE = """  <machine name="%(machine_name)s" address="%(ip)s" env-loader="/opt/sasc/bin/payload_env.sh" user="ubuntu"/>"""
+MACHINE_TEMPLATE = """  <machine name="%(machine_name)s" address="%(ip)s" env-loader="%(env_loader)s" user="ubuntu"/>"""
 NODE_TEMPLATE = """  <node pkg="uctf" type="spawn_%(team)s" name="%(node_name)s" args="%(machines)s --acs tap0 --gazebo-ip 192.168.2.1 --local-ip %(ip)s" machine="%(machine_name)s" >
-  <env name="SCRIMMAGE_TACTIC_INTERFACE_FILE" value="/home/ubuntu/scrimmage-templates/plugins/autonomy/python/behaviors.xml"/>
-</node>"""
+    <env name="SCRIMMAGE_TACTIC_INTERFACE_FILE" value="/home/ubuntu/scrimmage-templates/plugins/autonomy/python/behaviors.xml"/>
+  </node>"""
+LOCALHOST_MACHINE = """  <machine name="local" address="localhost" user="ubuntu"/>"""
+LOCALHOST_NODE_TEMPLATE = """  <node pkg="uctf" type="%(node_name)s" name="%(node_name)s">
+%(env_vars)s
+  </node>"""
+SWARM_COMMANDER_INI_FILENAME = os.path.expanduser("~/.swarm_commander.ini")
+SWARM_COMMANDER_INI_FILE="""
+[NETWORK]
+device = tap0
+port = 5554
+acs_id = 250
+"""
+SWARM_ENV_VAR_TEMPLATE = """    <env name="SCRIMMAGE_TACTIC_INTERFACE_FILE" value="%(tactic_dir)s/plugins/autonomy/python/behaviors.xml"/>"""
 
 
-def generate_launch_file(team, ips, vehicles):
+def write_swarm_commander_ini():
+    with open(SWARM_COMMANDER_INI_FILENAME, 'w') as fh:
+        print("writing %s" % SWARM_COMMANDER_INI_FILENAME)
+        fh.write(SWARM_COMMANDER_INI_FILE)
+
+
+def generate_launch_file(team, ips, vehicles, tactic_repo_path):
     machines = {}
     for count in range(0, len(ips)):
         machines[count] = []
@@ -42,14 +57,29 @@ def generate_launch_file(team, ips, vehicles):
     for k, v in machines.items():
         subs = {}
         subs['ip'] = ips[k]
-        
         subs['machines'] = ' '.join([str(i) for i in  v])
         subs['team'] = team
         subs['count'] = k
         subs['machine_name'] = '_'.join([team, str(k)])
         subs['node_name'] = '_'.join([team, 'payload', str(k)])
+        subs['env_loader'] = '/opt/sasc/bin/payload_env.sh'
         machine_strs.append(MACHINE_TEMPLATE % subs)
         nodes.append(NODE_TEMPLATE % subs)
+
+    machine_strs.append(LOCALHOST_MACHINE)
+
+    # Add FTI
+    subs = {}
+    subs['node_name'] = 'run_fti'
+    subs['env_vars'] = ''
+    nodes.append(LOCALHOST_NODE_TEMPLATE % subs)
+
+    subs = {}
+    subs['node_name'] = 'run_swarm_commander'
+    subs['env_vars'] = SWARM_ENV_VAR_TEMPLATE % {'tactic_dir': tactic_repo_path}
+    nodes.append(LOCALHOST_NODE_TEMPLATE % subs)
+
+
 
     launch_subs = {}
     launch_subs['machine_entries'] = '\n'.join(machine_strs)
@@ -94,7 +124,7 @@ def check_connection(host):
             subprocess.check_call(ping_cmd, stdout=devnull, stderr=devnull)
         except subprocess.CalledProcessError:
             print("Could not ping %s" % host)
-            raise EnvironmentError("Could not reach %s, is it running?")
+            raise EnvironmentError("Could not reach %s, is it running?" % host)
 
     t = paramiko.transport.Transport('%s:%s' % (host, 22))
     t.start_client()
@@ -160,10 +190,15 @@ if __name__ == '__main__':
         check_connection(ip)
         rsync_to_host(args.scrimmage_repo, 'ubuntu@%s:%s' % ( ip, SCRIMMAGE_REPO_PATH), dry_run=args.dry_run)
         extend_environment(ip)
-        
+
+    if not args.dry_run:
+        write_swarm_commander_ini()
+    else:
+        print("Dry run: Skipping swarm_commander_ini file update")
+
     lf_filename = '/tmp/sasc_remote.launch'
     with open(lf_filename, 'w') as lf:
-        launchfile_str = generate_launch_file(args.team, ips, args.vehicle_id)
+        launchfile_str = generate_launch_file(args.team, ips, args.vehicle_id, args.scrimmage_repo)
         lf.write(launchfile_str)
         print("created %s" % lf_filename)
     print("")
