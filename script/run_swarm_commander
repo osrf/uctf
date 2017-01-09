@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# A script to support using rosrun to launch swarm_commander
+
+/opt/sasc/bin/swarm_commander_env.sh swarm_commander.py
