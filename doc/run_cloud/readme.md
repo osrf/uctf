@@ -32,13 +32,13 @@ you'll get an error about permissions from `ssh`.
 ### Get the latest SASC package
 ssh to the simulation/arbiter machine and make sure that you have the latest SASC package installed:
 ```console
-sudo apt-get update
-sudo apt-get install sasc-gazebo-sitl
+sudo apt-get update && sudo apt-get install sasc-gazebo-sitl
 ```
-Note that, if there is a newer package available, it will take quite some time to download and install, due to its size. Please be patient.
+Note that, if there is a newer package available, it will take quite some time (~10 mintues) to download and install, due to its size. Please be patient.
 
 ### Launch Gazebo
-ssh to the simulation/arbiter machine and start Gazebo like so:
+ssh to the simulation/arbiter machine (e.g., `ssh -i cloudsim.pem
+ubuntu@1.2.3.4`) and start Gazebo like so:
 ```console
 export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/setup.bash
@@ -60,9 +60,11 @@ export INSTALL_SPACE=/opt/sasc
 arbiter_start.py -db br-blue -dr br-gold
 ```
 
+
 ### Launch the Game Director
 
-In another terminal on the simulation/arbiter machine:
+In another terminal on the simulation/arbiter machine (e.g., `ssh -i cloudsim.pem
+ubuntu@1.2.3.4`):
 
 Update the config file and update permissions
 
@@ -140,6 +142,10 @@ You can reuse the machines from a round for multiple games. Just stop and start 
 You should see the round(s) that you're invited to play in as a competitor.
 Click on the round you want to play.
 
+### Start your payload computers. 
+
+Click 
+
 ## Your local computer(s)
 
 You'll be using one or more computers physically located with you (e.g., in
@@ -188,6 +194,17 @@ To disconnect from the VPN, just give Ctrl-C in the terminal where you started
 `openvpn`.
 
 
+### Clear old known_hosts
+
+Since we're connecting to the same IPs if you've connected to a previous instance run the following commands to forgot the signatures for the previous instances.
+
+```
+ssh-keygen -R 192.168.2.1
+ssh-keygen -R 192.168.2.10
+ssh-keygen -R 192.168.2.11
+ssh-keygen -R 192.168.2.12
+```
+
 ## Setup your ssh agent
 
 From the CloudSim UI you will have a key download. The keys for your machines should be the same. Download and unpack them. Then add the key to your ssh-agent using the following command. Where the key is saved as key.pem.
@@ -195,7 +212,6 @@ From the CloudSim UI you will have a key download. The keys for your machines sh
 ```
 ssh-add ~/Download/key.pem
 ```
-
 
 ## Deploy your tactics and start payload
 
