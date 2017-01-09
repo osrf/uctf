@@ -152,7 +152,7 @@ In case it's not already installed, you should install `openvpn` on each OCU:
 sudo apt-get install openvpn
 ```
 
-You should also install the lastest `sasc-gazebo-sitl` package, which contains,
+You should also install the latest `sasc-gazebo-sitl` package, which contains,
 among other things, the graphical tools that you'll use later to startup and
 control your vehicles:
 ```console
@@ -220,6 +220,8 @@ ROS_HOSTNAME=192.168.2.150 roslaunch /tmp/sasc_remote.launch
 ```
 
 To stop the payloads you can press `Ctrl-C`
+
+This will also bring up two GUIs on your machine.
 
 
 <!-- The below is replaced by deployment scripts
@@ -306,18 +308,7 @@ The same tactic will be used by all planes. You will see a string like below ind
 ```
 -->
 
-## Use local tools to control vehicles
-
-After spawning vehicles, you need to run through a startup sequence using some
-graphical tools that you will run on your local OCUs, which must be connected
-to your VPN server.
-
 ### Flight Tech Interface (fti.py)
-
-From your OCU that is connected to the VPN, run `fti.py`:
-```console
-/opt/sasc/bin/fti_env.sh fti.py -d tap0 -z
-```
 
 A GUI should pop up and become populated by entries for each of your vehicles.
 Go through the following sequence in that GUI:
@@ -353,25 +344,6 @@ vehicle's behavior.
 
 ### Swarm Commander (swarm_commander.py)
 
-From your OCU that is connected to the VPN,:
-Create the file `~/.swarm_commander.ini`
-
-```
-[NETWORK]
-device = tap0
-port = 5554
-acs_id = 250
-```
-Then run `swarm_commander.py`
-
-```console
-export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/venv3/bin/activate
-. ${INSTALL_SPACE}/setup.bash
-export SCRIMMAGE_TACTIC_INTERFACE_FILE=~/scrimmage-template/plugins/autonomy/python/behaviors.xml
-PYTHONPATH=$PYTHONPATH:${INSTALL_SPACE}/venv3/lib/python3.5/site-packages:/usr/lib/python3/dist-packages swarm_commander.py
-```
-
 A GUI should pop up and become populated by your vehicles. If you just went
 through the startup sequence with `fti.py`, then your vehicles should all be in
 the "Swarm Ingress" state, which means that they're approaching the swarm
@@ -386,28 +358,3 @@ Selected UAVs to Subswarm".
 1. Click "Specify Selected Behavior Parameters".
 
 Your tactic should now start executing on the indicated vehicles.
-
-<!--
-### QGroundControl
-
-If you would like to see what's happening on a moving map you can use QGroundControl
-
-With the VPN connected run: 
-
-```console
-export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/setup.bash
-qgroundcontrol
-```
-
-To connect to the vehicles use the following procedure:
-
-1. Click on the Purple "Q" button in the top left.
-2. Select the "Comm Links" entry in the left menu.
-3. Click "Add"
-4. Select Type: UDP then enter Blue as the name and give it port 14000 and click OK
-5. Repeat for Gold using port 14001
-6. Select the "Blue" connection and click "Connect" (or gold if you're gold team)
-7. Click on the Paper Airplane Icon at the top to view the vehicles.
-
--->
