@@ -220,7 +220,7 @@ sasc_deploy --hosts 3 --scrimm ~/scrimmage-template blue 26 27 28 29 30 31
 The output of the above command will tell you the command to run the payloads remotely. It will look like this:
 
 ```
-ROS_HOSTNAME=192.168.2.150 roslaunch /tmp/sasc_remote.launch
+ROS_HOSTNAME=192.168.2.150 ROS_MASTER_URI=http://192.168.2.1:11311 roslaunch /tmp/sasc_remote.launch
 ```
 
 To stop the payloads you can press `Ctrl-C`

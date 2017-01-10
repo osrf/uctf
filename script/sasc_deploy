@@ -207,4 +207,6 @@ if __name__ == '__main__':
     print("")
     print("To run the payloads please invoke the following:")
     print("")
-    print("ROS_HOSTNAME=%s roslaunch %s" % (vpn_addr, lf_filename))
+    # Shared ROS_MASTER_URI is not necessary but it will abort if the master is not reachable,
+    # which means that gazebo is not roslaunched yet instead of failing subtly remotely.
+    print("ROS_HOSTNAME=%s ROS_MASTER_URI=http://192.168.2.1:11311 roslaunch %s" % (vpn_addr, lf_filename))
