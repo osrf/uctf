@@ -1,51 +1,9 @@
 Game Director Interface Instructions:
 
-# Create Game Director User
+# Log in as Game Director User
 
-A Game Director user must first be created to control a game within the Game Director Interface, to create a Game Director user run:
-
-	> create_user.py
-
-If a user is already created in the SQLite database (gdi.db), the following message will appear:
-
-	> A user already exists! Create another? (y/n): 
-
-Enter 'y', without the tick marks and then enter an email address for the user when prompted.
-
-	> Enter email address: 
-
-Press enter/return and then enter a Password when prompted.
-
-	> Password: 
-
-Press enter/return and then retype the password entered above when prompted.
-
-	> Password (again): 
-
-Press enter/return and the password match and the user does not exist, the new user will be created.
-
-
-@ Log in as Game Director User
-
-To login as a Game Director, launch the application server:
-
-	For SSL/TLS:
-	> python run.py --ssl --cert <server.crt> --key <server.key>
-
-	For non SSL/TLS:
-	> python run.py
-
-Once the application is running, navigate to the Game Director Interface
-
-http(s)://hostname:hostport
-
-	hostname = hostname running the Game Director Application Server [defaults 127.0.01]
-	hostport = host port that the Game Director Application Server is listening on [defaults 5001]
-
-When the web pages loads, click on the Menu button (represented by three (3) horizontal lines stacked on top of each other) in the top left hand corner of the page.
 
 Enter the username of the Game Director user created above.
-** NOTE **: username will be the first portion of the email address before the '@' symbol.  For example, if email address entered was test@testmail.com, usernaem will be 'test' withouth the tick marks.
 
 Enter the password of the user entered.
 

@@ -68,23 +68,38 @@ arbiter_start.py -db br-blue -dr br-gold
 In another terminal on the simulation/arbiter machine (e.g., `ssh -i cloudsim.pem
 ubuntu@1.2.3.4`):
 
-Update the config file and update permissions
-
+First create an admin user (to login via the web interface)
 ```
 export INSTALL_SPACE=/opt/sasc
-sudo nano  ${INSTALL_SPACE}/ugdi_venv/ugdi/config.py
+. ${INSTALL_SPACE}/bin/gdi_env.sh python /opt/sasc/ugdi_venv/ugdi/create_user.py
 ```
-Update NETWORK_1's device to be 'br-blue'
-And NETWORK_2's device to be 'br-gold'
 
-Save and exit. 
+A Game Director user must first be created to control a game within the Game Director Interface, to create a Game Director user run:
+
+  > create_user.py
+
+If a user is already created in the SQLite database (gdi.db), the following message will appear:
+
+  > A user already exists! Create another? (y/n):
+
+Enter 'y', without the tick marks and press enter.
+
+
+  > Password:
+
+Type an password and press enter/return and then retype the password entered above when prompted.
+
+  > Password (again):
+
+Press enter/return and the password match and the user does not exist, the new user will be created.
+
 
 Now run the game director:
 ```
 export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/ugdi_venv/bin/activate
-cd ${INSTALL_SPACE}/ugdi_venv/ugdi && python run.py
+. ${INSTALL_SPACE}/bin/gdi_env.sh /opt/sasc/ugdi_venv/ugdi/run.py
 ```
+
 
 The Game Director web interface will be available on port 5001 of the public IP.
 There will be a link in the CloudSim.io UI.
