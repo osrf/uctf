@@ -22,6 +22,11 @@ export INSTALL_SPACE=/opt/sasc-dev
 mkdir -p ${SRC_SPACE}
 ~~~
 
+Unless you have added the DoD SSL certificates to your system you will need to turn off ssl verification to pull from gitlab.nps.edu
+~~~
+export GIT_SSL_NO_VERIFY=1
+~~~
+
 
 Create a file `gazebo_uctf.rosinstall` with this command: 
 
