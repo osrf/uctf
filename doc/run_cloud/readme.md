@@ -368,7 +368,7 @@ vehicle's behavior.
 
 A GUI should pop up and become populated by your vehicles. If you just went
 through the startup sequence with `fti.py`, then your vehicles should all be in
-the "Swarm Ingress" state, which means that they're approaching the swarm
+the "Ingress" state, which means that they're approaching the swarm
 rally/way point. Eventually, when they reach the designated location, they'll
 start circling and their states will switch to "Swarm Ready". At this point,
 you can engage your tactics, like so:
