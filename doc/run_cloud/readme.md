@@ -19,6 +19,8 @@ SASC machines are grouped into Rounds. Click on the round button (with a + insid
 You must supply a name for the Round, along with one competitor username for each team.
 You must also select the number of computers to make available to each team. Drones will be evenly distributed across the machines. It's recommended to have less than 10 drones per machine to keep the load to a reasonable level. 
 
+Once you have configured the round press "Continue" to create the round.
+
 ## Launch the simulation/arbiter machine
 1. Click on the LAUNCH button in the Arbiter box. This will launch a simulation
 cloud machine. This process takes about 2 minutes, and you should see the
@@ -83,15 +85,18 @@ export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/ugdi_venv/bin/activate
 cd ${INSTALL_SPACE}/ugdi_venv/ugdi && python run.py
 ```
-The game director interface will be accessible at http://192.168.2.1:5001 for blue and http://192.168.2.1:5001 for gold
+
+The Game Director web interface will be available on port 5001 of the public IP.
+There will be a link in the CloudSim.io UI.
 
 Please see the [full game director documentation](game_director.md) for more details.
 
 ### Launch the ACS network logger
 
 At the time of writing, the `acs_net_logger.py` tool is not included in the `sasc-gazebo-sitl` package, so you will need to manually copy it to the arbiter/simulation machine, like so:
+`ssh -i cloudsim.pem ubuntu@1.2.3.4` # replace with actual IP address
+
 ```console
-ssh -i cloudsim.pem ubuntu@1.2.3.4 # replace with actual IP address
 wget --no-check-certificate https://gitlab.nps.edu/sasc/acs-env/raw/master/scripts/acs_net_logger.py
 chmod a+x acs_net_logger.py
 ```
@@ -106,6 +111,8 @@ export INSTALL_SPACE=/opt/sasc
 # Or, to log messages from the gold team:
 # ./acs_net_logger.py record br-gold /path/to/file.log
 ```
+
+Do not expect these scripts to show much output.
 
 ## Launch the payload machines
 1. You can launch a payload machine for each team by pressing the blue or gold LAUNCH A PAYLOAD button.
@@ -154,6 +161,9 @@ Click "LAUNCH ALL PAYLOADS" to launch all your payload machines.
 
 Your cloud instances may have already been started by the game master, in which case you will see the payload machines listed below for your team.
 
+After a few seconds, payload information and ssh download links should appear.
+It make take up to 2 minutes for the machines to fully provision.
+
 ## Your local computer(s)
 
 You'll be using one or more computers physically located with you (e.g., in
@@ -161,17 +171,13 @@ your lab) to get access to the competition. We call these computers OCUs, for
 Operator Control Units.  We're assuming that these computers are all running
 64-bit Ubuntu Xenial (e.g., the Predator laptops that you were provided with).
 
-In case it's not already installed, you should install `openvpn` on each OCU:
-```console
-sudo apt-get install openvpn
-```
+If you are not running on one of the SASC laptops please see [the binary installation instructions](docs/binary_install/readme.md)
 
-You should also install the latest `sasc-gazebo-sitl` package, which contains,
+Make sure to update `sasc-gazebo-sitl` to the latest package, which contains,
 among other things, the graphical tools that you'll use later to startup and
 control your vehicles:
 ```console
-sudo apt-get update
-sudo apt-get install sasc-gazebo-sitl
+sudo apt-get update && sudo apt-get install sasc-gazebo-sitl
 ```
 
 Note that, if there is a newer package available, it will take quite some time to download and install, due to its size. Please be patient.
@@ -184,12 +190,17 @@ using (e.g., in your lab) to the VPN server. There are a number (currently 5)
 of pre-generated VPN keys that you can download to make this connection, like so:
 
 1. In the box for your team, click on the "OCU keys" drop-down and
-select one of the keys. You'll be prompted to save a `.zip` file that contains the key.
-1. Unzip the `.zip` file that you downloaded.
-1. In a terminal, navigate to where you unzipped the file and start the
-`openvpn` client using the configuration file that was in the `.zip` file:
+select one of the keys. You'll be prompted to save a `.tar.gz` file that contains the key.
+1. Untar the `.tar.gz` file that you downloaded.
+1. In a terminal, navigate to where you unpacked the file and start the
+`openvpn` client using the configuration file that was in the `.tar.gz` file:
 ```console
 sudo openvpn --config openvpn.conf
+```
+
+A successfully started VPN connection will show
+```
+Initialization Sequence Completed
 ```
 
 You can connect multiple OCUs to your VPN server and they will all be able
@@ -203,11 +214,16 @@ To disconnect from the VPN, just give Ctrl-C in the terminal where you started
 
 ## Setup your ssh agent
 
-From the CloudSim UI you will have a key download. The keys for your machines should be the same. Download and unpack them. Then add the key to your ssh-agent using the following command. Where the key is saved as key.pem.
+From the CloudSim UI you will have link to download the key. 
+The key will be the same for all the payload machines.
+Add the key to your ssh-agent using the following command. Where the key is saved as cloudsim.pem.
 
 ```
-ssh-add ~/Download/key.pem
+ssh-add ~/Download/cloudsim.pem
 ```
+
+You will download these ssh keys but you will not need to use them directly.
+The deploy script will use the keys to log into the remote servers for you.
 
 ## Deploy your tactics and start payload
 
@@ -327,21 +343,15 @@ Go through the following sequence in that GUI:
 
 1. Click "CAL PRESSURE ALL" and then "OK" to the popups that follow.
 1. Click "FLIGHT READY ALL". The vehicle entrie should now be yellow.
-1. Click "ARM ALL". Note that this command won't take effect until the vehicles
-have had some time to initialize their simulated GPS sensors, which can take a
-couple of minutes after spawning. The vehicle entries should now be green.
-
-  You should see content like this from the payload for each machine, after which it will be armable.
-    ```
-[INFO] [1480712292.473821]: MAVLink STATUSTEXT: EKF2 IMU0 is using GPS
-[INFO] [1480712292.474442]: MAVLink STATUSTEXT: EKF2 IMU1 is using GPS
-```
 1. For each vehicle:
-
     1. Select the vehicle in the list of entries.
     1. Fill in a "Stack number" and "Altitude above runway (m)", then click "Send Config" and then confirm in the following popup.
     1. Click "AUTO". The vehicle should launch, climb, and go to its designated waypoint.
     1. Wait abou 10 seconds or until you see Waypoint 1 in the payload console. This operation uses templates that are not safe to run in parallel..
+1. Click "ARM ALL". Note that this command won't take effect until the vehicles
+have had some time to initialize their simulated GPS sensors, which can take a
+couple of minutes after spawning. Upon a successful command the vehicle status line will show `<ARMED>`
+
 
 There are a number of conditions after launch that can cause the vehicle
 entries to become red, indicating a problem, including:
