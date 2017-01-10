@@ -193,18 +193,6 @@ you're going to connect.
 To disconnect from the VPN, just give Ctrl-C in the terminal where you started
 `openvpn`.
 
-
-### Clear old known_hosts
-
-Since we're connecting to the same IPs if you've connected to a previous instance run the following commands to forgot the signatures for the previous instances.
-
-```
-ssh-keygen -R 192.168.2.1
-ssh-keygen -R 192.168.2.10
-ssh-keygen -R 192.168.2.11
-ssh-keygen -R 192.168.2.12
-```
-
 ## Setup your ssh agent
 
 From the CloudSim UI you will have a key download. The keys for your machines should be the same. Download and unpack them. Then add the key to your ssh-agent using the following command. Where the key is saved as key.pem.

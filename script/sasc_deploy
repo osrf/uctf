@@ -91,7 +91,8 @@ def generate_launch_file(team, ips, vehicles, tactic_repo_path):
     return launchfile
 
 def rsync_to_host(source, dest, dry_run=False):
-    cmd = ['rsync', '-ave', 'ssh', source, dest]
+    # Only rsa key as that's the one we're overrideing
+    cmd = ['rsync', '-ave', 'ssh -o HostKeyAlgorithms=ssh-rsa', source, dest]
     if dry_run:
         cmd.insert(1, '-n')
     subprocess.check_call(cmd)
@@ -101,7 +102,8 @@ ROS_IP=%(ros_ip)s"""
 
 
 def extend_environment(ros_ip, remote_filename='/etc/environment', dry_run=False):
-    cmd = ['ssh', 'ubuntu@%s' % ros_ip, """sudo bash -c 'tee %s > /dev/null << EOF
+    # Only rsa key as that's the one we're overrideing
+    cmd = ['ssh', '-o', 'HostKeyAlgorithms=ssh-rsa', 'ubuntu@%s' % ros_ip, """sudo bash -c 'tee %s > /dev/null << EOF
 %s
 EOF'""" % (remote_filename, ENVIRONMENT_STRING % {'ros_ip': ros_ip})]
     if dry_run:
