@@ -135,6 +135,11 @@ You can reuse the machines from a round for multiple games. Just stop and start 
 1. Sign up with a Google account at https://cloudsim.io.
 1. Email `uctf-internal@osrfoundation.org` to request competitor access. Wait to hear confirmation, then log out and back in.
 
+## Install sasc-gazebo-sitl on your local machines
+
+You will need to follow the [binary install instructions](doc/install_binary/readme.md)
+
+
 ## Login to cloudsim.io
 1. Log in to https://cloudsim.io/
 1. Click on the SASC link (on the left menu bar, under the Dashboard).
@@ -142,9 +147,12 @@ You can reuse the machines from a round for multiple games. Just stop and start 
 You should see the round(s) that you're invited to play in as a competitor.
 Click on the round you want to play.
 
+
 ### Start your payload computers. 
 
-Click 
+Click "LAUNCH ALL PAYLOADS" to launch all your payload machines.
+
+Your cloud instances may have already been started by the game master, in which case you will see the payload machines listed below for your team.
 
 ## Your local computer(s)
 
