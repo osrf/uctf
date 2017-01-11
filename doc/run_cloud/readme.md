@@ -25,7 +25,9 @@ Once you have configured the round press "Continue" to create the round.
 1. Click on the LAUNCH button in the Arbiter box. This will launch a simulation
 cloud machine. This process takes about 2 minutes, and you should see the
 Status and machine ip update. You should also see a "KEYS" button appear; click
-it to download the ssh key for the simulation machine. Given that key, you can
+it to download the ssh key for the simulation machine.
+It may take a minute or two for the key to become available, while the machine is provisioned.
+Given that key, you can
 ssh into the machine as user `ubuntu` (e.g., `ssh -i cloudsim.pem
 ubuntu@1.2.3.4`).  Note that you must make the key file not-world-readable
 after you download it (e.g., `chmod 600 cloudsim.pem`); if you don't do this,
@@ -129,10 +131,6 @@ export INSTALL_SPACE=/opt/sasc
 
 Do not expect these scripts to show much output.
 
-## Launch the payload machines
-1. You can launch a payload machine for each team by pressing the blue or gold LAUNCH A PAYLOAD button.
-1. After a few seconds, payload information (local IP address) and ssh download links should appear.
-
 ## Start a game
 At this point, everything is ready for the teams to spawn their vehicles. You
 should tell them that the game is on, who is playing which team (blue vs.
@@ -206,6 +204,7 @@ of pre-generated VPN keys that you can download to make this connection, like so
 
 1. In the box for your team, click on the "OCU keys" drop-down and
 select one of the keys. You'll be prompted to save a `.tar.gz` file that contains the key.
+Generating the keys takes a minute or two you may have to wait before you can download it.
 1. Untar the `.tar.gz` file that you downloaded.
 1. In a terminal, navigate to where you unpacked the file and start the
 `openvpn` client using the configuration file that was in the `.tar.gz` file:
@@ -231,6 +230,7 @@ To disconnect from the VPN, just give Ctrl-C in the terminal where you started
 
 From the CloudSim UI you will have link to download the key. 
 The key will be the same for all the payload machines.
+The key takes a minute or two to generate and will not be downloadable immediately.
 Add the key to your ssh-agent using the following command. Where the key is saved as cloudsim.pem.
 
 ```
