@@ -11,7 +11,7 @@ from uctf.spawn import vehicle_id_type
 SUPPORTED_PAYLOADS_PER_HOST = 9
 
 KNOWN_HOSTS_FILE = os.path.expanduser("~/.ssh/known_hosts")
-SCRIMMAGE_REPO_PATH = '/home/ubuntu/scrimmage-template'
+SCRIMMAGE_REPO_PATH = '/home/ubuntu/scrimmage-templates'
 LAUNCH_TEMPLATE = """
 <launch>
 %(machine_entries)s
