@@ -72,8 +72,7 @@ ubuntu@1.2.3.4`):
 
 First create an admin user (to login via the web interface)
 ```
-export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/bin/gdi_env.sh python /opt/sasc/ugdi_venv/ugdi/create_user.py
+/opt/sasc/bin/gdi_env.sh python /opt/sasc/ugdi_venv/ugdi/create_user.py
 ```
 
 A Game Director user must first be created to control a game within the Game Director Interface, to create a Game Director user run:
@@ -98,8 +97,7 @@ Press enter/return and the password match and the user does not exist, the new u
 
 Now run the game director:
 ```
-export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/bin/gdi_env.sh /opt/sasc/ugdi_venv/ugdi/run.py
+/opt/sasc/bin/gdi_env.sh /opt/sasc/ugdi_venv/ugdi/run.py
 ```
 
 
