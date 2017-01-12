@@ -242,7 +242,7 @@ The deploy script will use the keys to log into the remote servers for you.
 
 ## Deploy your tactics and start payload
 
-Assuming that your tactics repository is checked out into `~/scrimmage-template`.
+Assuming that your tactics repository is checked out into `~/scrimmage-templates`.
 
 This assumes you want to launch vehicles 26-31 and you're on team `blue`, the other option is `gold`.
 
@@ -253,7 +253,7 @@ Your game instances will have a number of payload hosts, the script needs to kno
 ```
 . /opt/sasc/setup.bash
 . /opt/sasc/share/uctf/setup.sh
-sasc_deploy --hosts 3 --scrimm ~/scrimmage-template blue 26 27 28 29 30 31
+sasc_deploy --hosts 3 --scrimm ~/scrimmage-templates blue 26 27 28 29 30 31
 ```
 
 The output of the above command will tell you the command to run the payloads remotely. It will look like this:
