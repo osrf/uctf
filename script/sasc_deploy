@@ -10,6 +10,8 @@ from uctf.spawn import vehicle_id_type
 
 SUPPORTED_PAYLOADS_PER_HOST = 9
 
+DEFAULT_SCRIMMAGE_CHECKOUT_LOCATION = os.path.expanduser('~/scrimmage-templates')
+BEHAVIORS_XML_RELATIVE_PATH = 'plugins/autonomy/python/behaviors.xml'
 KNOWN_HOSTS_FILE = os.path.expanduser("~/.ssh/known_hosts")
 SCRIMMAGE_REPO_PATH = '/home/ubuntu/scrimmage-templates'
 LAUNCH_TEMPLATE = """
@@ -35,6 +37,13 @@ acs_id = 250
 """
 SWARM_ENV_VAR_TEMPLATE = """    <env name="SCRIMMAGE_TACTIC_INTERFACE_FILE" value="%(tactic_dir)s/plugins/autonomy/python/behaviors.xml"/>"""
 
+
+def validate_scrimmage_templates_arg(value):
+    """Validate the vehicle_id_type from string to int."""
+    behaviors_xml = os.path.join(value, BEHAVIORS_XML_RELATIVE_PATH)
+    if not os.path.exists(behaviors_xml):
+        raise argparse.ArgumentTypeError('%s was not found inside indicated repo: %s' % (BEHAVIORS_XML_RELATIVE_PATH, value))
+    return value
 
 def write_swarm_commander_ini():
     with open(SWARM_COMMANDER_INI_FILENAME, 'w') as fh:
@@ -94,9 +103,10 @@ def generate_launch_file(team, ips, vehicles, tactic_repo_path):
 
 def rsync_to_host(source, dest, dry_run=False):
     # Only rsa key as that's the one we're overrideing
-    cmd = ['rsync', '-ave', 'ssh -o HostKeyAlgorithms=ssh-rsa', source, dest]
+    cmd = ['rsync', '--delete', '-ave', 'ssh -o HostKeyAlgorithms=ssh-rsa', source, dest]
     if dry_run:
         cmd.insert(1, '-n')
+    print('rsyncing tactics to host: %s' % cmd)
     subprocess.check_call(cmd)
 
 ENVIRONMENT_STRING = """PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
@@ -166,7 +176,8 @@ if __name__ == '__main__':
     # parser.add_argument('--identity', '-i', default=None,
     #     help='SSH Identity to use for authentification')
     parser.add_argument('--dry-run', action='store_true')
-    parser.add_argument('--scrimmage-repo', action='store', default=SCRIMMAGE_REPO_PATH)
+    parser.add_argument('--scrimmage-repo', action='store', default=DEFAULT_SCRIMMAGE_CHECKOUT_LOCATION,
+        type=validate_scrimmage_templates_arg)
     parser.add_argument('--first-copter', action='store', default=1, type=int,
         help="The first copter id")
     parser.add_argument('--first-plane', action='store', default=26, type=int,
@@ -208,6 +219,7 @@ if __name__ == '__main__':
 
     print("Vehicle IDs to start: %s" % args.vehicle_id)
 
+
     if args.team == 'blue':
         team_network = 2
     else:
@@ -222,7 +234,7 @@ if __name__ == '__main__':
     for ip in ips:
         print("Working on host %s" % ip)
         check_connection(ip)
-        rsync_to_host(args.scrimmage_repo, 'ubuntu@%s:%s' % ( ip, SCRIMMAGE_REPO_PATH), dry_run=args.dry_run)
+        rsync_to_host(os.path.join(args.scrimmage_repo, ''), 'ubuntu@%s:%s' % ( ip, SCRIMMAGE_REPO_PATH), dry_run=args.dry_run)
         extend_environment(ip)
 
     if not args.dry_run:
