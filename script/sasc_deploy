@@ -8,6 +8,8 @@ import subprocess
 
 from uctf.spawn import vehicle_id_type
 
+SUPPORTED_PAYLOADS_PER_HOST = 9
+
 KNOWN_HOSTS_FILE = os.path.expanduser("~/.ssh/known_hosts")
 SCRIMMAGE_REPO_PATH = '/home/ubuntu/scrimmage-template'
 LAUNCH_TEMPLATE = """
@@ -165,26 +167,56 @@ if __name__ == '__main__':
     #     help='SSH Identity to use for authentification')
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--scrimmage-repo', action='store', default=SCRIMMAGE_REPO_PATH)
+    parser.add_argument('--first-copter', action='store', default=1, type=int,
+        help="The first copter id")
+    parser.add_argument('--first-plane', action='store', default=26, type=int,
+        help="The first plane id")
+    parser.add_argument('--copters', action='store', default=0, type=int,
+        help="How many copters to clone if not passing them explicity by id.")
+    parser.add_argument('--planes', action='store', default=0, type=int,
+        help="How many planes to clone if not passing them explicity by id.")
     parser.add_argument('team', choices=['blue', 'gold'])
+    parser.add_argument('--vpn-interface', action='store', default='tap0',
+        help='The device name of the vpn network')
     parser.add_argument(
         'vehicle_id', nargs='*', metavar='VEHICLE_ID', type=vehicle_id_type,
-        default=range(1, 51),
-        help='The vehicle ids to spawn (default: 1-50)')
+        help='Specific vehicle ids to spawn.')
     args = parser.parse_args()
-    
-    if len(set(args.vehicle_id)) != len(args.vehicle_id):
+
+    if args.hosts < 1:
+        parser.error("The number of hosts must be positive.")
+    if args.copters < 0 or args.planes < 0:
+        parser.error("Number of planes and copters must both be zero or positive.")
+
+    if (args.planes or args.copters):
+        if len(args.vehicle_id):
+            parser.error("Passing vehicle ids (%s) is mutually exclusive with --copters and --planes" % args.vehicle_id)
+        if (args.first_copter + args.copters > 26):
+            parser.error("initial copter [%s] + numer of copters [%s] too high" % (args.first_copter, args.planes))
+        if (args.first_plane + args.planes > 51):
+            parser.error("initial plane [%s] + numer of copters [%s] too high" % (args.first_plane, args.planes))
+        args.vehicle_id = [n + args.first_copter for n in range(0, args.copters)] + \
+                          [n + args.first_plane for n in range(0, args.planes)]
+
+    elif len(set(args.vehicle_id)) != len(args.vehicle_id):
         parser.error("vehicle_id's must be unique, %s" % args.vehicle_id)
-    
+
+    max_payloads = args.hosts * SUPPORTED_PAYLOADS_PER_HOST
+    if len(args.vehicle_id) > max_payloads:
+        parser.error("Too many vehicles: %s Only %s hosts * %s supported paylods = %s  are supported" %
+                     (len(args.vehicle_id), args.hosts, SUPPORTED_PAYLOADS_PER_HOST, max_payloads))
+
+    print("Vehicle IDs to start: %s" % args.vehicle_id)
+
     if args.team == 'blue':
         team_network = 2
     else:
         team_network = 3
     ips = ['192.168.%s.1%s' % (team_network, increment) for increment in range(0, args.hosts)]
 
-    vpn_interface = 'tap0'
-    vpn_addr = get_vpn_address(vpn_interface)
+    vpn_addr = get_vpn_address(args.vpn_interface)
     if not vpn_addr:
-        parser.error("We did not find a vpn running, looking for [%s], aborting." % vpn_interface)
+        parser.error("We did not find a vpn running, looking for [%s], aborting." % args.vpn_interface)
 
     machines = {}
     for ip in ips:
