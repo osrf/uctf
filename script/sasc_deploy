@@ -4,8 +4,11 @@ import argparse
 import netifaces
 import os
 import paramiko
+import signal
 import subprocess
+import tempfile
 
+from builtins import input
 from uctf.spawn import vehicle_id_type
 
 SUPPORTED_PAYLOADS_PER_HOST = 9
@@ -179,6 +182,8 @@ if __name__ == '__main__':
     # parser.add_argument('--identity', '-i', default=None,
     #     help='SSH Identity to use for authentification')
     parser.add_argument('--dry-run', action='store_true')
+    parser.add_argument('-y', '--autorun', action='store_true',
+        help="Automatically run the launch file.")
     parser.add_argument('--scrimmage-repo', action='store', default=DEFAULT_SCRIMMAGE_CHECKOUT_LOCATION,
         type=validate_scrimmage_templates_arg)
     parser.add_argument('--first-copter', action='store', default=1, type=int,
@@ -245,9 +250,10 @@ if __name__ == '__main__':
     else:
         print("Dry run: Skipping swarm_commander_ini file update")
 
-    lf_filename = '/tmp/sasc_remote.launch'
-    with open(lf_filename, 'w') as lf:
-        launchfile_str = generate_launch_file(args.team, ips, args.vehicle_id, args.scrimmage_repo)
+    launch_prefix = "sasc_launch_%s_%s_" % (args.team, '_'.join([str(v) for v in args.vehicle_id]))
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, prefix=launch_prefix, suffix='.launch') as lf:
+        lf_filename = lf.name
+        launchfile_str = generate_launch_file(args.team, ips, args.vehicle_id, args.scrimmage_repo, args.vpn_interface)
         lf.write(launchfile_str)
         print("created %s" % lf_filename)
     print("")
@@ -256,4 +262,32 @@ if __name__ == '__main__':
     print("")
     # Shared ROS_MASTER_URI is not necessary but it will abort if the master is not reachable,
     # which means that gazebo is not roslaunched yet instead of failing subtly remotely.
-    print("ROS_HOSTNAME=%s ROS_MASTER_URI=http://192.168.2.1:11311 roslaunch %s" % (vpn_addr, lf_filename))
+    cmd = "ROS_HOSTNAME=%s ROS_MASTER_URI=http://192.168.2.1:11311 roslaunch %s" % (vpn_addr, lf_filename)
+    print(cmd)
+    run = args.autorun
+    if not run:
+        response = input('Would you like to run this automatically [y/N]')
+        yeses = ['y', 'yes']
+        if response.lower() in yeses:
+            run = True
+
+    def execute(cmd):
+        ctrl_c_pressed = False
+        p = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        while p.poll() is None:
+            try:
+                for stdout_line in iter(p.stdout.readline, ""):
+                    yield stdout_line
+            except KeyboardInterrupt as ex:
+                p.send_signal(signal.SIGINT)
+                print("Sent roslaunch a sigint")
+                ctrl_c_pressed = True
+        p.stdout.close()
+        return_code = p.wait()
+        if return_code:
+            if not (return_code == signal.SIGINT and ctrl_c_pressed):
+                raise subprocess.CalledProcessError(return_code, cmd)
+
+    if run:
+        for l in execute(cmd):
+            print("roslaunch: %s" % l)
