@@ -2,4 +2,4 @@
 
 # A script to support using rosrun to launch fti.py
 
-/opt/sasc/bin/fti_env.sh fti.py -d tap0 -z
+/opt/sasc/bin/fti_env.sh fti.py $@

@@ -21,11 +21,11 @@ LAUNCH_TEMPLATE = """
 </launch>
 """
 MACHINE_TEMPLATE = """  <machine name="%(machine_name)s" address="%(ip)s" env-loader="%(env_loader)s" user="ubuntu"/>"""
-NODE_TEMPLATE = """  <node pkg="uctf" type="spawn_%(team)s" name="%(node_name)s" args="%(machines)s --acs tap0 --gazebo-ip 192.168.2.1 --local-ip %(ip)s" machine="%(machine_name)s" >
+NODE_TEMPLATE = """  <node pkg="uctf" type="spawn_%(team)s" name="%(node_name)s" args="%(machines)s --acs %(autopilot_network_interface)s --gazebo-ip 192.168.2.1 --local-ip %(ip)s" machine="%(machine_name)s" >
     <env name="SCRIMMAGE_TACTIC_INTERFACE_FILE" value="/home/ubuntu/scrimmage-templates/plugins/autonomy/python/behaviors.xml"/>
   </node>"""
 LOCALHOST_MACHINE = """  <machine name="local" address="localhost" user="ubuntu"/>"""
-LOCALHOST_NODE_TEMPLATE = """  <node pkg="uctf" type="%(node_name)s" name="%(node_name)s">
+LOCALHOST_NODE_TEMPLATE = """  <node pkg="uctf" type="%(node_name)s" name="%(node_name)s" args="%(arguments)s">
 %(env_vars)s
   </node>"""
 SWARM_COMMANDER_INI_FILENAME = os.path.expanduser("~/.swarm_commander.ini")
@@ -51,7 +51,7 @@ def write_swarm_commander_ini():
         fh.write(SWARM_COMMANDER_INI_FILE)
 
 
-def generate_launch_file(team, ips, vehicles, tactic_repo_path):
+def generate_launch_file(team, ips, vehicles, tactic_repo_path, ocu_network_interface, autopilot_network_interface='tap0'):
     machines = {}
     for count in range(0, len(ips)):
         machines[count] = []
@@ -74,6 +74,7 @@ def generate_launch_file(team, ips, vehicles, tactic_repo_path):
         subs['machine_name'] = '_'.join([team, str(k)])
         subs['node_name'] = '_'.join([team, 'payload', str(k)])
         subs['env_loader'] = '/opt/sasc/bin/payload_env.sh'
+        subs['autopilot_network_interface'] = autopilot_network_interface
         machine_strs.append(MACHINE_TEMPLATE % subs)
         nodes.append(NODE_TEMPLATE % subs)
 
@@ -83,11 +84,13 @@ def generate_launch_file(team, ips, vehicles, tactic_repo_path):
     subs = {}
     subs['node_name'] = 'run_fti'
     subs['env_vars'] = ''
+    subs['arguments'] = '-d %s -z' % ocu_network_interface
     nodes.append(LOCALHOST_NODE_TEMPLATE % subs)
 
     subs = {}
     subs['node_name'] = 'run_swarm_commander'
     subs['env_vars'] = SWARM_ENV_VAR_TEMPLATE % {'tactic_dir': tactic_repo_path}
+    subs['arguments'] = ''
     nodes.append(LOCALHOST_NODE_TEMPLATE % subs)
 
 
