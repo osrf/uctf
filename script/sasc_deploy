@@ -270,6 +270,7 @@ if __name__ == '__main__':
     # which means that gazebo is not roslaunched yet instead of failing subtly remotely.
     cmd = "ROS_HOSTNAME=%s ROS_MASTER_URI=http://192.168.2.1:11311 roslaunch %s" % (vpn_addr, lf_filename)
     print(cmd)
+    return # TODO remove when autorun is ready https://gitlab.nps.edu/sasc/swarmcommander/issues/4
     run = args.autorun
     if not run:
         response = input('Would you like to run this automatically [y/N]')
