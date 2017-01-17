@@ -278,23 +278,23 @@ if __name__ == '__main__':
     #     if response.lower() in yeses:
     #         run = True
 
-    def execute(cmd):
-        ctrl_c_pressed = False
-        p = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        while p.poll() is None:
-            try:
-                for stdout_line in iter(p.stdout.readline, ""):
-                    yield stdout_line
-            except KeyboardInterrupt as ex:
-                p.send_signal(signal.SIGINT)
-                print("Sent roslaunch a sigint")
-                ctrl_c_pressed = True
-        p.stdout.close()
-        return_code = p.wait()
-        if return_code:
-            if not (return_code == signal.SIGINT and ctrl_c_pressed):
-                raise subprocess.CalledProcessError(return_code, cmd)
-
-    if run:
-        for l in execute(cmd):
-            print("roslaunch: %s" % l)
+    # def execute(cmd):
+    #     ctrl_c_pressed = False
+    #     p = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    #     while p.poll() is None:
+    #         try:
+    #             for stdout_line in iter(p.stdout.readline, ""):
+    #                 yield stdout_line
+    #         except KeyboardInterrupt as ex:
+    #             p.send_signal(signal.SIGINT)
+    #             print("Sent roslaunch a sigint")
+    #             ctrl_c_pressed = True
+    #     p.stdout.close()
+    #     return_code = p.wait()
+    #     if return_code:
+    #         if not (return_code == signal.SIGINT and ctrl_c_pressed):
+    #             raise subprocess.CalledProcessError(return_code, cmd)
+    # 
+    # if run:
+    #     for l in execute(cmd):
+    #         print("roslaunch: %s" % l)
