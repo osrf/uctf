@@ -251,7 +251,7 @@ Your game instances will have a number of payload hosts, the script needs to kno
 ```
 . /opt/sasc/setup.bash
 . /opt/sasc/share/uctf/setup.sh
-sasc_deploy --hosts 3 --scrimm ~/scrimmage-templates blue 26 27 28 29 30 31
+sasc_deploy --hosts 3 --scrimm ~/scrimmage-templates blue --planes 15
 ```
 
 The output of the above command will tell you the command to run the payloads remotely. It will look like this:
