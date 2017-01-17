@@ -13,11 +13,11 @@
 - hg:
     local-name: ign-math
     uri: https://bitbucket.org/ignitionrobotics/ign-math
-    version: ign-math3
+    version: ign-math2
 - hg:
     local-name: ign-msgs
     uri: https://bitbucket.org/ignitionrobotics/ign-msgs
-    version: default
+    version: 99e88fc83713d20756efa0bc2bb93bece737288a
 - hg:
     local-name: ign-tools
     uri: https://bitbucket.org/ignitionrobotics/ign-tools
