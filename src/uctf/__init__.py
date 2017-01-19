@@ -24,7 +24,9 @@ from xacro import process_doc
 
 
 CUBE_LENGTH = 500
+CUBE_ROTATION = -0.40 # radians
 # default location of spawned vehicles
+# Only used in widget only correct for Zurich
 MIN_LATITUDE = 47.397742
 MAX_LATITUDE = 47.402251
 MIN_LONGITUDE = 8.5389317
@@ -36,6 +38,7 @@ MAX_LONGITUDE = 8.5455939
 # ORIGIN_LATITUDE = 47.397742
 # ORIGIN_LONGITUDE = 8.545594
 
+# Mc Millan
 ORIGIN_ALTITUDE = 282.0
 ORIGIN_HEADING = 353.0
 ORIGIN_LATITUDE = 35.72068
@@ -58,11 +61,15 @@ def get_vehicle_base_port(mav_sys_id):
 
 def get_vehicle_pose(mav_sys_id, vehicle_type, color):
     inteam_id = mav_sys_id % 100
-    DISTANCE_FROM_CUBE = 5.0
-    x = -DISTANCE_FROM_CUBE if color == 'blue' else \
-        (CUBE_LENGTH + DISTANCE_FROM_CUBE)
-    y = CUBE_LENGTH - 50 - inteam_id * (2 if vehicle_type == 'iris' else 5)
-    yaw = 0 if color == 'blue' else 3.1416
+    DISTANCE_FROM_CUBE = 125.0
+    vertical_offset = -DISTANCE_FROM_CUBE
+    latteral_offset = (-CUBE_LENGTH if color =='gold' else 0) + \
+         (1 if color == 'blue' else -1) * inteam_id * (1 if vehicle_type == 'iris' else 3)
+    sin_rot = math.sin(CUBE_ROTATION)
+    cos_rot = math.cos(CUBE_ROTATION)
+    x = -sin_rot * latteral_offset + cos_rot * vertical_offset
+    y = cos_rot * latteral_offset + sin_rot * vertical_offset
+    yaw = CUBE_ROTATION
     return (x, y, yaw)
 
 
