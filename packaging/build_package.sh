@@ -92,9 +92,9 @@ cd ${WS}/other_src/mavproxy
 PYTHONPATH=$PYTHONPATH:${INSTALL_SPACE}/lib/python2.7/dist-packages python setup.py install --prefix=${INSTALL_SPACE} --install-layout=deb
 
 
-echo "installing qgroundcontrol"
-wget https://s3-us-west-2.amazonaws.com/qgroundcontrol/latest/QGroundControl.AppImage -O ${INSTALL_SPACE}/bin/qgroundcontrol
-chmod +x ${INSTALL_SPACE}/bin/qgroundcontrol
+# echo "installing qgroundcontrol"
+# wget https://s3-us-west-2.amazonaws.com/qgroundcontrol/latest/QGroundControl.AppImage -O ${INSTALL_SPACE}/bin/qgroundcontrol
+# chmod +x ${INSTALL_SPACE}/bin/qgroundcontrol
 
 echo "Installing arbiter and dependencies"
 
