@@ -13,7 +13,7 @@
 - git:
     local-name: ardupilot
     uri: https://github.com/tfoote/ardupilot.git
-    version: instrumenting_sim_gazebo
+    version: jan-scrimmage
 - git:
     local-name: swarmcommander
     uri: https://gitlab.nps.edu/sasc/swarmcommander.git
