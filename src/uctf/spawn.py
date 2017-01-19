@@ -39,9 +39,8 @@ def vehicle_type_and_mav_sys_id(vehicle_id, vehicle_color):
 def spawn_team(color):
     parser = argparse.ArgumentParser('Spawn vehicle for one team.')
     parser.add_argument(
-        'vehicle_id', nargs='*', metavar='VEHICLE_ID', type=vehicle_id_type,
-        default=range(1, 51),
-        help='The vehicle ids to spawn (default: 1-50)')
+        'vehicle_id', nargs='+', metavar='VEHICLE_ID', type=vehicle_id_type,
+        help='The vehicle ids to spawn')
     parser.add_argument(
         '--gazebo-ros-master-uri',
         help='The uri used to spawn the models')
