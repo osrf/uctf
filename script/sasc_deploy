@@ -76,6 +76,9 @@ def generate_launch_file(team, ips, vehicles, tactic_repo_path, ocu_network_inte
         subs = {}
         subs['ip'] = ips[k]
         subs['machines'] = ' '.join([str(i) for i in  v])
+        if not subs['machines']:
+            # Don't bother launching a machine with zero drones
+            continue
         subs['team'] = team
         subs['count'] = k
         subs['machine_name'] = '_'.join([team, str(k)])
