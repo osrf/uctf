@@ -358,7 +358,7 @@ Go through the following sequence in that GUI:
 1. Click "FLIGHT READY ALL". The vehicle entrie should now be yellow.
 1. For each vehicle:
     1. Select the vehicle in the list of entries.
-    1. Fill in a "Stack number" and "Altitude above runway (m)", then click "Send Config" and then confirm in the following popup.
+    1. Fill in a "Stack number" (1 for Blue, 2 for Gold) and "Altitude above runway (m)", then click "Send Config" and then confirm in the following popup.
     1. Click "AUTO". The vehicle should launch, climb, and go to its designated waypoint.
     1. Wait abou 10 seconds or until you see Waypoint 1 in the payload console. This operation uses templates that are not safe to run in parallel..
 1. Click "ARM ALL". Note that this command won't take effect until the vehicles
