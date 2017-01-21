@@ -1,3 +1,4 @@
+  <param name="/use_sim_time" value="true" type="bool"/>
   <node
     name="ardupilot_@(vehicle_name)"
     pkg="uctf"
