@@ -260,6 +260,8 @@ The output of the above command will tell you the command to run the payloads re
 ROS_HOSTNAME=192.168.2.150 ROS_MASTER_URI=http://192.168.2.1:11311 roslaunch /tmp/sasc_remote.launch
 ```
 
+If you get a timeout the first time try again.
+
 To stop the payloads you can press `Ctrl-C`
 
 This will also bring up two GUIs on your machine.
