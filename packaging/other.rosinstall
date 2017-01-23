@@ -8,8 +8,8 @@
     version: master
 - git:
     local-name: arbiter
-    uri: https://gitlab.nps.edu/sasc/arbiter.git
-    version: jan-scrimmage
+    uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/arbiter.git
+    version: rostime
 - git:
     local-name: ardupilot
     uri: https://github.com/tfoote/ardupilot.git
@@ -17,7 +17,7 @@
 - git:
     local-name: swarmcommander
     uri: https://gitlab.nps.edu/sasc/swarmcommander.git
-    version: jan-scrimmage
+    version: jan-scrimmage-2
 - git:
     local-name: ugdi
     uri: https://gitlab.nps.edu/sasc/game-director.git

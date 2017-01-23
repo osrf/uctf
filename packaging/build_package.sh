@@ -102,7 +102,7 @@ VENV3=${INSTALL_SPACE}/venv3
 mkdir -p ${VENV3}
 pyvenv --system-site-packages ${VENV3} 
 (. ${VENV3}/bin/activate && pip install wheel)
-(. ${VENV3}/bin/activate && pip install image mavproxy netifaces)
+(. ${VENV3}/bin/activate && pip install image mavproxy netifaces catkin-pkg rospkg)
 
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_lib && python setup.py install)
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_dashboards && python setup.py install)
