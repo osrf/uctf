@@ -29,7 +29,7 @@
 - hg:
     local-name: sdformat
     uri: https://bitbucket.org/osrf/sdformat
-    version: default
+    version: sdf4
 - git:
     local-name: uctf
     uri: https://github.com/osrf/uctf
