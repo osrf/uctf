@@ -60,8 +60,6 @@ SSH with X-Forwarding enabled to the simulation/arbiter machine (e.g., `ssh -XC 
 ```console
 export INSTALL_SPACE=/opt/sasc
 . ${INSTALL_SPACE}/venv3/bin/activate
-pip3 install rospkg
-pip3 install catkin-pkg
 . ${INSTALL_SPACE}/setup.bash
 arbiter_start.py -db br-blue -dr br-gold
 ```
