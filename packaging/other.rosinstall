@@ -8,8 +8,8 @@
     version: master
 - git:
     local-name: arbiter
-    uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/arbiter.git
-    version: rostime
+    uri: https://gitlab.nps.edu/sasc/arbiter.git
+    version: feb-scrimmage
 - git:
     local-name: ardupilot
     uri: https://github.com/tfoote/ardupilot.git
