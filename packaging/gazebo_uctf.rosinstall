@@ -37,8 +37,8 @@
 - git:
     local-name: autonomy-payload
     uri: https://gitlab.nps.edu/sasc/autonomy-payload.git
-    version: jan-scrimmage
+    version: feb-scrimmage
 - git:
     local-name: autopilot_bridge
     uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/autopilot_bridge.git
-    version: jan-scrimmage
+    version: feb-scrimmage

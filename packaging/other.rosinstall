@@ -1,7 +1,7 @@
 - git:
     local-name: acs_lib
     uri: https://gitlab.nps.edu/sasc/acs_lib.git
-    version: jan-scrimmage
+    version: feb-scrimmage
 - git:
     local-name: acs_dashboards
     uri: https://gitlab.nps.edu/gerkey_osrfoundation.org/acs_dashboards.git
@@ -17,7 +17,7 @@
 - git:
     local-name: swarmcommander
     uri: https://gitlab.nps.edu/sasc/swarmcommander.git
-    version: jan-scrimmage-2
+    version: feb-scrimmage
 - git:
     local-name: ugdi
     uri: https://gitlab.nps.edu/sasc/game-director.git
@@ -25,8 +25,8 @@
 - git:
     local-name: mavlink
     uri: https://gitlab.nps.edu/sasc/mavlink.git
-    version: dev
+    version: feb-scrimmage
 - git:
     local-name: mavproxy
     uri: https://gitlab.nps.edu/sasc/mavproxy.git
-    version: dev
+    version: feb-scrimmage
