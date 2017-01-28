@@ -2,9 +2,21 @@
 
 set -o errexit
 
+if [ "$1" != "" ]; then
+  INSTALL_SPACE=$1
+else
+  INSTALL_SPACE=/opt/sasc
+fi
+
+if [ "$2" == "true" ]; then
+  BUILD_PACKAGE=true
+else
+  BUILD_PACKAGE=false
+fi
+
+
 WS=`pwd`/ws
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-INSTALL_SPACE=/opt/sasc
 REPOS=${SCRIPTDIR}/gazebo_uctf.rosinstall
 OTHER_REPOS=${SCRIPTDIR}/other.rosinstall
 
@@ -128,5 +140,6 @@ sed -i '/^.*launcher manifest.xml* /d' ${WS}/sasc-control
 sed -i '/^.*darpa_logo* /d' ${WS}/sasc-control
 sed -i '/^.*Screen Shot* /d' ${WS}/sasc-control
 
-
-(cd ${WS} && equivs-build ${WS}/sasc-control)
+if [ "$BUILD_PACKAGE" == "true" ]; then
+  (cd ${WS} && equivs-build ${WS}/sasc-control)
+fi
