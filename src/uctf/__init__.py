@@ -406,7 +406,7 @@ def get_launch_snippet(
             'launch_mavros': launch_mavros,
         }
         if vehicle_type == 'iris':
-            data['executable'] = 'arducopter-quad'
+            data['executable'] = 'arducopter'
             data['model'] = 'gazebo-iris'
         else:
             data['executable'] = 'arduplane'
