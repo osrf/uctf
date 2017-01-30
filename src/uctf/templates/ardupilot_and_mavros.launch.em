@@ -32,6 +32,7 @@
   <arg name="port" value="5554" />
   <arg name="dev" value="@(acs_network_inteface)" />
   <arg name="range" value="-1" />
+  <arg name="publish_clock" value="true" />
 </include>
 @[end if]
 @# /usr/bin/python /opt/ros/kinetic/bin/roslaunch ap_master sitl.launch id:=101 name:=sitl101 sitl:=tcp:192.168.2.250:6772 port:=5554 ns:=sitl101 dev:=sitl_bridge_1 range:=-1
