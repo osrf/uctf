@@ -91,7 +91,8 @@ git submodule update --init --recursive
 ./waf install
 
 echo "installing lxml needed for mavlink"
-pip install lxml --system --target=${INSTALL_SPACE}/lib/python/site-packages/ --install-option="--install-scripts=${INSTALL_SPACE}/bin"
+pip install lxml future pyserial --system --target=${INSTALL_SPACE}/lib/python2.7/dist-packages/ --install-option="--install-scripts=${INSTALL_SPACE}/bin"
+
 
 echo "Get mavlink"
 cd ${WS}/other_src/mavlink
@@ -114,11 +115,12 @@ VENV3=${INSTALL_SPACE}/venv3
 mkdir -p ${VENV3}
 pyvenv --system-site-packages ${VENV3} 
 (. ${VENV3}/bin/activate && pip3 install wheel)
-(. ${VENV3}/bin/activate && pip3 install image mavproxy netifaces catkin-pkg rospkg)
+(. ${VENV3}/bin/activate && pip3 install future image mavproxy netifaces catkin-pkg rospkg)
 
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_lib && python setup.py install)
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_dashboards && python setup.py install)
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/arbiter && python setup.py install)
+(. ${VENV3}/bin/activate && cd ${WS}/other_src/mavlink/pymavlink && python setup.py install)
 (. ${VENV3}/bin/activate && cd ${WS}/src/autonomy-payload/ap_lib && python setup.py install)
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/swarmcommander && python setup.py install)
 
