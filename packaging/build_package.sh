@@ -119,6 +119,7 @@ pyvenv --system-site-packages ${VENV3}
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_lib && python setup.py install)
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/acs_dashboards && python setup.py install)
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/arbiter && python setup.py install)
+(. ${VENV3}/bin/activate && cd ${WS}/src/autonomy-payload/ap_lib && python setup.py install)
 (. ${VENV3}/bin/activate && cd ${WS}/other_src/swarmcommander && python setup.py install)
 
 echo "Installing Game Director and dependencies"
