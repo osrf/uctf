@@ -6,6 +6,8 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 PACKAGING_DIR=`mktemp -d `
 
+LOCAL_DIR=`pwd`
+
 # deletes the temp directory
 function cleanup {
   rm -rf "$PACKAGING_DIR"
@@ -34,3 +36,5 @@ sed -i '/^.*Screen Shot* /d' ${PACKAGING_DIR}/sasc-control
 
 echo "Building Package with equivs"
 (cd ${PACKAGING_DIR} && equivs-build ${PACKAGING_DIR}/sasc-control)
+
+(cd ${PACKAGING_DIR} && cp *.deb $LOCAL_DIR)
