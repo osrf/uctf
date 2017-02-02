@@ -3,15 +3,15 @@
 set -o errexit
 
 if [ "$1" != "" ]; then
-  INSTALL_SPACE=$1
+  WS=$1
 else
-  INSTALL_SPACE=/opt/sasc
+  WS=`pwd`/ws
 fi
 
-if [ "$2" == "true" ]; then
-  BUILD_PACKAGE=true
+if [ "$2" != "" ]; then
+  INSTALL_SPACE=$2
 else
-  BUILD_PACKAGE=false
+  INSTALL_SPACE=/opt/sasc
 fi
 
 
@@ -32,7 +32,7 @@ mkdir -p ${WS}/src
 
 echo "Cloning from ${REPOS} into ${WS}/src..."
 if [ -e ${WS}/src/.rosinstall ]; then
-  wstool merge -t ${WS}/src ${REPOS} --merge-replace
+  wstool merge --merge-replace -t ${WS}/src ${REPOS} 
   wstool update -t ${WS}/src
 else
   wstool init ${WS}/src ${REPOS}
@@ -55,6 +55,12 @@ else
   wstool init ${WS}/other_src ${OTHER_REPOS}
 fi
 
+cd ${WS}/other_src/ardupilot
+git submodule update --init --recursive
+
+cd ${WS}/other_src/mavlink
+git submodule update --init --recursive
+
 echo "Installing dependencies with rosdep..."
 . /opt/ros/kinetic/setup.bash
 rosdep install --from-path ${WS}/src --ignore-src -y|| true
@@ -67,25 +73,29 @@ sudo apt-get install -y python3-django python3-netifaces python3-numpy python3-p
 # things for venv
 sudo apt-get install -y python-numpy python-jinja2
 
+
+
+
 echo "Building Gazebo and friends..."
 cd ${WS}
 catkin config --init --extend /opt/ros/kinetic -i ${INSTALL_SPACE} --install --isolate-devel
 sudo mkdir -p ${INSTALL_SPACE}
 sudo chown -R ${USER}:${USER} ${INSTALL_SPACE}
 catkin build --verbose
+
+# Install Gazebo models
 mkdir -p ${INSTALL_SPACE}/share/gazebo_models
 for MODEL in iris_with_standoffs iris_with_standoffs_demo gimbal_small_2d zephyr_delta_wing zephyr_delta_wing_ardupilot_demo sun ground_plane
 do
   rsync -av ${WS}/src/gazebo_models/${MODEL} ${INSTALL_SPACE}/share/gazebo_models
 done
 
+
+
 # echo "Cloning Ardupilot..."
 # git clone https://github.com/tfoote/ardupilot.git -b uctf-dev
 echo "Building Ardupilot..."
 cd ${WS}/other_src/ardupilot
-# export PATH=${PATH}:${WS}/ardupilot/Tools/autotest
-# ./Tools/scripts/install-prereqs-ubuntu.sh Now in bootstrap image
-git submodule update --init --recursive
 ./waf configure --prefix=${INSTALL_SPACE}
 ./waf
 ./waf install
@@ -94,10 +104,8 @@ echo "installing lxml needed for mavlink"
 pip install lxml future pyserial --system --target=${INSTALL_SPACE}/lib/python2.7/dist-packages/ --install-option="--install-scripts=${INSTALL_SPACE}/bin"
 
 
-echo "Get mavlink"
-cd ${WS}/other_src/mavlink
-git submodule update --init --recursive
-cd pymavlink
+echo "Installing mavlink"
+cd ${WS}/other_src/mavlink/pymavlink
 PYTHONPATH=$PYTHONPATH:${INSTALL_SPACE}/lib/python2.7/dist-packages python setup.py install --prefix=${INSTALL_SPACE} --install-layout=deb
 
 echo "Installing mavproxy"
@@ -132,17 +140,3 @@ virtualenv --system-site-packages ${GDI_VENV}
 (. ${GDI_VENV}/bin/activate && cd ${WS}/other_src/ugdi && pip install -r requirements.txt )
 (. ${GDI_VENV}/bin/activate && cd ${WS}/src/autonomy-payload/ap_lib && python setup.py install)
 cp -r ${WS}/other_src/ugdi ${GDI_VENV}
-
-echo "generating control file"
-
-cp ${SCRIPTDIR}/sasc-control.base ${WS}/sasc-control
-echo -n "Files:" >> ${WS}/sasc-control
-find -L ${INSTALL_SPACE} -type f | xargs -I {} echo " {} /" >> ${WS}/sasc-control
-sed -i '/^.*script (dev).tmpl.*/d' ${WS}/sasc-control
-sed -i '/^.*launcher manifest.xml* /d' ${WS}/sasc-control
-sed -i '/^.*darpa_logo* /d' ${WS}/sasc-control
-sed -i '/^.*Screen Shot* /d' ${WS}/sasc-control
-
-if [ "$BUILD_PACKAGE" == "true" ]; then
-  (cd ${WS} && equivs-build ${WS}/sasc-control)
-fi
