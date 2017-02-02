@@ -180,7 +180,7 @@ def check_connection(host):
             break
     t.close()
     if not success:
-        raise EnvironmentError("cannot authenticate an ssh connection to host %s aborting." % host)
+        raise EnvironmentError("cannot authenticate an ssh connection to host %s aborting. Did you ssh-add the key file?" % host)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('Deploy tactics and prepare remote machines')
