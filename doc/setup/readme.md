@@ -9,7 +9,3 @@ You can choose between two different approaches for getting the necessary packag
 * [build from source](../install_source/readme.md)
 
 Afterwards you can test your setup by [running an example](../run_example/readme.md).
-
----
-
-Next: [Program your own team](../program_team/readme.md)

@@ -61,9 +61,7 @@ First start the Qt application:
 
 ```console
 
-. <ws_payload>/devel/setup.bash
-. <venv3>/bin/activate
-PYTHONPATH=/opt/sasc-dev/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/dist-packages:/usr/lib/python3/dist-packages fti.py -d enp0s25 -z
+$INSTALL_SPACE/bin/fti_env.sh fti.py -d enp0s25 -z
 ```
 
 For each vehicle perform the following steps:
@@ -120,10 +118,7 @@ All vehicles have the same shape in this application despite one of them being a
 
 
 ```console
-export INSTALL_SPACE=/opt/sasc-dev
-. ${INSTALL_SPACE}/venv3/bin/activate
-. ${INSTALL_SPACE}/setup.bash
-PYTHONPATH=$PYTHONPATH:${INSTALL_SPACE}/venv3/lib/python3.5/site-packages:/usr/lib/python3/dist-packages swarm_commander.py
+$INSTALL_SPACE/bin/swarm_commander_env.sh swarm_commander.py
 ```
 
 ![QGroundControl showing trajectory](qgroundcontrol.jpg)
@@ -135,9 +130,7 @@ One the vehicles are in the air (and `swarm_state=2`) they can be assigned to a 
 **TODO to use more than one team you need two separate network interfaces**
 
 ```console
-export INSTALL_SPACE=/opt/sasc-dev
-. ${INSTALL_SPACE}/venv3/bin/activate
-PYTHONPATH=${INSTALL_SPACE}/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/dist-packages:/usr/lib/python3/dist-packages arbiter_start.py -db enp0s25 -dr wlp3s0
+$INSTALL_SPACE/bin/arbiter_env.sh arbiter_start.py -db enp0s25 -dr wlp3s0
 ```
 
 ## Run vehicles on separate machines
@@ -164,9 +157,7 @@ export ROS_IP=<this-ip-address>
 When spawning the vehicles we need to pass the IP address of this machine so that Gazebo knows where to send the MAVLINK communication to:
 
 ```console
-spawn_blue 2 27 --mavlink-addr <this-ip-address> --launch
+spawn_blue 2 27 --acs enp0s25
 ```
 
 ---
-
-Next: [Program your own team](../program_team/readme.md)

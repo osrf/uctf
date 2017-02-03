@@ -10,7 +10,3 @@ Each page builds upon the previous ones, so we recommend following them in order
 * [Setup](setup/readme.md)
 
   Instructions how to setup a system to run the scenario.
-
-* [Create and run your own team](custom_team/readme.md)
-
-  Instructions how to program your own team and compete in the scenario.
