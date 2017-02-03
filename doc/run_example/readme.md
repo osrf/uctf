@@ -157,7 +157,7 @@ export ROS_IP=<this-ip-address>
 When spawning the vehicles we need to pass the IP address of this machine so that Gazebo knows where to send the MAVLINK communication to:
 
 ```console
-spawn_blue 2 27 --acs enp0s25
+spawn_blue 2 27 --mavlink <this-ip-address> --acs enp0s25
 ```
 
 ---
