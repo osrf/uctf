@@ -16,8 +16,8 @@
     version: feb-scrimmage
 - git:
     local-name: swarmcommander
-    uri: https://gitlab.nps.edu/sasc/swarmcommander.git
-    version: feb-scrimmage
+    uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/swarmcommander.git
+    version: virtualenv_support
 - git:
     local-name: ugdi
     uri: https://gitlab.nps.edu/sasc/game-director.git
