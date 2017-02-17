@@ -2,29 +2,12 @@
 
 After setting up your system running the example will make sure everything works as expected.
 
-## Environment setup
-
-In order to use the installed software some environment variables need to be setup.
-This has to happen for each terminal:
-
-Use the appropriate setup from either your [source](../install_source/readme.md) or [binary](../install_binary/readme.md) installation. 
-
-You can check the values of the environment variables with:
-
-```console
-env | grep "GAZEBO\|ROS" | sort
-```
-
-For more information on these environment variables please see the [ROS](http://wiki.ros.org/ROS/EnvironmentVariables) / [Gazebo](http://gazebosim.org/tutorials?tut=components) documentation.
-
-Each of the following subsections should be executed in a separate terminal and they should continue to run until the end of the example.
-
 ## Start Gazebo
 
 To start the Gazebo simulation with this scenario call:
 
 ```console
-roslaunch uctf uctf.launch
+/opt/sasc/bin/sasc_gazebo_env.sh roslaunch uctf uctf.launch gui:=false
 ```
 
 At that point the Gazebo world will only contain the environment (game cube, team and penalty areas) but no vehicles yet.
@@ -51,7 +34,8 @@ The two scripts `spawn_blue` and `spawn_gold` can be used to perform the followi
 For this example we will only spawn two vehicles (one quadcopter (1), one fixed wing (26)) for a single team and automatically start the generated `roslaunch` files:
 
 ```console
-spawn_blue 1 26 --acs enp0s25
+
+/opt/sasc/bin/sasc_gazebo_env.sh spawn_blue 1 26 --acs enp0s25
 ```
 
 ### Use flight tech interface
@@ -60,8 +44,7 @@ The flight tech interface is being used to prepare each vehicle for the flight.
 First start the Qt application:
 
 ```console
-
-$INSTALL_SPACE/bin/fti_env.sh fti.py -d enp0s25 -z
+/opt/sasc/bin/fti_env.sh fti.py -d enp0s25 -z
 ```
 
 For each vehicle perform the following steps:
@@ -118,7 +101,7 @@ All vehicles have the same shape in this application despite one of them being a
 
 
 ```console
-$INSTALL_SPACE/bin/swarm_commander_env.sh swarm_commander.py
+/opt/sasc/bin/swarm_commander_env.sh swarm_commander.py
 ```
 
 ![QGroundControl showing trajectory](qgroundcontrol.jpg)
@@ -130,7 +113,7 @@ One the vehicles are in the air (and `swarm_state=2`) they can be assigned to a 
 **TODO to use more than one team you need two separate network interfaces**
 
 ```console
-$INSTALL_SPACE/bin/arbiter_env.sh arbiter_start.py -db enp0s25 -dr wlp3s0
+/opt/sasc/bin/arbiter_env.sh arbiter_start.py -db enp0s25 -dr wlp3s0
 ```
 
 ## Run vehicles on separate machines
@@ -157,7 +140,7 @@ export ROS_IP=<this-ip-address>
 When spawning the vehicles we need to pass the IP address of this machine so that Gazebo knows where to send the MAVLINK communication to:
 
 ```console
-spawn_blue 2 27 --mavlink <this-ip-address> --acs enp0s25
+/opt/sasc/bin/sasc_gazebo_env.sh spawn_blue 2 27 --mavlink <this-ip-address> --acs enp0s25
 ```
 
 ---
