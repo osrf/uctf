@@ -23,6 +23,7 @@ install(PROGRAMS
   "script/gdi_env.sh"
   "script/payload_env.sh"
   "script/sasc_gazebo_env.sh"
+  "script/sasc_gazebo_env_imp.sh"
   "script/swarm_commander_env.sh"
   DESTINATION bin
 )
