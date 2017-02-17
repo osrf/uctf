@@ -44,24 +44,17 @@ Note that, if there is a newer package available, it will take quite some time (
 ssh to the simulation/arbiter machine (e.g., `ssh -i cloudsim.pem
 ubuntu@1.2.3.4`) and start Gazebo like so:
 ```console
-export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/setup.bash
-. ${INSTALL_SPACE}/share/gazebo-8/setup.sh
-. ${INSTALL_SPACE}/share/uctf/setup.sh
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${INSTALL_SPACE}/share/gazebo_models
-export ROS_HOSTNAME=192.168.2.1
-export ROS_MASTER_URI=http://192.168.2.1:11311
-roslaunch uctf uctf.launch gui:=false
+/opt/sasc/bin/cloudsim_sasc_gazebo_env.sh roslaunch uctf uctf.launch gui:=false
 ```
 
 ### Launch Arbiter
 
 SSH with X-Forwarding enabled to the simulation/arbiter machine (e.g., `ssh -XC -i cloudsim.pem ubuntu@1.2.3.4`) and start the Arbiter like so:
 ```console
-export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/venv3/bin/activate
-arbiter_start.py -db br-blue -dr br-gold
+/opt/sasc/bin/arbiter_env.sh arbiter_start.py -db br-blue -dr br-gold
 ```
+
+If you are on limited bandwidth and do not need the gui there's a `--nogui` option too
 
 
 ### Launch the Game Director
@@ -231,6 +224,7 @@ The key takes a minute or two to generate and will not be downloadable immediate
 Add the key to your ssh-agent using the following command. Where the key is saved as cloudsim.pem.
 
 ```
+chmod 600 ~/Download/cloudsim.pem
 ssh-add ~/Download/cloudsim.pem
 ```
 
@@ -248,8 +242,7 @@ To deploy your tactics and prepare the cloud machines use the following command.
 Your game instances will have a number of payload hosts, the script needs to know how many the game is provisioned with to allocate the simulation appropriately.
 
 ```
-. /opt/sasc/setup.bash
-. /opt/sasc/share/uctf/setup.sh
+. /opt/sasc/bin/cloudsim_sasc_gazebo_env.sh
 sasc_deploy --hosts 3 --scrimm ~/scrimmage-templates blue --planes 15
 ```
 
