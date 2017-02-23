@@ -34,7 +34,7 @@ The two scripts `spawn_blue` and `spawn_gold` can be used to perform the followi
 For this example we will only spawn two vehicles (one quadcopter (1), one fixed wing (26)) for a single team and automatically start the generated `roslaunch` files:
 
 ```console
-
+export SCRIMMAGE_TACTIC_INTERFACE_FILE=~/scrimmage-templates/plugins/autonomy/python/behaviors.xml
 /opt/sasc/bin/sasc_gazebo_env.sh spawn_blue 1 26 --acs enp0s25
 ```
 
