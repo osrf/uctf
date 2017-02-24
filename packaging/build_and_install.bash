@@ -76,6 +76,6 @@ GDI_VENV=${INSTALL_SPACE}/ugdi_venv
 mkdir -p ${GDI_VENV}
 virtualenv --system-site-packages ${GDI_VENV}
 (. ${GDI_VENV}/bin/activate && cd ${WS}/other_src/ugdi && pip install -r requirements.txt )
-(. ${GDI_VENV3}/bin/activate && cd ${WS}/other_src/acs_lib && python setup.py install)
+(. ${GDI_VENV}/bin/activate && cd ${WS}/other_src/acs_lib && python setup.py install)
 (. ${GDI_VENV}/bin/activate && cd ${WS}/src/autonomy-payload/ap_lib && python setup.py install)
 cp -r ${WS}/other_src/ugdi ${GDI_VENV}
