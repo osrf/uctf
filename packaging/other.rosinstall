@@ -21,7 +21,7 @@
 - git:
     local-name: ugdi
     uri: https://gitlab.nps.edu/sasc/game-director.git
-    version: master
+    version: mar-scrimmage
 - git:
     local-name: mavlink
     uri: https://gitlab.nps.edu/sasc/mavlink.git
