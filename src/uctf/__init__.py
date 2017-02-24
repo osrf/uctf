@@ -24,7 +24,7 @@ from xacro import process_doc
 
 
 CUBE_LENGTH = 500
-CUBE_ROTATION = -0.40 # radians
+CUBE_ROTATION = -0.40  # radians
 # default location of spawned vehicles
 # Only used in widget only correct for Zurich
 MIN_LATITUDE = 47.397742
@@ -63,8 +63,9 @@ def get_vehicle_pose(mav_sys_id, vehicle_type, color):
     inteam_id = mav_sys_id % 100
     DISTANCE_FROM_CUBE = 125.0
     vertical_offset = -DISTANCE_FROM_CUBE
-    latteral_offset = (-CUBE_LENGTH if color =='gold' else 0) + \
-         (1 if color == 'blue' else -1) * inteam_id * (1 if vehicle_type == 'iris' else 3)
+    latteral_offset = (-CUBE_LENGTH if color == 'gold' else 0) + \
+        (1 if color == 'blue' else -1) * inteam_id * \
+        (1 if vehicle_type == 'iris' else 3)
     sin_rot = math.sin(CUBE_ROTATION)
     cos_rot = math.cos(CUBE_ROTATION)
     x = -sin_rot * latteral_offset + cos_rot * vertical_offset
