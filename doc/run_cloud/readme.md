@@ -363,13 +363,17 @@ couple of minutes after spawning. Upon a successful command the vehicle status l
 There are a number of conditions after launch that can cause the vehicle
 entries to become red, indicating a problem, including:
 
-* Throttle failure. The autopilot sometimes determines that the simulated
-throttle has failed and commands RTL. You can usually override this command
-by clicking "AUTO" again for that vehicle.
 * Lack of airspeed or airspeed too low. Either the autopilot isn't reporting
 the airspeed properly, or the reported airspeed is too low. Either way, it
 causes a warning/error in the GUI. There doesn't seem to be any effect on the
 vehicle's behavior.
+
+#### Launch rate limiting
+
+To simulate launching from a pair catapult only two planes can be launced every 30 seconds.
+The 30 second countdown for the next plane starts after the previous plane has traveled out of the launching area.
+You can do everything to the planes however they will be prevented from moving until their turn on the catapult.
+Note that the catapult automatically iterates from lowest to highest in vehicle number.
 
 ### Swarm Commander (swarm_commander.py)
 
