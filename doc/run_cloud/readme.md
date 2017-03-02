@@ -221,8 +221,10 @@ Your game instances will have a number of payload hosts, the script needs to kno
 
 ```
 . /opt/sasc/bin/cloudsim_sasc_gazebo_env.sh
-sasc_deploy --hosts 3 --scrimm ~/scrimmage-templates blue --planes 15
+sasc_deploy --hosts 3 --scrimm ~/scrimmage-templates blue --planes 15 --copters 10
 ```
+
+The total number of vehicles should add up to less than 25. You can choose the balance between planes and copters as you wish.
 
 The output of the above command will tell you the command to run the payloads remotely. It will look like this:
 
@@ -237,90 +239,6 @@ To stop the payloads you can press `Ctrl-C`
 This will also bring up two GUIs on your machine.
 
 
-<!-- The below is replaced by deployment scripts
-## SSH to your Payload machine
-
-To get shell access to your Payload machine, which is where you'll be cloning
-and running your tactics, you need the SSH key for that machine, and you need
-to be connected to the VPN server. You can download the SSH key by clicking on
-the "KEYS" button in the box for the Payload machine. Note that you must make
-the key file not-world-readable after you download it (e.g., `chmod 600
-cloudsim.pem`); if you don't do this, you'll get an error about permissions
-from `ssh`.
-
-With the SSH key downloaded and after connecting your computer to the VPN
-server, you can login to your Payload machine as the user `ubuntu` at the
-"Local IP" address that is shown in the box for that machine (e.g., `ssh -i
-cloudsim.pem ubuntu@192.168.2.10`).
-
-### Get the latest SASC package
-With your VPN connected, ssh to your payload machine and make sure that you have the latest SASC package installed:
-```console
-sudo apt-get update
-sudo apt-get install sasc-gazebo-sitl
-```
-Note that, if there is a newer package available, it will take quite some time to download and install, due to its size. Please be patient.
-
-### Check out your tactics code
-With your VPN connected, ssh to your payload machine and fetch your tactics code, e.g.:
-```console
-git clone https://gitlab.nps.edu/myfork/scrimmage-templates
-```
-
-### Spawn vehicle(s)
-With your VPN connected, ssh to your payload machine and start running vehicles
-with your tactics.  We're assuming that your tactic repo is checked out to
-`$HOME/scrimmage-templates`, with your tactics modules sitting inside there, in
-`plugins/autonomy/python`. In the examples below, we're assuming that the
-tactic that you want to run is in a class called `MyClass` that is implemented
-in a file called `mymodule.py` (which, for completeness, is located at
-`$HOME/scrimmage-templates/plugins/autonomy/python/mymodule.py`).
-
-Note that you **must** have already launched Gazebo (e.g., `roslaunch uctf utctf.launch`) on the arbiter/simulation machine, as explained [above](#launch-gazebo). If Gazebo isn't running, you'll get an exception from trying to run `spawn_blue` or `spawn_gold`.
-
-#### Blue team
-To spawn a blue plane from the blue Payload machine:
-```console
-export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/setup.bash
-. ${INSTALL_SPACE}/share/gazebo-8/setup.sh
-. ${INSTALL_SPACE}/share/uctf/setup.sh
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${INSTALL_SPACE}/share/gazebo_models
-export PYTHONPATH=/home/ubuntu/scrimmage-templates/plugins/autonomy/python:$PYTHONPATH
-export SCRIMMAGE_TACTIC_INTERFACE_FILE=/home/ubuntu/scrimmage-templates/plugins/autonomy/python/behaviors.xml
-spawn_blue 26 --acs tap0 --gazebo-ip 192.168.2.1 --local-ip 192.168.2.10
-```
-
-The `spawn_blue` script can be used to spawn multiple planes; just pass more integers in the range 26-50 (the ids 1-25 are for copters, which aren't yet supported). E.g., to launch 10 planes:
-```console
-spawn_blue 26 27 28 29 30 31 32 33 34 35 --acs tap0 --gazebo-ip 192.168.2.1 --local-ip 192.168.2.10 --tactic-module mymodule --tactic-name MyClass
-```
-The same tactic will be used by all planes.
-
-#### Gold team
-To spawn a gold plane from the gold Payload machine:
-```console
-export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/setup.bash
-. ${INSTALL_SPACE}/share/gazebo-8/setup.sh
-. ${INSTALL_SPACE}/share/uctf/setup.sh
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${INSTALL_SPACE}/share/gazebo_models
-export PYTHONPATH=/home/ubuntu/scrimmage-templates/plugins/autonomy/python:$PYTHONPATH
-spawn_gold 26 --acs tap0 --gazebo-ip 192.168.3.1 --local-ip 192.168.3.10 --tactic-module mymodule --tactic-name MyClass
-```
-
-The `spawn_gold` script can be used to spawn multiple planes; just pass more integers in the range 26-50 (the ids 1-25 are for copters, which aren't yet supported). E.g., to launch 10 planes:
-```console
-spawn_gold 26 27 28 29 30 31 32 33 34 35 --acs tap0 --gazebo-ip 192.168.2.1 --local-ip 192.168.2.10 --tactic-module mymodule --tactic-name MyClass
-```
-The same tactic will be used by all planes. You will see a string like below indicating that your tactic was found successfully. 
-
-```
-..INFO.. tactic_interface: Found tutorial_greedy_shooter_1 at: /home/ubuntu/scrimmage-templates/plugins/autonomy/python/tutorial_greedy_shooter.py
-..INFO.. tactic_interface: Tactic Name: TutorialGreedyShooter
-```
--->
-
 ### Flight Tech Interface (fti.py)
 
 A GUI should pop up and become populated by entries for each of your vehicles.
@@ -331,11 +249,10 @@ Go through the following sequence in that GUI:
 1. For each vehicle:
     1. Select the vehicle in the list of entries.
     1. Fill in a "Stack number" (1 for Blue, 2 for Gold) and "Altitude above runway (m)", then click "Send Config" and then confirm in the following popup.
+    1. Click "ARM" to arm the vehicle. You should see it change status to "ARMED" in the gui.
     1. Click "AUTO". The vehicle should launch, climb, and go to its designated waypoint.
-    1. Wait abou 10 seconds or until you see Waypoint 1 in the payload console. This operation uses templates that are not safe to run in parallel..
-1. Click "ARM ALL". Note that this command won't take effect until the vehicles
-have had some time to initialize their simulated GPS sensors, which can take a
-couple of minutes after spawning. Upon a successful command the vehicle status line will show `<ARMED>`
+       For planes make sure to go to AUTO soon after arming. An armed plane in simulation can get slightly airborn but if not in AUTO it will crash and become unrecoverable.
+    1. Wait about 10 seconds or until you see Waypoint 1 in the payload console. This operation uses templates that are not safe to run in parallel..
 
 
 There are a number of conditions after launch that can cause the vehicle
