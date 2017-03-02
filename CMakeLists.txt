@@ -74,7 +74,9 @@ install(PROGRAMS
   "script/mavproxy.sh"
   "script/spawn_blue"
   "script/spawn_gold"
+  "script/run_arbiter"
   "script/run_fti"
+  "script/run_gdi"
   "script/run_swarm_commander"
   DESTINATION share/${PROJECT_NAME}
 )

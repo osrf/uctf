@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# A script to support using rosrun to launch fti.py
+
+/opt/sasc/bin/gdi_env.sh /opt/sasc/ugdi_venv/ugdi/run.py $@

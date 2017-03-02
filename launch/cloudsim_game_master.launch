@@ -1,0 +1,9 @@
+<launch>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" pass_all_args="true">
+    <arg name="world_name" value="$(find uctf)/worlds/uctf.world" />
+    <arg name="gui" value="false" />
+  </include>
+  
+  <node pkg="uctf" type="run_arbiter" name="arbiter" args="-db br-blue -dr br-gold --nogui"/>
+  <node pkg="uctf" type="run_gdi" name="game_director"/>
+</launch>
