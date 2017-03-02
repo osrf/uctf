@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# A script to support using rosrun to launch fti.py
-
-/opt/sasc/bin/arbiter_env.sh arbiter_start.py $@
