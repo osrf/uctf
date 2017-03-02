@@ -98,28 +98,6 @@ There will be a link in the CloudSim.io UI.
 
 Please see the [full game director documentation](game_director.md) for more details.
 
-### Launch the ACS network logger
-
-At the time of writing, the `acs_net_logger.py` tool is not included in the `sasc-gazebo-sitl` package, so you will need to manually copy it to the arbiter/simulation machine, like so:
-`ssh -i cloudsim.pem ubuntu@1.2.3.4` # replace with actual IP address
-
-```console
-wget --no-check-certificate https://gitlab.nps.edu/sasc/acs-env/raw/master/scripts/acs_net_logger.py
-chmod a+x acs_net_logger.py
-```
-
-You can start the logger like so:
-```console
-export INSTALL_SPACE=/opt/sasc
-. ${INSTALL_SPACE}/venv3/bin/activate
-. ${INSTALL_SPACE}/setup.bash
-# To log messages from the blue team:
-./acs_net_logger.py record br-blue /path/to/file.log
-# Or, to log messages from the gold team:
-# ./acs_net_logger.py record br-gold /path/to/file.log
-```
-
-Do not expect these scripts to show much output.
 
 ## Start a game
 At this point, everything is ready for the teams to spawn their vehicles. You

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
+import fasteners
 import netifaces
 import os
 import paramiko
@@ -248,7 +249,8 @@ if __name__ == '__main__':
     machines = {}
     for ip in ips:
         print("Working on host %s" % ip)
-        check_connection(ip)
+        with fasteners.InterProcessLock('/tmp/sasc_deploy_known_hosts_lock_file'):
+            check_connection(ip)
         rsync_to_host(os.path.join(args.scrimmage_repo, ''), 'ubuntu@%s:%s' % ( ip, SCRIMMAGE_REPO_PATH), dry_run=args.dry_run)
         extend_environment(ip)
 
