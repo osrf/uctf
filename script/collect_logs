@@ -1,0 +1,64 @@
+#!/usr/bin/env python
+
+import argparse
+import os
+import subprocess
+
+
+def rsync_from_host(source, dest, dry_run=False, remove_source_files=False):
+    # Only rsa key as that's the one we're overrideing
+    cmd = ['rsync', '--delete', '-ave', 'ssh -o HostKeyAlgorithms=ssh-rsa', source, dest]
+    if dry_run:
+        cmd.insert(1, '-n')
+    if remove_source_files:
+        cmd.append('--remove-source-files')
+    print('rsyncing logs host: %s' % cmd)
+    subprocess.check_call(cmd)
+    
+def fetch_payload_content(host, target_dir, dry_run=False, remove_source_files=False):
+    log_dirs = ['~/.ros']
+    for p in log_dirs:
+        rsync_from_host('%s:%s' % (host, p), target_dir, dry_run=False, remove_source_files=False)
+        
+def fetch_sim_content(host, target_dir, dry_run=False, remove_source_files=False):
+    log_dirs = ['~/.ros', '~/.gazebo', '/tmp/arbiter*']
+    for p in log_dirs:
+        rsync_from_host('%s:%s' % (host, p), target_dir, dry_run=False, remove_source_files=False)
+        
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser('Fetch logs from cloudsim instances')
+    parser.add_argument("--hosts", type=int, default=3,
+                        help="Number of payload host machines")
+    parser.add_argument('--dry-run', action='store_true')
+    parser.add_argument('--remove-source-files', action='store_true')
+    parser.add_argument('team', choices=['blue', 'gold', 'sim', 'all'])
+    args = parser.parse_args()
+
+    if args.team in ['blue', 'all']:
+        hosts = []
+        for x in range(args.hosts):
+            hosts.append("ubuntu@192.168.2.%s" % (10 + x))
+        for host in hosts:
+            directory = 'blue/logs/%s' % host
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+            fetch_payload_content(host, directory)
+
+    if args.team in ['gold', 'all']:
+        hosts = []
+        for x in range(args.hosts):
+            hosts.append("ubuntu@192.168.3.%s" % (10 + x))
+        for host in hosts:
+            directory = 'gold/logs/%s' % host
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+            fetch_payload_content(host, directory, dry_run=args.dry_run, remove_source_files=args.remove_source_files)
+
+
+    if args.team in ['sim', 'all']:
+        host = "ubuntu@192.168.2.1"
+        directory = 'sim/logs/'
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        fetch_sim_content(host, directory, dry_run=args.dry_run, remove_source_files=args.remove_source_files)
