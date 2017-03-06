@@ -55,7 +55,6 @@ For each vehicle perform the following steps:
 * Click "AUTO"
 * Click "ARM Throttle"
 
-**TODO the vehicles does not take off yet, you can use QGroundControl to trigger a take off**
 
 <!--### 2D visualization
 
@@ -96,6 +95,7 @@ To connect it with the port of the *blue* team the following steps are necessary
 Now you should see both vehicles at a location in Zurich, Switzerland (which are the default GPS coordinates of the PX4).
 All vehicles have the same shape in this application despite one of them being a quadcopter.
 
+![QGroundControl showing trajectory](qgroundcontrol.jpg)
 
 ### swarmcommander
 
@@ -103,8 +103,6 @@ All vehicles have the same shape in this application despite one of them being a
 ```console
 /opt/sasc/bin/swarm_commander_env.sh swarm_commander.py
 ```
-
-![QGroundControl showing trajectory](qgroundcontrol.jpg)
 
 ### Run the arbiter
 
