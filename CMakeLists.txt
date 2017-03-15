@@ -11,6 +11,8 @@ install(FILES
   DESTINATION share/${PROJECT_NAME}
 )
 install(PROGRAMS
+  "script/clear_keys.bash"
+  "script/collect_logs"
   "script/control_team_blue"
   "script/control_team_gold"
   "script/rqt_uctf"
