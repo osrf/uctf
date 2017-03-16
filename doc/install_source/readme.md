@@ -27,7 +27,7 @@ INSTALL_SPACE=/opt/sasc-dev
 
 mkdir -p $WORKSPACE/src
 cd $WORKSPACE/src && git clone https://github.com/osrf/uctf.git
-$WORKSPACE/src/uctf/packaging/download.bash
+$WORKSPACE/src/uctf/packaging/download.bash $WORKSPACE
 
 rm -rf $INSTALL_SPACE
 $WORKSPACE/src/uctf/packaging/build_and_install.bash $WORKSPACE $INSTALL_SPACE
