@@ -42,3 +42,7 @@
     local-name: autopilot_bridge
     uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/autopilot_bridge.git
     version: mar-scrimmage
+- git:
+    local-name: gazebo_radar_plugin
+    uri: git@github.com:ros-simulation/gazebo_radar_plugin.git
+    version: master

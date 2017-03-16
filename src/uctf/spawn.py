@@ -60,8 +60,9 @@ def spawn_team(color):
         '--no-payload', action='store_false', dest='include_payload',
         help='Do not launch the payload.')
     parser.add_argument('--debug', action='store_true')
-    parser.add_argument('--px4', action='store_true', default=False)
-    parser.add_argument('--mavros', action='store_true', default=False)
+    parser.add_argument('--px4', action='store_true')
+    parser.add_argument('--mavros', action='store_true')
+    parser.add_argument('--use-radar', action='store_true')
     parser.add_argument('--gazebo-ip', default='127.0.0.1')
     parser.add_argument('--local-ip', default='127.0.0.1')
     args = parser.parse_args()
@@ -101,6 +102,7 @@ def spawn_team(color):
             debug=args.debug, autopilot=autopilot,
             gazebo_ip=args.gazebo_ip,
             local_ip=args.local_ip,
+            use_radar=args.use_radar,
         )
 
         launch_path = generate_launch_file(

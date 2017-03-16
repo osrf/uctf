@@ -202,6 +202,7 @@ def spawn_model(
     autopilot='ardupilot',
     gazebo_ip='127.0.0.1',
     local_ip='127.0.0.1',
+    use_radar=False,
 ):
     x, y, yaw = pose
 
@@ -262,6 +263,8 @@ def spawn_model(
         kwargs['mappings']['fdm_port_in'] = str(baseport + 5)
         # fdm out is gazebo in
         kwargs['mappings']['fdm_port_out'] = str(baseport + 4)
+
+    kwargs['mappings']['use_radar'] = 'true' if use_radar else 'false'
 
     model_xml = xacro(model_xml, **kwargs)
     if debug:

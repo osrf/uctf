@@ -1,10 +1,11 @@
 <?xml version='1.0'?>
-<sdf version='1.6' xmlns:xacro='http://ros.org/wiki/xacro'> 
+<sdf version='1.6' xmlns:xacro='http://ros.org/wiki/xacro'>
   <!-- <xacro:arg name='visual_material' default='Gazebo/DarkGrey' /> -->
   <xacro:arg name='fdm_addr' default='127.0.0.1' />
   <xacro:arg name='listen_addr' default='127.0.0.1' />
   <xacro:arg name='fdm_port_in' default='9005' />
   <xacro:arg name='fdm_port_out' default='9004' />
+  <xacro:arg name='use_radar' default="false" />
   <model name="iris_demo">
     <include>
       <uri>model://iris_with_standoffs</uri>
@@ -198,6 +199,68 @@
         <rotorVelocitySlowdownSim>1</rotorVelocitySlowdownSim>
       </rotor>
     </plugin>
+    <xacro:property name='use_radar' value='$(arg use_radar)'/>
+    <xacro:if value="$(arg use_radar)">
+      <plugin name="mode_c_radar" filename="libModeCRadarPlugin.so">
+        <robotNamespace>radar</robotNamespace>
+        <position_noise>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.001</stddev>
+          </noise>
+        </position_noise>
+        <known_model_types>
+          <type>iris</type>
+          <type>delta_wing</type>
+        </known_model_types>
+      </plugin>
+      <link name="radar_mount">
+        <gravity>false</gravity>
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.000166667</ixx>
+            <iyy>0.000166667</iyy>
+            <izz>0.000166667</izz>
+          </inertia>
+        </inertial>
 
+        <!-- <collision name="collision">
+          <pose>0 0.02 0 0 0 -1.5708</pose>
+          <geometry>
+            <mesh>
+              <uri>model://logical_camera/meshes/camera.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <pose>0 0.02 0 0 0 -1.5708</pose>
+          <geometry>
+            <mesh>
+              <uri>model://logical_camera/meshes/camera.dae</uri>
+            </mesh>
+          </geometry>
+        </visual> -->
+        <sensor name="logical_camera" type="logical_camera">
+
+          <logical_camera>
+            <near>0.2</near>
+            <far>2.0</far>
+            <horizontal_fov>1.04719755</horizontal_fov>
+            <aspect_ratio>1.778</aspect_ratio>
+          </logical_camera>
+
+          <visualize>true</visualize>
+          <always_on>true</always_on>
+          <update_rate>10</update_rate>
+        </sensor>
+      </link>
+      <joint name='radar_mount_joint' type='fixed'>
+        <child>radar_mount</child>
+        <parent>base_link</parent>
+      </joint>
+    </xacro:if>
   </model>
 </sdf>

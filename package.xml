@@ -13,6 +13,7 @@
 
   <exec_depend>ap_master</exec_depend>
   <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>gazebo_radar_plugin</exec_depend>
   <exec_depend>mavros</exec_depend>
   <exec_depend>opencv3</exec_depend>
   <exec_depend>rqt</exec_depend>
