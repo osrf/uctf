@@ -30,7 +30,7 @@ cd $WORKSPACE/src && git clone https://github.com/osrf/uctf.git
 $WORKSPACE/src/uctf/packaging/download.bash
 
 rm -rf $INSTALL_SPACE
-$WORKSPACE/src/uctf/packaging/build_and_install.bash
+$WORKSPACE/src/uctf/packaging/build_and_install.bash $WORKSPACE $INSTALL_SPACE
 
 
 ~~~
