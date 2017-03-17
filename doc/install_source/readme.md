@@ -1,3 +1,7 @@
+# Prerequisites
+
+All documentationa and support assumes Ubuntu Xenial  16.04 as the base platform.
+
 # Build package from source
 
 For this tutorial we will assume you are still using ROS and Gazebo from binary packages.
