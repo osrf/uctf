@@ -1,3 +1,7 @@
+# Prerequisites
+
+Make sure you are on a computer with Ubuntu Xenial 16.04. It is the platform for which this project is being developed. Other platforms may work but are not supported.
+
 # Install binary packages
 
 ## Install dependencies
