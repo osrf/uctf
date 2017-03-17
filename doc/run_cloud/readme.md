@@ -40,29 +40,24 @@ sudo apt-get update && sudo apt-get install sasc-gazebo-sitl
 ```
 Note that, if there is a newer package available, it will take quite some time (~10 mintues) to download and install, due to its size. Please be patient.
 
-### Launch Gazebo
+### Launch Processes
 ssh to the simulation/arbiter machine (e.g., `ssh -i cloudsim.pem
 ubuntu@1.2.3.4`) and start Gazebo like so:
 ```console
-/opt/sasc/bin/cloudsim_sasc_gazebo_env.sh roslaunch uctf uctf.launch gui:=false
+/opt/sasc/bin/cloudsim_sasc_gazebo_env.sh roslaunch uctf cloudsim_game_master.launch
 ```
 
-### Launch Arbiter
 
-SSH with X-Forwarding enabled to the simulation/arbiter machine (e.g., `ssh -XC -i cloudsim.pem ubuntu@1.2.3.4`) and start the Arbiter like so:
-```console
-/opt/sasc/bin/arbiter_env.sh arbiter_start.py -db br-blue -dr br-gold
-```
-
-If you are on limited bandwidth and do not need the gui there's a `--nogui` option too
+The Game Director web interface will be available on port 5001 of the public IP.
+There will be a link in the CloudSim.io UI.
 
 
-### Launch the Game Director
+### Configure the Game Director
 
 In another terminal on the simulation/arbiter machine (e.g., `ssh -i cloudsim.pem
 ubuntu@1.2.3.4`):
 
-First create an admin user (to login via the web interface)
+Create an admin user (to login via the web interface)
 ```
 /opt/sasc/bin/gdi_env.sh python /opt/sasc/ugdi_venv/ugdi/create_user.py
 ```
@@ -86,16 +81,6 @@ Type an password and press enter/return and then retype the password entered abo
 
 Press enter/return and the password match and the user does not exist, the new user will be created.
 
-
-Now run the game director:
-```
-/opt/sasc/bin/gdi_env.sh /opt/sasc/ugdi_venv/ugdi/run.py
-```
-
-
-The Game Director web interface will be available on port 5001 of the public IP.
-There will be a link in the CloudSim.io UI.
-
 Please see the [full game director documentation](game_director.md) for more details.
 
 
@@ -107,9 +92,8 @@ gold), and that they are free to start spawning.
 **NOTE**: this step might be tied into the Game Director.
 
 ## Stop a game
-To stop a game, just give a Ctrl-C to the `roslaunch` and `arbiter_start.py` commands that you started.
+To stop a game, just give a Ctrl-C to the `roslaunch`  commands that you started.
 
-**NOTE**: this step might be tied into the Game Director.
 
 ## Start a new game
 You can reuse the machines from a round for multiple games. Just stop and start Gazebo and the Arbiter.
