@@ -1,6 +1,6 @@
 # Prerequisites
 
-All documentationa and support assumes Ubuntu Xenial  16.04 as the base platform.
+All documentation and support assumes Ubuntu Xenial  16.04 as the base platform.
 
 # Build package from source
 
