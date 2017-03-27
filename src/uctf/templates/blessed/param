@@ -163,11 +163,11 @@ ELEVON_REVERSE         0.000000
 #We use default FBW* params; omitting
 
 #Fence params.
-FENCE_ACTION     1.000000
+FENCE_ACTION     4.000000
 FENCE_AUTOENABLE 2.000000
 #_CHANNEL - We don't use the Manual Tx to enable / disable fence:
 FENCE_CHANNEL    0.000000
-FENCE_MAXALT     500.000000
+FENCE_MAXALT     1000.000000
 FENCE_MINALT     70.000000
 FENCE_RETALT     100.000000
 FENCE_RET_RALLY  1.000000
@@ -344,6 +344,9 @@ RTL_AUTOLAND     0.000000
 #SCALING_SPEED         15.0000
 #SCHED_DEBUG            0.0000
 
+#Serail0 = USB
+#Serial1 = Telemetry radio
+#Serial2 = Link to companion computer
 SERIAL0_BAUD     115.000000
 SERIAL1_BAUD     57.000000
 SERIAL2_BAUD     1500.000000
