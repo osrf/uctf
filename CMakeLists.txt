@@ -15,6 +15,7 @@ install(PROGRAMS
   "script/collect_logs"
   "script/control_team_blue"
   "script/control_team_gold"
+  "script/debug_sasc_vehicle"
   "script/rqt_uctf"
   "script/spawn_blue"
   "script/spawn_gold"
@@ -34,7 +35,7 @@ install(DIRECTORY
   DESTINATION lib/python/site-packages
 )
 install(DIRECTORY
-  "launch" "media" "worlds"
+  "launch" "media" "worlds" "resources"
   DESTINATION share/${PROJECT_NAME}
 )
 

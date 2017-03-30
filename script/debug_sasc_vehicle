@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+
+import argparse
+import netifaces
+
+
+def get_vpn_address(device='tap0'):
+    if device not in netifaces.interfaces():
+        return None
+    addrs = netifaces.ifaddresses(device)
+    return addrs[netifaces.AF_INET][0]['addr']
+
+
+def main():
+    parser = argparse.ArgumentParser('Connect to a sasc autopilot for debugging')
+    parser.add_argument(
+        "--hosts", type=int, default=1,
+        help="Number of payload host machines")
+    parser.add_argument('team', choices=['blue', 'gold'])
+    parser.add_argument(
+        '--vpn-interface', action='store', default='tap0',
+        help='The device name of the vpn network')
+    parser.add_argument(
+        'vehicle_id', metavar='VEHICLE_ID', type=int,
+        help='Specific vehicle ids to debug.')
+    args = parser.parse_args()
+
+    if args.hosts < 1:
+        parser.error("The number of hosts must be positive.")
+
+
+
+    if args.team == 'blue':
+        team_network = 2
+    else:
+        team_network = 3
+    increment = args.vehicle_id % args.hosts
+    payload_ip = '192.168.%s.1%s' % (team_network, increment)
+    payload_master_port = 11311 + args.vehicle_id
+
+    vpn_addr = get_vpn_address(args.vpn_interface)
+    if not vpn_addr:
+        parser.error("We did not find a vpn running, looking for [%s], aborting." % args.vpn_interface)
+
+    ros_master_uri = 'http://%s:%s' % (payload_ip, payload_master_port)
+
+    print("Vehicle IDs to debug: %s" % args.vehicle_id)
+    print("Expected to be on host %s" % payload_ip)
+    print("Expected ROS_MASTER_URI is %s" % ros_master_uri)
+    print("Using local interface %s detected IP %s" % (args.vpn_interface, vpn_addr))
+
+
+    print("")
+    print("")
+    print("To debug the payloads please invoke the following in this terminal:")
+    print("")
+
+    cmd = "ROS_HOSTNAME=%s ROS_MASTER_URI=%s rqt --perspective-file /opt/sasc/share/uctf/resources/sasc.perspective" % (vpn_addr, ros_master_uri)
+    print(cmd)
+
+if __name__ == '__main__':
+    main()
