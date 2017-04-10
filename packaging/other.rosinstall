@@ -1,15 +1,15 @@
 - git:
     local-name: acs_lib
     uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/acs_lib.git
-    version: mar-scrimmage
+    version: livefly
 - git:
     local-name: acs_dashboards
     uri: https://gitlab.nps.edu/gerkey_osrfoundation.org/acs_dashboards.git
-    version: mar-scrimmage
+    version: livefly
 - git:
     local-name: arbiter
     uri: https://gitlab.nps.edu/sasc/arbiter.git
-    version: mar-scrimmage
+    version: livefly
 - git:
     local-name: ardupilot
     uri: https://github.com/tfoote/ardupilot.git
@@ -17,11 +17,11 @@
 - git:
     local-name: swarmcommander
     uri: https://gitlab.nps.edu/tfoote_osrfoundation.org/swarmcommander.git
-    version: mar-scrimmage
+    version: livefly
 - git:
     local-name: ugdi
     uri: https://gitlab.nps.edu/sasc/game-director.git
-    version: mar-scrimmage
+    version: livefly
 - git:
     local-name: mavlink
     uri: https://gitlab.nps.edu/sasc/mavlink.git
