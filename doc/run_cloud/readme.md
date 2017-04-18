@@ -101,6 +101,10 @@ You can reuse the machines from a round for multiple games. Just stop and start 
 ## Finish the round
 1. Once you are finished with the round, press the FINISH ROUND button to terminate the machines (simulation and payloads). Machines are billed for each hour they are running.
 
+## Remote debugging
+
+If you wish to remotely debug your gazebo instance you can modify your launching technique to allow attchment of gzclient to get a 3D visualization of the world as well as interact with it remotely. [See these instructions](remote_debugging.md) 
+
 # Competitor
 
 ## One-time setup
