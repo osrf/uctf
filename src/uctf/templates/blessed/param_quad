@@ -1,0 +1,321 @@
+#STD FILE MARKER
+#
+#Aerial Combat Swarms settings for Flame Wheel 450 quadcopter
+#
+#These are the parameters that are most pertinent to our
+#projects.  For a full list and documentation of all params 
+#see ardupilot.org documentation.
+
+#Aerial Combat Swarm params (ACS)
+#Forces throttle to 0% when set to 1
+ACS_KILL_THR 0.000000
+#Sends plane to RTL if payload heartbeat not present.
+ACS_WATCH_HB 1.000000
+
+#AHRS params
+#6 sat minimum
+AHRS_GPS_MINSATS 6
+AHRS_GPS_USE 1
+AHRS_ORIENTATION 0
+
+#THESE are speicific to the airframe!
+##AHRS_TRIM* = trim correction due to autopilot's orientation
+#AHRS_TRIM_X 0.001715645
+#AHRS_TRIM_Y -0.003312971
+#AHRS_TRIM_Z 0
+
+#Maxmimum lean angle in all flight modes:
+ANGLE_MAX 4500
+
+#Checks done prior to arming motor (see docs for details)
+#8127 sets the bitmask to do all prearing checks EXCEPT RC.
+#See this page: http://ardupilot.org/copter/docs/prearm_safety_check.html
+#and this one: http://ardupilot.org/copter/docs/parameters.html?highlight=parameters#arming-parameters
+ARMING_CHECK 8127
+
+#Maximum acceleration for pitch, roll, and yaw axes
+#in centidegrees/sec/sec
+#ATC_ACCEL_P_MAX 110000
+#ATC_ACCEL_R_MAX 93149.49
+#ATC_ACCEL_Y_MAX 27000
+
+#Calibrations for the voltage and current sensors
+BATT_AMP_OFFSET 0
+BATT_AMP_PERVOLT 15.5 
+BATT_CAPACITY 5450
+BATT_CURR_PIN 3
+BATT_MONITOR 4
+BATT_VOLT_MULT 5.647
+BATT_VOLT_PIN 2
+
+#Radius of the circle flown when in CIRCLE mode in cm
+CIRCLE_RADIUS 1000
+
+#Circle mode's turn rate in deg/sec.  Positive to turn clockwise  negative for counter clockwise
+CIRCLE_RATE 20
+
+#Only use one compass, and it is external.
+#NOTE that 2nd compass is NOT external  though we don't use it.
+COMPASS_EXTERN2 0
+COMPASS_EXTERN3 0
+COMPASS_EXTERNAL 1
+#Don't autolearn compass. Do this in case we get close to metal.
+#Just be sure to calibrate compass before maiden flight.
+COMPASS_LEARN 0
+
+#Compass orient notes the direction the compass is mounted in the air frame
+COMPASS_ORIENT 0
+
+#0 is the primary compass and we don't use the other 2
+COMPASS_PRIMARY 0
+COMPASS_USE 1
+COMPASS_USE2 0
+COMPASS_USE3 0
+
+#Delay before automatic disarm in seconds. A value of zero disables auto disarm.
+DISARM_DELAY 30
+
+#Fence params
+FENCE_ACTION 1
+FENCE_ALT_MAX 500
+FENCE_ENABLE 1
+FENCE_MARGIN 2
+FENCE_RADIUS 2000
+FENCE_TOTAL 0
+FENCE_TYPE 6
+
+#Flight mode settings for the R/C Tx
+FLTMODE1 2
+FLTMODE2 3
+FLTMODE3 0
+FLTMODE4 5
+FLTMODE5 0
+FLTMODE6 3
+
+#OLD value for frame:
+#FRAME 1
+#
+#FRAME_TYPE: Frame Type (+  X, V, etc)
+#Controls motor mixing for multicopters.  Not used for Tri or Traditional Helicopters.
+#Values: 
+#        0 : Plus
+#         1 : X
+#         2 : V
+#         3 : H
+#         4 : V-Tail
+#         5 : A-Tail
+#         10 : Y6B
+FRAME_TYPE 1
+
+#FRAME_CLASS: Frame Class
+#Controls major frame class for multicopter component
+#Values: 
+#        0 : Undefined
+#         1 : Quad
+#         2 : Hexa
+#         3 : Octa
+#         4 : OctaQuad
+#         5 : Y6
+#         6 : Heli
+#         7 : Tri
+#         8 : SingleCopter
+#         9 : CoaxCopter
+FRAME_CLASS 1
+
+#Failsafe settings:
+FS_BATT_ENABLE 2
+FS_BATT_MAH 1000
+FS_BATT_VOLTAGE 10.6
+FS_CRASH_CHECK 1
+FS_EKF_ACTION 1
+FS_EKF_THRESH 0.8
+FS_GCS_ENABLE 1
+FS_GCS_TIMEOUT 20
+FS_THR_ENABLE 0
+
+#GPS Type = 1 means Auto detect.  0 means off.  We have only 1 GPS Rx.
+GPS_TYPE 1
+GPS_TYPE2 0
+
+#Enables/disables user input during LAND mode, the landing phase of RTL, and auto mode landings.
+LAND_REPOSITION 0
+
+#The descent speed for the final stage of landing in cm/s
+#Range : 30 200
+#Increment : 10
+#Units : cm/s
+LAND_SPEED 50
+
+#The descent speed for the first stage (high stage) of landing in cm/s. If this is zero then WPNAV_SPEED_DN is used
+#Range : 0 500
+#Increment : 10
+#Units : cm/s
+LAND_SPEED_HIGH 0
+
+LOG_BITMASK 176126
+LOG_DISARMED 0
+
+#Enable the magnetometer
+MAG_ENABLE 1
+
+#Auto restart of mission when entering Auto mode
+#(0 = don't restart -- run from previous command)
+MIS_RESTART 0
+
+
+#Controls if Home is included as a Rally point (i.e. as a safe landing place) for RTL
+#Values: 
+#        0 : DoNotIncludeHome
+#        1 : IncludeHome
+#Typically Home is where the aircraft boots and this typically
+#is NOT a safe place to land.  Leave this param 0.
+RALLY_INCL_HOME 0
+
+#Maximum distance a rally point can be from home point to be used (km).
+#NOTE: if this is set too low the Home point will get used,
+#which is typically undesireable as a landing location.
+RALLY_LIMIT_KM 2.0
+
+#Channel mappings for throttle, pitch, roll, yaw:
+RCMAP_PITCH 2
+RCMAP_ROLL 1
+RCMAP_THROTTLE 3
+RCMAP_YAW 4
+
+#The minimum relative altitude the model will move to before Returning to Launch.  Set to zero to return at current altitude.
+#Range : 0 8000
+#Increment : 1
+#Units : Centimeters
+RTL_ALT 3000
+
+#This is the altitude the vehicle will move to as the final stage of Returning to Launch or after completing a mission.  Set to zero to land.
+#Range : -1 1000
+#Increment : 1
+#Units : Centimeters
+RTL_ALT_FINAL 0
+
+#The vehicle will climb this many cm during the initial climb portion of the RTL
+#Range : 0 3000
+#Increment : 10
+#Units : Centimeters
+RTL_CLIMB_MIN 0
+
+#Defines a cone above home which determines maximum climb
+#Range : 0.5 10.0
+#Increment : 0.1
+RTL_CONE_SLOPE 3
+
+#Time (in milliseconds) to loiter above home before beginning final descent
+#Range : 0 60000
+#Increment : 1000
+#Units : ms
+RTL_LOIT_TIME 5000
+
+#Defines the speed in cm/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WPNAV_SPEED will be used instead.
+#Range : 0 2000
+#Increment : 50
+#Units : cm/s
+RTL_SPEED 0
+
+#Serail0 = USB
+#Serial1 = Telemetry radio
+#Serial2 = Link to companion computer
+SERIAL0_BAUD 115
+SERIAL0_PROTOCOL 1
+SERIAL1_BAUD 57
+SERIAL1_PROTOCOL 1
+SERIAL2_BAUD 115
+SERIAL2_PROTOCOL 1
+
+
+#enable terrain data. This enables the vehicle storing a database of terrain data on the SD card. The terrain data is requested from the ground station as needed, and stored for later use on the SD card. To be useful the ground station must support TERRAIN_REQUEST messages and have access to a terrain database, such as the SRTM database.
+#Values: 
+#        0 : Disable
+#        1 : Enable
+#ACS doesn't use terrain following! 
+#Keep this parameter disabled to save space on the SD Card
+TERRAIN_ENABLE 0
+TERRAIN_FOLLOW 0
+
+
+#This is the altitude in meters above which for navigation can begin. This applies in auto takeoff and auto landing.
+#Range : 0 5
+WP_NAVALT_MIN 0
+
+#Determines how the autopilot controls the yaw during missions and RTL
+#Values: 
+#        0 : Never change yaw
+#         1 : Face next waypoint
+#         2 : Face next waypoint except RTL
+#         3 : Face along GPS course
+WP_YAW_BEHAVIOR 2
+
+#Defines the horizontal acceleration in cm/s/s used during missions
+#Range : 50 500
+#Increment : 10
+#Units : cm/s/s
+WPNAV_ACCEL 100
+
+#Defines the vertical acceleration in cm/s/s used during missions
+#Range : 50 500
+#Increment : 10
+#Units : cm/s/s
+WPNAV_ACCEL_Z 100
+
+
+#Loiter maximum jerk in cm/s/s/s
+#Range : 500 5000
+#Increment : 1
+#Units : cm/s/s/s
+WPNAV_LOIT_JERK 1000
+
+#Loiter maximum acceleration in cm/s/s.  Higher values cause the copter to accelerate and stop more quickly.
+#Range : 100 981
+#Increment : 1
+#Units : cm/s/s
+WPNAV_LOIT_MAXA 250
+
+#Loiter minimum acceleration in cm/s/s. 
+#Higher values stop the copter more quickly when the stick is 
+#centered  but cause a larger jerk when the copter stops.
+#Range : 25 250
+#Incerment : 1
+#Units : cm/s/s
+WPNAV_LOIT_MINA 25
+
+#Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode
+#Range : 0 2000
+#Increment : 50
+#Units : cm/s
+WPNAV_LOIT_SPEED 500
+
+#Defines the distance from a waypoint, that when crossed indicates the wp has been hit.
+#Range : 100 1000
+#Increment : 1
+#Units : cm
+WPNAV_RADIUS 200
+
+#This controls the use of a rangefinder for terrain following
+#Values: 
+#        0 : Disable
+#        1 : Enable
+WPNAV_RFND_USE 0
+
+
+#Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission
+#Range : 20 2000
+#Increment : 50
+#Units : cm/s
+WPNAV_SPEED 1000
+
+#Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission
+#Range : 0 500
+#Increment : 10
+#Units : cm/s
+WPNAV_SPEED_DN 150
+
+#Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission
+#Range : 0 1000
+#Increment : 50
+#Units : cm/s
+WPNAV_SPEED_UP 250
