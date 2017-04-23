@@ -35,7 +35,7 @@ For this example we will only spawn two vehicles (one quadcopter (1), one fixed 
 
 ```console
 export SCRIMMAGE_TACTIC_INTERFACE_FILE=~/scrimmage-templates/plugins/autonomy/python/behaviors.xml
-/opt/sasc/bin/sasc_gazebo_env.sh spawn_blue 1 26 --acs enp0s25
+/opt/sasc/bin/payload_env.sh spawn_blue 1 26 --acs enp0s25
 ```
 
 ### Use flight tech interface
