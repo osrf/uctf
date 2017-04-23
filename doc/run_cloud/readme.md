@@ -170,7 +170,7 @@ sudo openvpn --config openvpn.conf
 
 If you are having trouble with rsync hanging, in another terminal:
 ```
-`sudo ifconfig tap0 mtu 1150`
+sudo ifconfig tap0 mtu 1150
 ```
 
 A successfully started VPN connection will show
